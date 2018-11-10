@@ -1,0 +1,118 @@
+<% include ../partials/header %> 
+<div class="content-box" >
+  <div id="content-index"> 
+    
+  <!-- ============infinit scroll implementation=============== -->
+  <!-- <script>
+
+    $(window).scroll(function() { 
+      if($(window).scrollTop() == $(document).height() - $(window).height()){
+        ++page; 
+        getReadList(); } 
+      }); 
+
+  </script> -->
+
+  <%if(noMatch!== null) {%>
+    <div class="contents">
+      <h3><img src="/icons/search.png" /><%= noMatch %></h3>    
+    </div>
+  <% } %>
+
+  <% contents.forEach(function(content){ %>
+    <div class="contents row"> 
+
+  <% if(content.video){ %>
+      <!-- ==============Index-like-button=============== -->
+      <div class="content-hotness col-sm-2">
+        <form action="/contents/<%=content._id%>" method="POST">  
+          <%if (user.contentLiked.indexOf(content._id) != -1) { %>
+          <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/>
+          </button>
+          <% } else { %>
+          <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/>
+          </button>
+          <% } %>
+        </form>
+      </div>
+      <!-- ==============thumnail=============== -->
+      <div class="content-thumbnail col-sm-5">
+      <% if(content.video.provider == 'youtube'){ %>
+        
+          <iframe width="220" height="136" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+        
+      <% } else if(content.video.provider == 'twitch'){ %>
+        
+          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="220" height="136"></iframe>
+        
+      <% } %>
+     
+      <% } else if(content.image) { %>
+        
+          <img width="220" height="136" src="<%= content.image%>">
+        
+      <% } %>
+      </div>
+    
+    <!-- ==============Title=============== -->
+      <div class="col-sm-4">
+        <div class="content-title">
+          <a href="/contents/<%= content._id %>">
+            <h4><strong><%= content.name %></strong></h4>
+          </a>
+        </div>
+      <!-- ==============Infoline=============== -->
+        <div class="content-infoline">
+          <!-- Momentjs Ago --> 
+          <div>Posted by <strong><%= content.author.username%></strong> <%= moment(content.createdAt).fromNow()%></div>
+
+          <!-- DISQUS Comments Count -->
+          <div id="verticalLine"><img style="width: 33px; height: 33px;" src="/icons/like.png" /><bold><%= content.likes %></bold></div>
+          <span id="verticalLine" class="disqus-comment-count" data-disqus-identifier="<%= content._id %>"></span>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+    <div class="content-ad"> 
+      광고페이지
+    </div>
+  </div>
+
+  <% if (pages > 0) { %>
+  <form action="/contents<%=url%>" method="GET" class="form-group">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+
+      <% if (current == 1) { %>
+        <li class="page-item disabled"><a class="page-link">First</a></li>
+      <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+      <% } %>
+      <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+      <% if (i !== 1) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+      <% } %>
+
+      <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+        <% if (i == current) { %>
+          <li class="page-item active"><a class="page-link"><%= i %></a></li>
+        <% } else { %>
+          <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+        <% } %>
+        <% if (i == Number(current) + 4 && i < pages) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+      <% } %>
+
+      <% if (current == pages) { %>
+        <li class="page-item disabled"><a class="page-link">Last</a></li>
+      <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+      <% } %>
+      </ul>
+    </nav>
+  </form>
+  <% } %>
+</div>
+
+<% include ../partials/footer %>

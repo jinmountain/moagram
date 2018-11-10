@@ -1,0 +1,93 @@
+<% include partials/header %>
+
+<h1>This is Wall<h1>
+
+<p><%= olouser.username %></p>
+<p><%= olouser.email %></p>
+
+<p>
+	<img src= "<%= olouser.thumbnail %>" />
+</p>
+
+<!-- ========Follow Button======== -->
+<div>
+	Number of Followers: <%= olouser.follower%>	
+</div>
+
+<% if(olouser._id != user.id) { %>
+<form action="/profile/<%=olouser._id%>" method="POST">
+                        
+    <%if (user.following.indexOf(olouser._id) != -1) { %>
+        <button style="border: none; background-color: transparent;">Unfollow</button>
+
+        
+    <% } else { %>
+        <button style="border: none; background-color: transparent;">Follow
+        </button>
+    <% } %>
+</form>
+<% } %> 
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% contents.forEach(function(content){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+          	<% if(content.video){ %>
+	            <div>
+            	<% if(content.video.provider == 'youtube'){ %>
+                  <div>
+                    <iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                <% } else if(content.video.provider == 'twitch'){ %>
+                  <div>
+                    <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+                  </div>
+                <% } %>
+	            </div>
+      		<% } %>
+               	<div class="caption">
+                   	<h4><%=content.name %></h4>
+               	</div>
+               	<p>
+                   	<a href="/contents/<%=content._id %>" class="btn btn-primary">More Info</a>
+               	</p>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<!-- ========Contents Created======== -->
+<div>Contents you shared</div>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% myContents.forEach(function(content){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+          	<% if(content.video){ %>
+	            <div>
+	        	<% if(content.video.provider == 'youtube'){ %>
+	              	<div>
+	                	<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+	              	</div>
+	            <% } else if(content.video.provider == 'twitch'){ %>
+	              	<div>
+	                	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+	              	</div>
+	            <% } %>
+	            </div>
+  			<% } %>
+               	<div class="caption">
+                   	<h4><%=content.name %></h4>
+               	</div>
+               	<p>
+                   	<a href="/contents/<%=content._id %>" class="btn btn-primary">More Info</a>
+               	</p>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<div><%= noContents %></div>
+
+
+
+<% include partials/footer %>

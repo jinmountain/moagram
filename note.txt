@@ -1,0 +1,255 @@
+
+
+<div class="collapse" id="collapseReplies">
+    <% include ../comments/reply %>
+</div>
+
+
+=======old version comments========
+<div>       
+	<p>
+	    <a class="btn btn-primary" data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseComment">
+	    Add Comment
+	    </a>
+	</p>
+</div>
+
+<div class="collapse" id="collapseComment">
+                    <h4 style="text-align: center">Add New Comment to <%= content.name %></h4>
+                    <div style="width: 60%; margin: 10px auto;">
+                        <form action="/contents/<%= content._id %>/comments" method="POST">
+                            
+                            <div class="form-group">
+                                <textarea id="editor" name="txt" type="text"></textarea>
+                            </div>
+                            <script>
+                              CKEDITOR.replace( 'editor');
+                            </script>
+                            <!-- <div class="form-group">
+                                <input class="form-control" type="text" name="txt" placeholder="text">
+                            </div> -->
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                            </div>
+                        </form>
+                        <div class="text-right">
+                            <a href="/contents/<%=content._id%>">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Now Using collapse for Add new comment button -->
+                <!-- <div class="text-right">
+                    <a class="btn btn-success" href="/contents/<%= content._id %>/comments/new">Add New Comment</a>
+                </div> -->
+               
+                <hr>
+
+                <% content.comments.forEach(function(comment){ %>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right"><%=comment.createdAt%></span> 
+                        <div>                          
+
+                            <%- comment.txt %> 
+                            <div class="pull-right">
+                            <% if(user && comment.author.id.equals(user._id)){ %>
+                                <form style="display: inline" class="pull-right" action="/contents/<%=content._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">DELETE</button>
+
+                                    <a href="/contents/<%=content._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-info">EDIT</a>
+                                </form>
+                            <% } %>
+                                
+                            </div>
+                       <!--  =====Comment Reply====== -->
+                            <div>
+                                <a class="btn btn-xs btn-warning" data-toggle="modal" type="button" data-target="#modalReply">댓글달기</a>
+                            </div>
+                            <div class="modal" id="modalReply" role="dialog" aria-hidden="true" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 style="text-align: center">댓글달기</h4>
+                                        </div>
+                                        <div class="modal-body" style="width: 90%; margin: 10px auto;">
+                                            <form action="/contents/<%=content._id%>/comments/<%=comment._id%>/comments" method="POST">
+                                                
+                                                <div class="form-group">
+                                                    <textarea id="replyEditor" name="txt" type="text"> </textarea>
+                                                </div>
+                                                <script>
+                                                    CKEDITOR.replace('replyEditor');
+                                                </script>
+                                                <!-- <div class="form-group">
+                                                    <input class="form-control" type="text" name="txt" placeholder="text">
+                                                </div> -->
+                                                <div class="form-group">
+                                                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+<div class="collapse" id="collapseComment">
+                    <h4 style="text-align: center">Add New Comment to <%= content.name %></h4>
+                    <div style="width: 60%; margin: 10px auto;">
+                        <form action="/contents/<%= content._id %>/comments" method="POST">
+                            
+                            <div class="form-group">
+                                <textarea id="editor" name="txt" type="text"></textarea>
+                            </div>
+                            <script>
+                              CKEDITOR.replace( 'editor');
+                            </script>
+                            <!-- <div class="form-group">
+                                <input class="form-control" type="text" name="txt" placeholder="text">
+                            </div> -->
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                            </div>
+                        </form>
+                        <div class="text-right">
+                            <a href="/contents/<%=content._id%>">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Now Using collapse for Add new comment button -->
+                <!-- <div class="text-right">
+                    <a class="btn btn-success" href="/contents/<%= content._id %>/comments/new">Add New Comment</a>
+                </div> -->
+               
+                <hr>
+
+                <% content.comments.forEach(function(comment){ %>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right"><%=comment.createdAt%></span> 
+                        <div>                          
+
+                            <%- comment.txt %> 
+                            <div class="pull-right">
+                            <% if(user && comment.author.id.equals(user._id)){ %>
+                                <form style="display: inline" class="pull-right" action="/contents/<%=content._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">DELETE</button>
+
+                                    <a href="/contents/<%=content._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-info">EDIT</a>
+                                </form>
+                            <% } %>
+                                
+                            </div>
+                       <!--  =====Comment Reply====== -->
+                            <div>
+                                <a class="btn btn-xs btn-warning" data-toggle="modal" type="button" data-target="#modalReply">댓글달기</a>
+                            </div>
+                            <div class="modal" id="modalReply" role="dialog" aria-hidden="true" tabindex="-1">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 style="text-align: center">댓글달기</h4>
+                                        </div>
+                                        <div class="modal-body" style="width: 90%; margin: 10px auto;">
+                                            <form action="/contents/<%=content._id%>/comments/<%=comment._id%>/comments" method="POST">
+                                                
+                                                <div class="form-group">
+                                                    <textarea id="replyEditor" name="txt" type="text"> </textarea>
+                                                </div>
+                                                <script>
+                                                    CKEDITOR.replace('replyEditor');
+                                                </script>
+                                                <!-- <div class="form-group">
+                                                    <input class="form-control" type="text" name="txt" placeholder="text">
+                                                </div> -->
+                                                <div class="form-group">
+                                                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+==================================
+
+
+================================================= -->
+<!-- ============= YOUTUBE VIDEO ID PARSER============ -->
+<!--                     <% if(content.video) { %>
+                    <div style="padding: 5px;"><pre id="myCode"></pre></div>
+                    <% } %>
+
+                    <script>  
+                      function getId(url) { 
+                          var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                          var match = url.match(regExp);
+
+                          if (match && match[2].length == 11) {
+                              return match[2];
+                          } else {
+                              return 'error';
+                          }
+                      }
+
+                      var myId;
+                      var myUrl = "<%= content.video %>";
+
+                      myId = getId(myUrl);
+                      
+                      $('#myId').html(myId);
+                      
+                      $('#myCode').html('<iframe width="530" height="265" src="//www.youtube.com/embed/' + myId + '" frameborder="0" allowfullscreen></iframe>');
+                    </script>  -->
+        <!-- ================================================== -->
+
+
+
+        <% if (pages > 0) { %>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+    <% if (current == 1) { %>
+      <li class="page-item disabled"><a class="page-link">First</a></li>
+    <% } else { %>
+      <li class="page-item"><a class="page-link" href="/contents/pages/1">First</a></li>
+    <% } %>
+    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+    <% if (i !== 1) { %>
+      <li class="page-item disabled"><a class="page-link">...</a></li>
+    <% } %>
+
+    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+      <% if (i == current) { %>
+        <li class="page-item active"><a class="page-link"><%= i %></a></li>
+      <% } else { %>
+        <li class="page-item"><a class="page-link" href="/contents/pages/<%= i %>"><%= i %></a></li>
+      <% } %>
+      <% if (i == Number(current) + 4 && i < pages) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+      <% } %>
+    <% } %>
+
+    <% if (current == pages) { %>
+      <li class="page-item disabled"><a class="page-link">Last</a></li>
+    <% } else { %>
+      <li class="page-item"><a class="page-link" href="/contents/pages/<%= pages %>">Last</a></li>
+    <% } %>
+
+    </ul>
+  </nav>
+  <% } %>

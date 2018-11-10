@@ -1,0 +1,155 @@
+<% include ../partials/header %>
+    <div id="content-show">
+        <div class="content-show-sidebar">
+            <p class="lead">YelpCamp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+
+        <div class="content-show-main">
+            <div class="thumbnail">
+                
+                <div class="caption-full">
+                    <ul>
+                        <li>Submitted By <strong><%= content.author.username %></strong></li>
+                        <li><%= content.createdAt %></li>
+                    </ul>
+                    <h4><a><%=content.name%></a></h4>
+                    <hr>
+                    <img class="img-responsive" src="<%= content.image %>">
+                    <div>
+                    <%- content.description %>
+                    </div>
+                    <div class="text-right">
+                    <% if(user && content.author.id.equals(user._id)){ %>
+                        <a class="btn btn-danger" href="/contents/<%= content._id %>/edit">Edit content</a>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="content-show-comment">
+                <div class="text-right">
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseComment">
+                        Add Comment
+                        </a>
+                    </p>
+                </div>
+                <div class="collapse" id="collapseComment">
+                    <h4 style="text-align: center">Add New Comment to <%= content.name %></h4>
+                    <div style="width: 60%; margin: 10px auto;">
+                        <form action="/contents/<%= content._id %>/comments" method="POST">
+                            
+                            <div class="form-group">
+                                <textarea id="editor" name="txt" type="text"></textarea>
+                            </div>
+                            <script>
+                              CKEDITOR.replace( 'editor');
+                            </script>
+                            <!-- <div class="form-group">
+                                <input class="form-control" type="text" name="txt" placeholder="text">
+                            </div> -->
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                            </div>
+                        </form>
+                        <div class="text-right">
+                            <a href="/contents/<%=content._id%>">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Now Using collapse for Add new comment button -->
+                <!-- <div class="text-right">
+                    <a class="btn btn-success" href="/contents/<%= content._id %>/comments/new">Add New Comment</a>
+                </div> -->
+                <hr>
+
+                <% content.comments.forEach(function(comment){ %>
+                <div class="row" href="/contents/<%= content._id %>/comments/<%= comment._id %>">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right"><%=comment.createdAt%></span> 
+                        <div>                          
+
+                            <%- comment.txt %> 
+                            <div class="pull-right">
+                            <% if(user && comment.author.id.equals(user._id)){ %>
+                                <form style="display: inline" class="pull-right" action="/contents/<%=content._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">DELETE</button>
+
+                                    <a href="/contents/<%=content._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-info">EDIT</a>
+                                </form>
+                            <% } %>                                
+                            </div>
+                
+                       <!--  =====Comment Reply====== -->
+                            <p>
+                                <a class="btn btn-xs btn-warning" data-toggle="collapse" href="#collapseReply" role="button" aria-expanded="false" aria-controls="collapseReply">댓글달기</a>
+
+                                <div class="collapse" id="collapseReply">
+                                    <h4 style="text-align: center">댓글달기</h4>
+                                    <div style="width: 60%; margin: 10px auto;">
+                                        <form action="/contents/<%=content._id%>/comments/<%=comment._id%>/comments" method="POST">
+                                            
+                                            <div class="form-group">
+                                                <textarea id="replyEditor" name="txt" type="text"> </textarea>
+                                            </div>
+                                            <script>
+                                                CKEDITOR.replace('replyEditor');
+                                            </script>
+                                            <!-- <div class="form-group">
+                                                <input class="form-control" type="text" name="txt" placeholder="text">
+                                            </div> -->
+                                            <div class="form-group">
+                                                <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                
+
+                                <a href="/contents/<%=content._id%>/comments/<%=comment._id%>" class="btn btn-xs btn-info">제발</a>
+
+                                <button href="/contents/<%=content._id%>/comments/<%=comment._id%>"data-toggle="collapse" data-target="replies" class="btn btn-xs btn-info">댓글보기                          
+                                </button>
+                            </p>                           
+            <% }) %>
+                            <div href="/contents/<%= content._id %>/comments/<%= comment._id%>" data-toggle="collapse" aria-controls="collapseReplies">
+                            
+                            <a class="btn btn-xs btn-primary" data-toggle="collapse" href="#collapseReplies" role="button" aria-expanded="false" aria-controls="collapseReplies">댓글보기</a>
+
+                            <div class="collapse" id="collapseReplies">
+                            <% comment.comments.forEach(function(reply){ %>
+                                <div class="row" href="/contents/<%= content_id %>/comments/<%= comment._id %>">
+                                    <div class="col-md-12">
+                                        <strong><%= reply.author.username %></strong>
+                                        <span class="pull-right"><%=reply.createdAt%></span> 
+                                        <div>                          
+                                            <%- reply.txt %> 
+                                            <div class="pull-right">
+                                            <% if(user && reply.author.id.equals(user._id)){ %>
+                                                <form style="display: inline" class="pull-right" action="/contents/<%=content_id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                                    <button class="btn btn-xs btn-danger">DELETE</button>
+
+                                                    <a href="/contents/<%=content_id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-info">EDIT</a> 
+                                                </form>
+                                            <% } %>                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% include ../partials/footer %>
