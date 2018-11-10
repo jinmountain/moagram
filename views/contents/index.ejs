@@ -64,7 +64,8 @@
       <!-- ==============Infoline=============== -->
         <div class="content-infoline">
           <!-- Momentjs Ago --> 
-          <div>Posted by <strong><%= content.author.username%></strong> <%= moment(content.createdAt).fromNow()%></div>
+          <div>Posted by <strong><%= content.author.username%></strong></div>
+          <div><%= moment(content.createdAt).fromNow()%></div>
 
           <!-- DISQUS Comments Count -->
           <div id="verticalLine"><img style="width: 33px; height: 33px;" src="/icons/like.png" /><bold><%= content.likes %></bold></div>

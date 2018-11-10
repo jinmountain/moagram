@@ -63,10 +63,10 @@
         <div class="content-show-main-header">
           <ul>
             <li>Submitted By <a href="/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a> 
-              <% if(olouser._id != user.id) { %>
-              <form action="/profile/<%=olouser._id%>" method="POST">
+              <% if(content.author.id != user.id) { %>
+              <form action="/profile/<%=content.author.id%>" method="POST">
                                       
-              <%if (user.following.indexOf(olouser._id) != -1) { %>
+              <%if (user.following.indexOf(content.author.id) != -1) { %>
                 <button class="btn btn-default btn-sm" id="btn-default">Unfollow</button>
 
                 
@@ -80,6 +80,7 @@
             <li><%= content.author.id%></li>
             <li><%= moment(content.createdAt).format('MMMM Do YYYY, h:mm:ss a'); %></li>
             <li><%= content.category %></li>
+            <li><%= content.views %></li>
           </ul>
 
           <h4><a><%=content.name%></a></h4>

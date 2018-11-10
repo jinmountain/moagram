@@ -28,7 +28,8 @@ const contentSchema = new mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref: "Comment"
       }
-   ]
+   ],
+   views: Number
 });
 
 module.exports = mongoose.model('Content', contentSchema);

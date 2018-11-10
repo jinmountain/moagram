@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // ======== encrypt the cookie ========
 app.use(cookieSession({
-	maxAge: 24 * 60 * 60 * 1000,
+	maxAge: 24 * 60 * 60 * 1000, //24hours
 	keys: [keys.session.cookieKey]
 }));
 

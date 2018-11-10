@@ -145,7 +145,9 @@ router.post('/', function(req,res){
 		username: req.user.username
 	};
     var likes = 0;
+    var views = 0;
     var timeNow = moment();
+
 	var newContent = {
         name: name, 
         image: image, 
@@ -154,8 +156,10 @@ router.post('/', function(req,res){
         description: desc, 
         author:author, 
         likes: likes, 
-        createdAt: timeNow
+        createdAt: timeNow,
+        views: views
     }
+
     // Create a new content and save to DB
     Content.create(newContent, function(err, newContent){
         if(err){
@@ -226,32 +230,48 @@ router.get("/:id", function(req, res){
         if (err){
             console.log(err);
         } else{
-            var sideContentsArray = [];
-            var ctg = foundContent.category;
-            var sidescroll = []
-
-            Content.find({category: ctg}).sort({"createdAt": -1}).limit(3).exec(function(err, foundSideContents){
-                if(err){
+            User.findById(req.user._id, function(err, foundUser) {
+                if (err) {
                     console.log(err);
-                } else{
-                    User.findById(foundContent.author.id, function(err, foundUser){
-                    if(err){
-                        console.log(err);
-                    } else{
+                } else {
+                    //if the id of content is in the user's contentViewed list
+                    //increase the view by 1
+                    //============================================================
+                    // if there is the content id in the user's contentViewed list
+                    // don't add view count
+                    if (foundUser.contentViewed.indexOf(foundContent._id) != -1) {
+                        foundContent.views += 0;
+
+                    // if not, add view count by 1 
+                    // and push the content id into the user's viewed list
+                    } else {
+                        foundContent.views += 1;
+                        foundContent.save();
+
+                        foundUser.contentViewed.push(foundContent._id);
+                        foundUser.save();
+                    }
+
+                    var ctg = foundContent.category;
+
+                    Content.find({category: ctg}).sort({"createdAt": -1}).limit(3).exec(function(err, foundSideContents){
+                        if(err){
+                            console.log(err);
+                        } else{
+                            
                         res.render("contents/show", 
                             {shortname: configDB.shortname,
                              sideContents: foundSideContents,
                              content: foundContent,
                              olouser: foundUser,
-                             sidescrollinfinite: sidescroll,
                              url: req.url
                             });
                         }
-                    })
+                    });
                 }
-            })
+            });
         }
-    })
+    });
     
     //find the campground with provided ID
     Content.findById(req.params.id).populate("comments").exec(function(err, foundContent){
@@ -366,7 +386,15 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
 });
 
 router.put("/:id", function(req, res){
-    var newData = {name: req.body.name, image: req.body.image, video: req.body.video, category: req.body.category, description: req.body.description};
+
+    var newData = {
+        name: req.body.name, 
+        image: req.body.image, 
+        video: req.body.video, 
+        category: req.body.category, 
+        description: req.body.description
+    };
+
     Content.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, content){
         if(err){
             req.flash("error", err.message);
