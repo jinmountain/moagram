@@ -65,7 +65,16 @@
         <div class="content-infoline">
           <!-- Momentjs Ago --> 
           <div>Posted by <strong><%= content.author.username%></strong></div>
-          <div><%= moment(content.createdAt).fromNow()%></div>
+          <div> 
+            <% if(content.views > 1000) { %>
+            views <%= content.views/1000 %> K 
+            <% } else { %>
+            views <%= content.views %> 
+            <% } %>
+            | 
+            <%= moment(content.createdAt).fromNow()%>
+              
+          </div>
 
           <!-- DISQUS Comments Count -->
           <div id="verticalLine"><img style="width: 33px; height: 33px;" src="/icons/like.png" /><bold><%= content.likes %></bold></div>

@@ -14,6 +14,7 @@ const profile = require("./profile");
 const middleware = require("../middleware");
 const configDB = require('../config/keys.js');
 
+//find every content
 router.get('/', middleware.authCheck, (req, res) => {
     var noMatch = null;
     var perPage = 9;
@@ -48,6 +49,7 @@ router.get('/', middleware.authCheck, (req, res) => {
 	})
 });
 
+//Find all contents within the selected category
 router.get('/category/:category', middleware.authCheck, (req, res) => {
     var noMatch = null;
     var perPage = 9;
@@ -87,6 +89,7 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
      
 });
 
+//find contents that match the inserted search query
 router.get('/search/:search', middleware.authCheck, (req, res) => {
     var noMatch = null;
     var perPage = 9;
