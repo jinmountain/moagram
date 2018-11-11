@@ -60,24 +60,24 @@
 
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> 
                     <li class="nav-item dropdown d-lg-none">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">OLO</a>
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h5><strong>OLO</strong></h5></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/contents">OLO</a>
-                            <a class="dropdown-item" href="/contents/new"><img id="nav-icons" width="33" height="33" src="/icons/youtube.png">Youtube videos
-                            </a>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" href="/contents"><h6><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h6></a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                            <a class="dropdown-item" href="/contents/popular"><h6><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> Popular</h6>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/contents/new"><h6>Create Post <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
+                            </a>
                         </div>
                     </li>
 
                     <li class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">OLO</a>
+                        <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="margin-bottom: 0px;">OLO</h5></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/contents">New</a>
-                            <a class="dropdown-item" href="/contents/popular">Popular
+                            <a class="dropdown-item" href="/contents"><h5><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h5></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/contents/popular"><h5 style="margin-bottom: 0px;"><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> Popular</h5>
                             </a>
                         </div>
                     </li>
@@ -86,7 +86,7 @@
     <!-- Responsive Icons -->
     <!-- <div class="d-lg-none">hide on screens wider than lg</div>
     <div class="d-none d-lg-block">hide on screens smaller than lg</div> -->
-                        <a class="btn btn-default btn-sm d-none d-lg-block" id="btn-default" href="/contents/new"><img id="nav-icons" width="33" height="33" src="/icons/youtube.png">Share Videos
+                        <a class="btn btn-default btn-sm d-none d-lg-block" id="btn-default" href="/contents/new"><h5 style="margin-bottom: 0px;">Create Post <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h5>
                         </a>
                     </li>
                     
@@ -147,11 +147,10 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="nav-link" href="/profile"> 
-                                <%= user.username %>
+                                <h5><%= user.username %></h5>
                             </a>
-                            <a class="nav-link" href="/auth/logout">Logout</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                            <a class="nav-link" href="/auth/logout"><h6>Logout</h6></a>
                         </div>
                     </div>                 
                 <% } %>
@@ -166,13 +165,13 @@
             <a class="nav-link active" href="/contents"><img id="cat-icons" src="/icons/checkAll.png"/> All</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/education" name="category"><img id="cat-icons" src="/icons/education.png"> Educational</a>
+            <a class="nav-link active" href="/contents/category/educational" name="category"><img id="cat-icons" src="/icons/education.png"> Educational</a>
           </li>
           <li class="nav-item"> 
             <a class="nav-link active" href="/contents/category/fitness" name="category"><img id="cat-icons" src="/icons/fitness.png"> Fitness</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/motivation" name="category"><img id="cat-icons" src="/icons/motivation.png"> Motivational</a>
+            <a class="nav-link active" href="/contents/category/motivational" name="category"><img id="cat-icons" src="/icons/motivation.png"> Motivational</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="/contents/category/music" name="category"><img id="cat-icons" src="/icons/music.png"/> Music</a>

@@ -38,12 +38,22 @@ router.get('/', middleware.authCheck, (req, res) => {
                         noMatch = "Nothing found, please try again.";
                     } 
 
-                    res.render('contents/index', {
-                        contents: allContents, 
-                        noMatch: noMatch,
-                        current: page,    
-                        pages: Math.ceil(count / perPage),
-                        url: req.url
+                    Content.find({})
+                    .sort({"hotness": -1})
+                    .limit(3)
+                    .exec(function(err, foundSideContents){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            res.render('contents/index', {
+                                contents: allContents, 
+                                noMatch: noMatch,
+                                current: page,    
+                                pages: Math.ceil(count / perPage),
+                                url: req.url,
+                                sideContents: foundSideContents
+                            });   
+                        }
                     });
                 }
             });
@@ -77,12 +87,22 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
                         noMatch = "Nothing found, please try again.";
                     } 
 
-                    res.render('contents/index', {
-                        contents: allContents, 
-                        noMatch: noMatch,
-                        current: page,    
-                        pages: Math.ceil(count / perPage),
-                        url: req.url
+                    Content.find({category: ctg})
+                    .sort({"hotness": -1})
+                    .limit(3)
+                    .exec(function(err, foundSideContents){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            res.render('contents/index', {
+                                contents: allContents, 
+                                noMatch: noMatch,
+                                current: page,    
+                                pages: Math.ceil(count / perPage),
+                                url: req.url,
+                                sideContents: foundSideContents
+                            });   
+                        }
                     });
                 }
             });
@@ -119,12 +139,22 @@ router.get('/search/:search', middleware.authCheck, (req, res) => {
                         noMatch = "Nothing found, please try again.";
                     } 
 
-                    res.render('contents/index', {
-                        contents: allContents, 
-                        noMatch: noMatch,
-                        current: page,    
-                        pages: Math.ceil(count / perPage),
-                        url: req.url
+                    Content.find({})
+                    .sort({"hotness": -1})
+                    .limit(3)
+                    .exec(function(err, foundSideContents){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            res.render('contents/index', {
+                                contents: allContents, 
+                                noMatch: noMatch,
+                                current: page,    
+                                pages: Math.ceil(count / perPage),
+                                url: req.url,
+                                sideContents: foundSideContents
+                            });   
+                        }
                     });
                 }
             });
@@ -155,12 +185,23 @@ router.get('/popular', middleware.authCheck, (req, res) => {
                     if(allContents.length <1 ) {
                         noMatch = "Nothing found, please try again.";
                     } 
-                    res.render('contents/index', {
-                        contents: allContents, 
-                        noMatch: noMatch,
-                        current: page,    
-                        pages: Math.ceil(count / perPage),
-                        url: req.url
+
+                    Content.find({})
+                    .sort({"hotness": -1})
+                    .limit(3)
+                    .exec(function(err, foundSideContents){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            res.render('contents/index', {
+                                contents: allContents, 
+                                noMatch: noMatch,
+                                current: page,    
+                                pages: Math.ceil(count / perPage),
+                                url: req.url,
+                                sideContents: foundSideContents
+                            });   
+                        }
                     });
                 }
             });
@@ -246,7 +287,7 @@ router.post("/:id", function (req, res) {
                         var duration = moment.duration(now.diff(end));
                         var hours = duration.asHours();
                         var growth = (foundContent.views*3) + (foundContent.likes*30);
-                        var newHotness = (growth*10)/hours;
+                        var newHotness = (growth*30)/hours;
                         foundContent.hotness = newHotness;
                         //================================
 
@@ -269,7 +310,7 @@ router.post("/:id", function (req, res) {
                         var duration = moment.duration(now.diff(end));
                         var hours = duration.asHours();
                         var growth = (foundContent.views*3) + (foundContent.likes*30);
-                        var newHotness = (growth*10)/hours;
+                        var newHotness = (growth*30)/hours;
                         foundContent.hotness = newHotness;
                         //================================
 
@@ -316,7 +357,7 @@ router.get("/:id", function(req, res){
                         var duration = moment.duration(now.diff(end));
                         var hours = duration.asHours();
                         var growth = (foundContent.views*3) + (foundContent.likes*30);
-                        var newHotness = (growth*10)/hours;
+                        var newHotness = (growth*30)/hours;
                         foundContent.hotness = newHotness;
                         //================================
                         foundContent.save();
@@ -333,7 +374,7 @@ router.get("/:id", function(req, res){
                         var duration = moment.duration(now.diff(end));
                         var hours = duration.asHours();
                         var growth = (foundContent.views*3) + (foundContent.likes*30);
-                        var newHotness = (growth*10)/hours;
+                        var newHotness = (growth*30)/hours;
                         foundContent.hotness = newHotness;
                         //================================
                         foundContent.save();
@@ -342,22 +383,30 @@ router.get("/:id", function(req, res){
                         foundUser.save();
                     }
 
-                    var ctg = foundContent.category;
-
-                    Content.find({category: ctg}).sort({"createdAt": -1}).limit(3).exec(function(err, foundSideContents){
-                        if(err){
+                    //find the author of the content to view one's followers
+                    User.findById(foundContent.author.id, function(err, contentAuthor){
+                        if(err) {
                             console.log(err);
-                        } else{
-                            
-                        res.render("contents/show", 
-                            {shortname: configDB.shortname,
-                             sideContents: foundSideContents,
-                             content: foundContent,
-                             olouser: foundUser,
-                             url: req.url
+                        } else {
+                            //display contents with the same category on the side
+                            var ctg = foundContent.category;
+                            Content.find({category: ctg}).sort({"createdAt": -1}).limit(3).exec(function(err, foundSideContents){
+                                if(err){
+                                    console.log(err);
+                                } else{
+                                    
+                                res.render("contents/show", 
+                                    {shortname: configDB.shortname,
+                                     sideContents: foundSideContents,
+                                     content: foundContent,
+                                     olouser: foundUser,
+                                     url: req.url,
+                                     contentAuthor: contentAuthor
+                                    });
+                                }
                             });
                         }
-                    });
+                    }) 
                 }
             });
         }

@@ -83,6 +83,14 @@
               <% } %>
               </form>
               <% } %> 
+
+              <div id="verticalLine">
+                <% if(contentAuthor.follower > 1000) { %>
+                <%= contentAuthor.follower/1000 %> K followers
+                <% } else { %>
+                <%= contentAuthor.follower %> followers
+                <% } %>
+              </div>
             </li>
             <li>
               <form id="verticalLine" action="/contents/category/<%=content.category%>" method="GET">
@@ -91,7 +99,11 @@
                 </button>
               </form>
               <div id="verticalLine">
-                views <%= content.views %>
+                <% if(content.views > 1000) { %>
+                views <%= content.views/1000 %> K 
+                <% } else { %>
+                views <%= content.views %> 
+                <% } %>
               </div>
               <div id="verticalLine"><%= moment(content.createdAt).format('MMMM Do YYYY, h:mm:ss a'); %></div>
             </li>

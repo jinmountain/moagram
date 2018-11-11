@@ -64,15 +64,24 @@
 }
 
 /*some dropdown needs to be positioned to the right*/
-.dropdown-menu-right {
-    right: 0;
-    left: auto;
-    min-width: 200px;
+/*========When screen > 991px==================*/
+@media only screen and (min-width: 991px) {
+	.dropdown-menu-right {
+	    right: 0;
+	    left: auto;
+	    min-width: 200px;
+	}
 }
+
+
+
 
 /*removing bullets on the lists*/
 ul {
   list-style-type: none;
 }
 
+h6 {
+	margin-bottom: 0px;
+}
 

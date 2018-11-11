@@ -84,7 +84,67 @@
     </div>
   <% }); %>
     <div class="content-ad"> 
-      광고페이지
+      <div class="content-ad-partition">
+        <div class="content-hot-sidebar">
+          <!-- ======== side contents form ========= -->
+          <form action="/contents" method="GET" class="form-group">
+            <div class="list-group" style="max-width: 260px;">
+              <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">POPULAR POSTS</h5>
+              <li class="list-group-item" id="content-show-rec-list">
+                <% sideContents.forEach(function(slicedContent){ %>
+                <div class="contents-rec">
+                  <div class="content-sidebar-info">
+                    <% if(slicedContent.video){ %>
+                      <div class="content-sidebar-thumbnail">
+                      <% if(slicedContent.video.provider == 'youtube'){ %>
+                        <div>
+                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= slicedContent.video.id %>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      <% } else if(slicedContent.video.provider == 'twitch'){ %>
+                        <div>
+                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= slicedContent.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                        </div>
+                      <% } %>
+                      </div>
+                    <% } else if(slicedContent.image) { %>
+                      <div class="content-sidebar-thumbnail">
+                        <img width="260" height="125" src="<%= slicedContent.image%>">
+                      </div>
+                    <% } %>
+
+                    <div class="content-sidebar-title">
+                      <div>
+                        <h4><a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a></h4>
+                      </div>
+                      <div>
+                        by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
+                      </div>
+                    </div>
+                    <div class="content-sidebar-infoline">
+                      <!-- Momentjs Ago --> 
+                      <div id="show-sidebar-vertical-group">
+                        <div id="verticalLine">
+                          <img style="max-width: 30px; max-height: 30px;" 
+                        src="/icons/like.png" /><%= slicedContent.likes %>
+                        </div>
+                        <div id="verticalLine">
+                        <%= moment(slicedContent.createdAt).fromNow()%>
+                        </div>
+                        <div id="verticalLine">
+                          <!-- DISQUS Comments Count -->
+                          <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>
+                        </div>
+                      </div>
+                    </div>     
+                  </div>          
+                </div>
+                <% }); %>
+              </li>
+            </div>
+          </form>
+        </div>
+
+      </div>
     </div>
   </div>
 
