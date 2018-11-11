@@ -73,8 +73,13 @@
                         </div>
                     </li>
 
-                    <li class="nav-item d-none d-lg-block" id="main-nav-item">
-                        <a href="/contents" class="nav-link ">OLO</a>
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">OLO</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/contents">New</a>
+                            <a class="dropdown-item" href="/contents/popular">Popular
+                            </a>
+                        </div>
                     </li>
 
                     <li class="nav-item" id="main-nav-item">
@@ -158,25 +163,28 @@
       <form action="/contents/category" method="GET" class="form-group">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="/contents"><img id="cat-icons" src="/icons/checkAll.png"/>All</a>
+            <a class="nav-link active" href="/contents"><img id="cat-icons" src="/icons/checkAll.png"/> All</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/education" name="category"><img id="cat-icons" src="/icons/education.png">Educational</a>
+            <a class="nav-link active" href="/contents/category/education" name="category"><img id="cat-icons" src="/icons/education.png"> Educational</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/fitness" name="category"><img id="cat-icons" src="/icons/fitness.png">Fitness</a>
+            <a class="nav-link active" href="/contents/category/fitness" name="category"><img id="cat-icons" src="/icons/fitness.png"> Fitness</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/motivation" name="category"><img id="cat-icons" src="/icons/motivation.png">Motivational</a>
+            <a class="nav-link active" href="/contents/category/motivation" name="category"><img id="cat-icons" src="/icons/motivation.png"> Motivational</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/contents/category/music" name="category"><img id="cat-icons" src="/icons/music.png"/>Music</a>
+            <a class="nav-link active" href="/contents/category/music" name="category"><img id="cat-icons" src="/icons/music.png"/> Music</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link active" href="/contents/category/beauty" name="category"><img id="cat-icons" src="/icons/beauty.png">Beauty</a>
+            <a class="nav-link active" href="/contents/category/beauty" name="category"><img id="cat-icons" src="/icons/beauty.png"> Beauty</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/contents/category/gaming" name="category"><img id="cat-icons" src="/icons/game_b.png"/>Gaming</a>
+            <a class="nav-link active" href="/contents/category/gaming" name="category"><img id="cat-icons" src="/icons/game_b.png"/> Gaming</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/contents/category/vlog" name="category"><img id="cat-icons" src="/icons/selfie.png"/> VLOG</a>
           </li>
         </ul>
       </form>

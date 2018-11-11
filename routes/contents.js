@@ -14,6 +14,7 @@ const profile = require("./profile");
 const middleware = require("../middleware");
 const configDB = require('../config/keys.js');
 
+
 //find every content
 router.get('/', middleware.authCheck, (req, res) => {
     var noMatch = null;
@@ -28,6 +29,7 @@ router.get('/', middleware.authCheck, (req, res) => {
 		if(err){
             console.log(err);
         } else {
+
             Content.count().exec(function(err, count){
                 if(err) {
                     console.log(err);
@@ -131,6 +133,41 @@ router.get('/search/:search', middleware.authCheck, (req, res) => {
      
 });
 
+//found popular contents
+router.get('/popular', middleware.authCheck, (req, res) => {
+    var noMatch = null;
+    var perPage = 9;
+    var page = req.query.page || 1;
+
+    Content.find({})
+    .sort({"hotness": -1})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, allContents){
+        if(err){
+            console.log(err);
+        } else {
+
+            Content.count().exec(function(err, count){
+                if(err) {
+                    console.log(err);
+                } else {
+                    if(allContents.length <1 ) {
+                        noMatch = "Nothing found, please try again.";
+                    } 
+                    res.render('contents/index', {
+                        contents: allContents, 
+                        noMatch: noMatch,
+                        current: page,    
+                        pages: Math.ceil(count / perPage),
+                        url: req.url
+                    });
+                }
+            });
+        }
+    })
+});
+
 router.post('/', function(req,res){
 
 	var name = req.body.name;
@@ -150,6 +187,7 @@ router.post('/', function(req,res){
     var likes = 0;
     var views = 0;
     var timeNow = moment();
+    var hottness = 0;
 
 	var newContent = {
         name: name, 
@@ -160,7 +198,8 @@ router.post('/', function(req,res){
         author:author, 
         likes: likes, 
         createdAt: timeNow,
-        views: views
+        views: views,
+        hottness: hottness,
     }
 
     // Create a new content and save to DB
@@ -199,7 +238,20 @@ router.post("/:id", function (req, res) {
                     if (foundUser.contentLiked.indexOf(foundContent._id) != -1) {
                         
                         foundContent.likes -= 1;
+                        
+                        // every time someone like a post,
+                        // the post is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*10)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
+
                         foundContent.save();
+                        
 
                         foundUser.contentLiked.pull(foundContent._id);
                         foundUser.save();
@@ -209,6 +261,18 @@ router.post("/:id", function (req, res) {
 
                     } else {
                         foundContent.likes += 1;
+
+                        // every time someone like a post,
+                        // the post is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*10)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
+
                         foundContent.save();
 
                         foundUser.contentLiked.push(foundContent._id);
@@ -245,10 +309,33 @@ router.get("/:id", function(req, res){
                     if (foundUser.contentViewed.indexOf(foundContent._id) != -1) {
                         foundContent.views += 0;
 
+                        // every time someone views a post,
+                        // the post.hotness is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*10)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
+                        foundContent.save();
+
                     // if not, add view count by 1 
                     // and push the content id into the user's viewed list
                     } else {
                         foundContent.views += 1;
+
+                        // every time someone views a post,
+                        // the post.hotness is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*10)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
                         foundContent.save();
 
                         foundUser.contentViewed.push(foundContent._id);

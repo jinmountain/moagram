@@ -227,7 +227,7 @@ a { color: inherit; }
 @media only screen and (max-width: 600px) {
     .content-show-main-thumbnail #show-main-thumbnail {
     	width: 335px;
-    	height: 213px;
+    	height: 210px;
     }
     .content-show-main-thumbnail {
 		padding-left: 0px;

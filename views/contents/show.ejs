@@ -84,9 +84,6 @@
               </form>
               <% } %> 
             </li>
-
-            <li style="min-height: 31px; padding-left: 2px;"><div><%= moment(content.createdAt).format('MMMM Do YYYY, h:mm:ss a'); %></div></li>
-
             <li>
               <form id="verticalLine" action="/contents/category/<%=content.category%>" method="GET">
                 <button class="btn btn-default btn-sm" id="btn-default">
@@ -96,10 +93,11 @@
               <div id="verticalLine">
                 views <%= content.views %>
               </div>
+              <div id="verticalLine"><%= moment(content.createdAt).format('MMMM Do YYYY, h:mm:ss a'); %></div>
             </li>
           </ul>
 
-          <h4><a><%=content.name%></a></h4>
+          <h3><a><%=content.name%></a></h3>
           <hr>
         </div>
 
@@ -107,16 +105,16 @@
 
         <div class="content-show-main-thumbnail">
         <% if(content.image) { %>
-          <img id="show-main-thumbnail" width="580" height="300" style=" padding: 5px;" class="img-responsive" src="<%= content.image %>">
+          <img id="show-main-thumbnail" width="580" height="350" style=" padding: 5px;" class="img-responsive" src="<%= content.image %>">
         <% } %>
 
         <% if(content.video.provider == 'youtube'){ %>
           <div>
-            <iframe id="show-main-thumbnail" width="580" height="300" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+            <iframe id="show-main-thumbnail" width="580" height="350" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
           </div>
         <% } else if(content.video.provider == 'twitch'){ %>
           <div>
-            <iframe id="show-main-thumbnail" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
+            <iframe id="show-main-thumbnail" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="580" height="350"></iframe>
           </div>
         <% } %>
           <div>

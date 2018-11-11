@@ -10,20 +10,21 @@
                     <input class="form-control" type="text" name="image" value="<%= content.image %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="video" value="<%= content.video %>">
+                    <input class="form-control" type="text" name="video" value="<%= content.video.url %>">
                 </div>
 
                 <div class="form-group">
                     <label for="ctg">Select a category of your video</label>
                     <select class="form-control" id="ctg" name="category">
                         <optgroup label="Catergory of your video">
-                            <option value="education">education</option>
-                            <option value="fitness">fitness</option>
-                            <option value="motivation">motivation</option>
-                            <option value="gaming">gaming</option>
-                            <option value="music">music</option>
-                            <option value="beauty">beauty</option>
-                            <option value="other">other</option>
+                            <option value="educational">Educational</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="motivation">Motivation</option>
+                            <option value="music">Music</option>
+                            <option value="beauty">Beauty</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="vlog">VLOG</option>
+                            <option value="other">Others</option>
                         </optgroup>
                     </select>                   
 
@@ -38,7 +39,7 @@
                 </script>
 
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Update!</button>
+                    <button class="btn btn-lg btn-primary btn-block">Update</button>
                 </div>
             </form>
             <a href="/contents">Go Back</a>

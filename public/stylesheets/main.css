@@ -67,6 +67,7 @@
 .dropdown-menu-right {
     right: 0;
     left: auto;
+    min-width: 200px;
 }
 
 /*removing bullets on the lists*/

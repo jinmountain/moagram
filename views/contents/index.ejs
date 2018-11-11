@@ -55,7 +55,7 @@
       </div>
     
     <!-- ==============Title=============== -->
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <div class="content-title">
           <a href="/contents/<%= content._id %>">
             <h4><strong><%= content.name %></strong></h4>
@@ -87,6 +87,8 @@
       광고페이지
     </div>
   </div>
+
+  <!-- ========Pagination======== -->
 
   <% if (pages > 0) { %>
   <form action="/contents<%=url%>" method="GET" class="form-group">

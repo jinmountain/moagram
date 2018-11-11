@@ -29,7 +29,8 @@ const contentSchema = new mongoose.Schema({
          ref: "Comment"
       }
    ],
-   views: Number
+   views: Number,
+   hotness: Number
 });
 
 module.exports = mongoose.model('Content', contentSchema);
