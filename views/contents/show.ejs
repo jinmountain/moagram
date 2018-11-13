@@ -3,7 +3,7 @@
     <div class="content-show-sidebar">
       <form action="/contents" method="GET" class="form-group">
         <div class="list-group" style="max-width: 260px;">
-          <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">RECENT POSTS</h5>
+          <h5 style="text-align: center; border-bottom: 1px solid #DADADA; padding-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-r-52.png"/>ECENT <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
           <li class="list-group-item" id="content-show-rec-list">
             <% sideContents.forEach(function(slicedContent){ %>
             <div class="contents-rec">
@@ -94,7 +94,7 @@
             </li>
             <li>
               <form id="verticalLine" action="/contents/category/<%=content.category%>" method="GET">
-                <button class="btn btn-default btn-sm" id="btn-default">
+                <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <%= content.category %>
                 </button>
               </form>

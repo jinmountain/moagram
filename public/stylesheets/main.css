@@ -22,7 +22,6 @@
 
 #btn-default{
 	border:1px solid #DADADA;
-	text-transform: capitalize;
 }
 
 #search-bar {
@@ -85,3 +84,12 @@ h6 {
 	margin-bottom: 0px;
 }
 
+/*==== clears text selection ====*/
+a { color:red } /* Globally */
+
+/* Each state */
+
+a:visited { text-decoration: none; color:black; }
+a:hover { text-decoration: none; color:blue; }
+a:focus { text-decoration: none; color:yellow; }
+a:hover, a:active { text-decoration: none; color:black }

@@ -64,7 +64,7 @@
       <!-- ==============Infoline=============== -->
         <div class="content-infoline">
           <!-- Momentjs Ago --> 
-          <div>Posted by <strong><%= content.author.username%></strong></div>
+          <div>Posted by <strong><a class="noSelect" href="/profile/<%= content.author.id %>"><%= content.author.username%></a></strong></div>
           <div> 
             <% if(content.views > 1000) { %>
             views <%= content.views/1000 %> K 
@@ -89,8 +89,9 @@
           <!-- ======== side contents form ========= -->
           <form action="/contents" method="GET" class="form-group">
             <div class="list-group" style="max-width: 260px;">
-              <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">POPULAR POSTS</h5>
+              <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OPULAR <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
               <li class="list-group-item" id="content-show-rec-list">
+                <% var rank = 1; %>
                 <% sideContents.forEach(function(slicedContent){ %>
                 <div class="contents-rec">
                   <div class="content-sidebar-info">
@@ -114,7 +115,15 @@
 
                     <div class="content-sidebar-title">
                       <div>
-                        <h4><a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a></h4>
+                        <h4>
+                          <a href="/contents/<%= slicedContent._id %>">
+                            <strong>
+                              <!-- ====used to show rank of the popular===== -->
+                              <%rank += 1%>
+                              <%= slicedContent.name %>
+                            </strong>
+                          </a>
+                        </h4>
                       </div>
                       <div>
                         by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
