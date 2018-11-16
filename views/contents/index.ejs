@@ -64,20 +64,29 @@
       <!-- ==============Infoline=============== -->
         <div class="content-infoline">
           <!-- Momentjs Ago --> 
-          <div>Posted by <strong><a class="noSelect" href="/profile/<%= content.author.id %>"><%= content.author.username%></a></strong></div>
-          <div> 
+          <div>
+            Posted by 
+            <strong>
+              <a class="noSelect" href="/profile/<%= content.author.id %>"><%= content.author.username%></a>
+            </strong>
+          </div>
+          <div id="verticalLine" style="font-size: 15px;"><img style="width: 33px; height: 33px;" src="/icons/like.png"/>
+            <% if(content.likes > 1000) { %>
+            <bold> <%= Math.floor(content.likes/1000) %>K</bold> 
+            <% } else { %>
+            <bold> <%= content.likes %></bold>
+            <% } %>
+          </div>
+          <div id="verticalLine">
             <% if(content.views > 1000) { %>
-            views <%= content.views/1000 %> K 
+            views <%= Math.floor(content.views/1000) %>K 
             <% } else { %>
             views <%= content.views %> 
             <% } %>
             | 
             <%= moment(content.createdAt).fromNow()%>
-              
           </div>
-
           <!-- DISQUS Comments Count -->
-          <div id="verticalLine"><img style="width: 33px; height: 33px;" src="/icons/like.png" /><bold><%= content.likes %></bold></div>
           <span id="verticalLine" class="disqus-comment-count" data-disqus-identifier="<%= content._id %>"></span>
         </div>
       </div>
@@ -94,7 +103,7 @@
                 <% var rank = 1; %>
                 <% sideContents.forEach(function(slicedContent){ %>
                 <div class="contents-rec">
-                  <div class="content-sidebar-info">
+                  <div class="content-sidebar-info" style="margin-bottom: 0px;">
                     <% if(slicedContent.video){ %>
                       <div class="content-sidebar-thumbnail">
                       <% if(slicedContent.video.provider == 'youtube'){ %>
@@ -117,11 +126,9 @@
                       <div>
                         <h4>
                           <a href="/contents/<%= slicedContent._id %>">
-                            <strong>
-                              <!-- ====used to show rank of the popular===== -->
-                              <%rank += 1%>
-                              <%= slicedContent.name %>
-                            </strong>
+                            <!-- ====used to show rank of the popular===== -->
+                            <%rank += 1%>
+                            <strong><%=slicedContent.name %></strong>
                           </a>
                         </h4>
                       </div>
@@ -129,12 +136,15 @@
                         by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
                       </div>
                     </div>
-                    <div class="content-sidebar-infoline">
+                    <div class="content-sidebar-infoline" style="font-size: 13px;">
                       <!-- Momentjs Ago --> 
                       <div id="show-sidebar-vertical-group">
                         <div id="verticalLine">
-                          <img style="max-width: 30px; max-height: 30px;" 
-                        src="/icons/like.png" /><%= slicedContent.likes %>
+                          <% if(slicedContent.views > 1000) { %>
+                          views <%= Math.floor(slicedContent.views/1000) %>K 
+                          <% } else { %>
+                          views <%= slicedContent.views %> 
+                          <% } %>
                         </div>
                         <div id="verticalLine">
                         <%= moment(slicedContent.createdAt).fromNow()%>
