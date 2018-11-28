@@ -525,11 +525,17 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
 });
 
 router.put("/:id", function(req, res){
+    
+    var videoParse = urlParser.parse(req.body.video);
 
     var newData = {
         name: req.body.name, 
         image: req.body.image, 
-        video: req.body.video, 
+        video: {
+            url: req.body.video,
+            provider: videoParse.provider,
+            id: videoParse.id
+            }, 
         category: req.body.category, 
         description: req.body.description
     };
