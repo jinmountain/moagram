@@ -91,5 +91,5 @@ a { color:red } /* Globally */
 
 a:visited { text-decoration: none; color:black; }
 a:hover { text-decoration: none; color:blue; }
-a:focus { text-decoration: none; color:yellow; }
+a:focus { text-decoration: none; color:black; }
 a:hover, a:active { text-decoration: none; color:black }

@@ -29,7 +29,6 @@ router.get('/', middleware.authCheck, (req, res) => {
 		if(err){
             console.log(err);
         } else {
-
             Content.count().exec(function(err, count){
                 if(err) {
                     console.log(err);
@@ -71,6 +70,7 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
     // Search with category
     
     const ctg = req.params.category;
+    
     Content.find({category: ctg})
     .sort({"createdAt": -1})
     .skip((perPage * page) - perPage)

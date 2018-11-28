@@ -29,61 +29,55 @@
 <% } %> 
 
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-    <% contents.forEach(function(content){ %>
-        <div class="col-md-3 col-sm-6">
-            <div class="thumbnail">
-          	<% if(content.video){ %>
-	            <div>
-            	<% if(content.video.provider == 'youtube'){ %>
-                  <div>
-                    <iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
-                  </div>
-                <% } else if(content.video.provider == 'twitch'){ %>
-                  <div>
-                    <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
-                  </div>
-                <% } %>
-	            </div>
-      		<% } %>
-               	<div class="caption">
-                   	<h4><%=content.name %></h4>
-               	</div>
-               	<p>
-                   	<a href="/contents/<%=content._id %>" class="btn btn-primary">More Info</a>
-               	</p>
-            </div>
-        </div>
-    <% }); %>
+<% contents.forEach(function(content){ %>
+  <div class="col-md-3 col-sm-6">
+    <div class="thumbnail">
+  	<% if(content.video){ %>
+      <div>
+    	<% if(content.video.provider == 'youtube'){ %>
+          <div>
+            <iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+          </div>
+        <% } else if(content.video.provider == 'twitch'){ %>
+          <div>
+            <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+     	<div class="caption">
+          <a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
+      </div>
+    </div>
+  </div>
+<% }); %>
 </div>
 
 <!-- ========Contents Created======== -->
 <div>Contents you shared</div>
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-    <% myContents.forEach(function(content){ %>
-        <div class="col-md-3 col-sm-6">
-            <div class="thumbnail">
-          	<% if(content.video){ %>
-	            <div>
-	        	<% if(content.video.provider == 'youtube'){ %>
-	              	<div>
-	                	<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
-	              	</div>
-	            <% } else if(content.video.provider == 'twitch'){ %>
-	              	<div>
-	                	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
-	              	</div>
-	            <% } %>
-	            </div>
-  			<% } %>
-               	<div class="caption">
-                   	<h4><%=content.name %></h4>
-               	</div>
-               	<p>
-                   	<a href="/contents/<%=content._id %>" class="btn btn-primary">More Info</a>
-               	</p>
-            </div>
-        </div>
-    <% }); %>
+<% myContents.forEach(function(content){ %>
+  <div class="col-md-3 col-sm-6">
+    <div class="thumbnail">
+  	<% if(content.video){ %>
+      <div>
+  	<% if(content.video.provider == 'youtube'){ %>
+        	<div>
+          	<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+        	</div>
+      <% } else if(content.video.provider == 'twitch'){ %>
+        	<div>
+          	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+        	</div>
+      <% } %>
+      </div>
+<% } %>
+     	<div class="caption">
+        <a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
+      </div>
+    </div>
+  </div>
+<% }); %>
 </div>
 
 <div><%= noContents %></div>

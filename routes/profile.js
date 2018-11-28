@@ -51,22 +51,56 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	var likeList = []; 
 	var noContents = null;
 
-	Content.find({_id: {$in: ids}}, function(err, likedContents){
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1;
+
+
+	Content.find({_id: {$in: ids}})
+	.sort({"createdAt": -1})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, likedContents){
         if(err){
             console.log(err);
         } else {
-        	if (likedContents < 1) {
-        		noContents = "Haven't liked any content";
-        	}
-        	res.render('profile', 
-    			{request: request,
-    			 contents: likedContents,
-    			 user: req.user,
-    			 noContents: noContents
-    			}
-    		)
+        	Content.find({_id: {$in: ids}}).count().exec(function(err, count){
+        		if(err) {
+        			console.log(err);
+        		} else {
+        			if (likedContents < 1) {
+		        		noContents = "Haven't liked any content";
+		        	}
+		        	res.render('profile', {
+		        		request: request,
+					 	contents: likedContents,
+		    			user: req.user,
+		    			noContents: noContents,
+		    			current: page,    
+		                pages: Math.ceil(count / perPage),
+		                url: req.url
+		    		});
+        		}
+        	})
         }
-    })  
+    });
+
+	// Content.find({_id: {$in: ids}}, function(err, likedContents){
+ //        if(err){
+ //            console.log(err);
+ //        } else {
+ //        	if (likedContents < 1) {
+ //        		noContents = "Haven't liked any content";
+ //        	}
+ //        	res.render('profile', 
+ //    			{request: request,
+ //    			 contents: likedContents,
+ //    			 user: req.user,
+ //    			 noContents: noContents
+ //    			}
+ //    		)
+ //        }
+ //    })  
 });
 
 router.get("/contents", function(req, res) {

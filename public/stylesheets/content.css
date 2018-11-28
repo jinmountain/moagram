@@ -148,7 +148,7 @@
 	grid-template-columns: repeat(1, 1fr);
 	grid-template-rows: repeat(3,minmax(0px, auto));
 	grid-gap: 1px;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 .content-sidebar-thumbnail {
