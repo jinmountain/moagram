@@ -55,10 +55,10 @@
       </div>
     
     <!-- ==============Title=============== -->
-      <div class="col-sm-5">
+      <div class="col-md-6">
         <div class="content-title">
           <a href="/contents/<%= content._id %>">
-            <h4><strong><%= content.name %></strong></h4>
+            <strong><%= content.name %></strong>
           </a>
         </div>
       <!-- ==============Infoline=============== -->
@@ -124,13 +124,11 @@
 
                     <div class="content-sidebar-title">
                       <div>
-                        <h4>
-                          <a href="/contents/<%= slicedContent._id %>">
-                            <!-- ====used to show rank of the popular===== -->
-                            <%rank += 1%>
-                            <strong><%=slicedContent.name %></strong>
-                          </a>
-                        </h4>
+                        <a href="/contents/<%= slicedContent._id %>">
+                          <!-- ====used to show rank of the popular===== -->
+                          <%rank += 1%>
+                          <strong><%=slicedContent.name %></strong>
+                        </a>
                       </div>
                       <div>
                         by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 

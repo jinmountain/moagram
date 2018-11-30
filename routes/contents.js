@@ -214,11 +214,15 @@ router.post('/', function(req,res){
 	var name = req.body.name;
 	var image = req.body.image;
     var videoParse = urlParser.parse(req.body.video);
-    var video = {
+    
+    if (req.body.video) {
+        var video = {
         url: req.body.video,
         provider: videoParse.provider,
         id: videoParse.id
         };
+    }
+    
     var category = req.body.category;
 	var desc = req.body.description;
 	var author = {
@@ -246,7 +250,7 @@ router.post('/', function(req,res){
     // Create a new content and save to DB
     Content.create(newContent, function(err, newContent){
         if(err){
-            console.log(err);
+            
             req.flash("error", err.message);
             res.redirect("back");
         } else {
@@ -256,6 +260,8 @@ router.post('/', function(req,res){
                 if(err){
                     console.log(err);
                 } else {
+                    //when a user load a post it will update its 
+                    //last active time to the current time
                     foundUser.lastActiveTime = timeNow;
                 }
 

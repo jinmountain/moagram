@@ -47,7 +47,7 @@
 		            </div>
           		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
+	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><%=content.name %></a>
 	               	</div>
 	            </div>
 	        </div>
@@ -97,15 +97,20 @@
 	                    <iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
 	                  </div>
 	                <% } else if(content.video.provider == 'twitch'){ %>
-	                  <div>
-	                    <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
-	                  </div>
+						<div>
+							<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+						</div>
 	                <% } %>
 		            </div>
 	      		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
-	               	</div>
+	               		<a href="/contents/<%=content._id %>">
+	               			<div>
+	               				<%=content.name%>
+	               			</div>
+	               		</a>
+	               		<!-- <a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><%=content.name %></a>
+ -->	            </div>
 	            </div>
 	        </div>
 	    <% }); %>

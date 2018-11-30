@@ -28,7 +28,7 @@
 
                 <div class="content-sidebar-title">
                   <div>
-                    <h4><a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a></h4>
+                    <a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a>
                   </div>
                   <div>
                     by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
@@ -107,7 +107,8 @@
                 views <%= content.views %> 
                 <% } %>
               </div>
-              <div id="verticalLine"><%= moment(content.createdAt).format('MMMM Do YYYY, h:mm:ss a'); %></div>
+              
+              <div id="verticalLine"><%= moment(content.createdAt).format('LLLL'); %></div>
             </li>
           </ul>
 
@@ -187,7 +188,7 @@
 
                     <div class="content-mobile-rec-title">
                       <div>
-                        <h5><a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a></h5>
+                        <a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a>
                       </div>
                       <div>
                         by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 

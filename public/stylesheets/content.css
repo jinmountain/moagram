@@ -167,6 +167,11 @@
 	grid-row: 1/2;
     padding-left: 3px;
     text-align: center;
+    max-width: 260px;
+}
+
+.content-sidebar-title a {
+    max-width: 260px;
 }
 
 .content-sidebar-infoline {
