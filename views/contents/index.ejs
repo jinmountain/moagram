@@ -20,49 +20,52 @@
   <% } %>
 
   <% contents.forEach(function(content){ %>
-    <div class="contents row"> 
+    <% if(content.video){ %>
+    <div class="contents row">
+      <div class="col-md-6" style="padding-left: 0px; padding-right: 0px">
+        <!-- ==============Index-like-button=============== -->
+        <div class="row">
+          <div class="content-hotness col-sm-3" style="padding-right: 0px;">
+            <form action="/contents/<%=content._id%>" method="POST">  
+              <%if (user.contentLiked.indexOf(content._id) != -1) { %>
+              <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/>
+              </button>
+              <% } else { %>
+              <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/>
+              </button>
+              <% } %>
+            </form>
+          </div>
 
-  <% if(content.video){ %>
-      <!-- ==============Index-like-button=============== -->
-      <div class="content-hotness col-sm-2">
-        <form action="/contents/<%=content._id%>" method="POST">  
-          <%if (user.contentLiked.indexOf(content._id) != -1) { %>
-          <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/>
-          </button>
-          <% } else { %>
-          <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/>
-          </button>
+          <!-- ==============thumnail=============== -->
+          <div class="content-thumbnail col-sm-9">
+          <% if(content.video.provider == 'youtube'){ %>
+            
+              <iframe width="230" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+            
+          <% } else if(content.video.provider == 'twitch'){ %>
+            
+              <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="230" height="135"></iframe>
+            
           <% } %>
-        </form>
+         
+          <% } else if(content.image) { %>
+            
+              <img width="230" height="135" src="<%= content.image%>">
+            
+          <% } %>
+          </div>
+        </div>
       </div>
-      <!-- ==============thumnail=============== -->
-      <div class="content-thumbnail col-sm-5">
-      <% if(content.video.provider == 'youtube'){ %>
-        
-          <iframe width="220" height="136" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
-        
-      <% } else if(content.video.provider == 'twitch'){ %>
-        
-          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="220" height="136"></iframe>
-        
-      <% } %>
-     
-      <% } else if(content.image) { %>
-        
-          <img width="220" height="136" src="<%= content.image%>">
-        
-      <% } %>
-      </div>
-    
     <!-- ==============Title=============== -->
-      <div class="col-md-6">
-        <div class="content-title">
+      <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
+        <div class="content-title .col-xs-4 .col-sm-4">
           <a href="/contents/<%= content._id %>">
             <strong><%= content.name %></strong>
           </a>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline">
+        <div class="content-infoline .col-xs-8 .col-sm-8">
           <!-- Momentjs Ago --> 
           <div>
             Posted by 
@@ -84,14 +87,15 @@
             views <%= content.views %> 
             <% } %>
             | 
-            <%= moment(content.createdAt).fromNow()%>
+            <%= moment(content.date).fromNow()%>
           </div>
           <!-- DISQUS Comments Count -->
           <span id="verticalLine" class="disqus-comment-count" data-disqus-identifier="<%= content._id %>"></span>
         </div>
       </div>
     </div>
-  <% }); %>
+    <% }); %>
+
     <div class="content-ad"> 
       <div class="content-ad-partition">
         <div class="content-hot-sidebar">
@@ -145,7 +149,7 @@
                           <% } %>
                         </div>
                         <div id="verticalLine">
-                        <%= moment(slicedContent.createdAt).fromNow()%>
+                        <%= moment(slicedContent.date).fromNow()%>
                         </div>
                         <div id="verticalLine">
                           <!-- DISQUS Comments Count -->

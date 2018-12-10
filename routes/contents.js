@@ -213,16 +213,20 @@ router.post('/', function(req,res){
 
 	var name = req.body.name;
 	var image = req.body.image;
+
     var videoParse = urlParser.parse(req.body.video);
-    
-    if (req.body.video) {
+
+    try {
         var video = {
-        url: req.body.video,
-        provider: videoParse.provider,
-        id: videoParse.id
-        };
+            url: req.body.video,
+            provider: videoParse.provider,
+            id: videoParse.id
+        }
     }
-    
+    catch(err) {
+        var video = {}
+    }
+
     var category = req.body.category;
 	var desc = req.body.description;
 	var author = {
@@ -231,7 +235,12 @@ router.post('/', function(req,res){
 	};
     var likes = 0;
     var views = 0;
-    var timeNow = moment();
+    
+    //javascript built in date to sort
+    var timeNow = Date.now();
+    //moment js to show date
+    var dateNow = moment();
+
     var hottness = 0;
 
 	var newContent = {
@@ -243,8 +252,9 @@ router.post('/', function(req,res){
         author:author, 
         likes: likes, 
         createdAt: timeNow,
+        date: dateNow,
         views: views,
-        hottness: hottness,
+        hottness: hottness
     }
 
     // Create a new content and save to DB

@@ -14,7 +14,8 @@ const contentSchema = new mongoose.Schema({
    },
    category: String,
    description: String,
-   createdAt: String,
+   createdAt: Number,
+   date: String,
    author: {
       id: {
          type: mongoose.Schema.Types.ObjectId,

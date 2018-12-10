@@ -44,7 +44,7 @@
                       <% } %>
                       | 
                       <!-- Momentjs Ago --> 
-                      <%= moment(slicedContent.createdAt).fromNow()%>
+                      <%= moment(slicedContent.date).fromNow()%>
                     </div>
                     <div id="verticalLine">
                       <!-- DISQUS Comments Count -->
@@ -108,11 +108,13 @@
                 <% } %>
               </div>
               
-              <div id="verticalLine"><%= moment(content.createdAt).format('LLLL'); %></div>
+              <div id="verticalLine"><%= moment(content.date).format('LLLL'); %></div>
             </li>
           </ul>
 
-          <h3><a><%=content.name%></a></h3>
+          <div id="content-show-name">
+            <%=content.name%>
+          </div>
           <hr>
         </div>
 
@@ -204,7 +206,7 @@
                           views <%= slicedContent.views %> 
                           <% } %>
                           | 
-                          <%= moment(slicedContent.createdAt).fromNow()%>
+                          <%= moment(slicedContent.date).fromNow()%>
                         </div>
 
                         <div id="verticalLine">
