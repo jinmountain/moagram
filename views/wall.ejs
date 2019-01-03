@@ -1,33 +1,38 @@
 <% include partials/header %>
+<header class="jumbotron">
+  <div class="container">
+    <h1>This is Wall</h1>
 
-<h1>This is Wall<h1>
+    <p><%= olouser.username %></p>
+    <p><%= olouser.email %></p>
 
-<p><%= olouser.username %></p>
-<p><%= olouser.email %></p>
+    <p>
+    	<img src= "<%= olouser.thumbnail %>" />
+    </p>
 
-<p>
-	<img src= "<%= olouser.thumbnail %>" />
-</p>
+    <!-- ========Follow Button======== -->
+    <div>
+    	Number of Followers: <%= olouser.follower%>	
+    </div>
 
-<!-- ========Follow Button======== -->
-<div>
-	Number of Followers: <%= olouser.follower%>	
-</div>
+    <% if(olouser._id != user.id) { %>
+    <form action="/profile/<%=olouser._id%>" method="POST">
+                            
+        <%if (user.following.indexOf(olouser._id) != -1) { %>
+            <button style="border: none; background-color: transparent;">Unfollow</button>
 
-<% if(olouser._id != user.id) { %>
-<form action="/profile/<%=olouser._id%>" method="POST">
-                        
-    <%if (user.following.indexOf(olouser._id) != -1) { %>
-        <button style="border: none; background-color: transparent;">Unfollow</button>
+            
+        <% } else { %>
+            <button style="border: none; background-color: transparent;">Follow
+            </button>
+        <% } %>
+    </form>
+    <% } %> 
+  </div>  
+</header>
 
-        
-    <% } else { %>
-        <button style="border: none; background-color: transparent;">Follow
-        </button>
-    <% } %>
-</form>
-<% } %> 
-
+<!-- ===================================
+  ====================================== -->
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 <% contents.forEach(function(content){ %>
   <div class="col-md-3 col-sm-6">

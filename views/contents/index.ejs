@@ -61,16 +61,20 @@
       <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
         <div class="content-title .col-xs-4 .col-sm-4">
           <a href="/contents/<%= content._id %>">
-            <strong><%= content.name %></strong>
+            <p><strong><%= content.name %></strong></p>
           </a>
         </div>
       <!-- ==============Infoline=============== -->
         <div class="content-infoline .col-xs-8 .col-sm-8">
           <!-- Momentjs Ago --> 
           <div>
-            Posted by 
+            Posted by &nbsp;   
             <strong>
-              <a class="noSelect" href="/profile/<%= content.author.id %>"><%= content.author.username%></a>
+              <a class="noSelect" href="/profile/<%= content.author.id %>">
+                <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+                <%= content.author.username%>
+                  
+              </a>
             </strong>
           </div>
           <div id="verticalLine" style="font-size: 15px;"><img style="width: 33px; height: 33px;" src="/icons/like.png"/>
@@ -105,61 +109,66 @@
               <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OPULAR <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
               <li class="list-group-item" id="content-show-rec-list">
                 <% var rank = 1; %>
-                <% sideContents.forEach(function(slicedContent){ %>
+          <!-- =========== Side Contents for loop =========== -->
+                <% for (var i = 0, len = sideContents.length; i < len; i++) { %>
                 <div class="contents-rec">
                   <div class="content-sidebar-info" style="margin-bottom: 0px;">
-                    <% if(slicedContent.video){ %>
+                    <% if(sideContents[i].video){ %>
                       <div class="content-sidebar-thumbnail">
-                      <% if(slicedContent.video.provider == 'youtube'){ %>
+                      <% if(sideContents[i].video.provider == 'youtube'){ %>
                         <div>
-                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= slicedContent.video.id %>" frameborder="0" allowfullscreen></iframe>
+                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
                         </div>
-                      <% } else if(slicedContent.video.provider == 'twitch'){ %>
+                      <% } else if(sideContents[i].video.provider == 'twitch'){ %>
                         <div>
-                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= slicedContent.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
                         </div>
                       <% } %>
                       </div>
-                    <% } else if(slicedContent.image) { %>
+                    <% } else if(sideContents[i].image) { %>
                       <div class="content-sidebar-thumbnail">
-                        <img width="260" height="125" src="<%= slicedContent.image%>">
+                        <img width="260" height="125" src="<%= sideContents[i].image%>">
                       </div>
                     <% } %>
 
                     <div class="content-sidebar-title">
                       <div>
-                        <a href="/contents/<%= slicedContent._id %>">
+                        <a href="/contents/<%= sideContents[i]._id %>">
                           <!-- ====used to show rank of the popular===== -->
                           <%rank += 1%>
-                          <strong><%=slicedContent.name %></strong>
+                          <p><strong><%=sideContents[i].name %></strong></p>
                         </a>
                       </div>
                       <div>
-                        by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
+                        by &nbsp; <a href="/profile/<%= sideContents[i].author.id %>">
+                          <img style="display: inline-block;  border-radius: 50%;" src= "<%= sideContents[i].author.thumbnail %>" width= "25px" height= "25px" />
+
+                          <strong><%= sideContents[i].author.username %></strong>
+                        </a>
                       </div>
                     </div>
                     <div class="content-sidebar-infoline" style="font-size: 13px;">
                       <!-- Momentjs Ago --> 
                       <div id="show-sidebar-vertical-group">
                         <div id="verticalLine">
-                          <% if(slicedContent.views > 1000) { %>
-                          views <%= Math.floor(slicedContent.views/1000) %>K 
+                          <% if([i].views > 1000) { %>
+                          views <%= Math.floor(sideContents[i].views/1000) %>K 
                           <% } else { %>
-                          views <%= slicedContent.views %> 
+                          views <%= sideContents[i].views %> 
                           <% } %>
                         </div>
                         <div id="verticalLine">
-                        <%= moment(slicedContent.date).fromNow()%>
+                        <%= moment(sideContents[i].date).fromNow()%>
                         </div>
                         <div id="verticalLine">
                           <!-- DISQUS Comments Count -->
-                          <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>
+                          <span class="disqus-comment-count" data-disqus-identifier="<%= sideContents[i]._id %>"></span>
                         </div>
                       </div>
                     </div>     
                   </div>          
                 </div>
-                <% }); %>
+                <% }; %>
               </li>
             </div>
           </form>

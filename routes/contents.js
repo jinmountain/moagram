@@ -45,13 +45,15 @@ router.get('/', middleware.authCheck, (req, res) => {
                             console.log(err);
                         } else {
                             res.render('contents/index', {
-                                contents: allContents, 
+                                contents: allContents,
+
                                 noMatch: noMatch,
                                 current: page,    
                                 pages: Math.ceil(count / perPage),
+
                                 url: req.url,
                                 sideContents: foundSideContents
-                            });   
+                            });
                         }
                     });
                 }
@@ -231,7 +233,8 @@ router.post('/', function(req,res){
 	var desc = req.body.description;
 	var author = {
 		id: req.user._id,
-		username: req.user.username
+		username: req.user.username,
+        thumbnail: req.user.thumbnail
 	};
     var likes = 0;
     var views = 0;
