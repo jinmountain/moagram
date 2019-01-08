@@ -76,8 +76,10 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 					 	contents: likedContents,
 		    			user: req.user,
 		    			noContents: noContents,
+
 		    			current: page,    
 		                pages: Math.ceil(count / perPage),
+
 		                url: req.url
 		    		});
         		}
@@ -105,32 +107,53 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 
 router.get("/contents", function(req, res) {
 
- 	var request = "contentsCreated"; 
+ 	var request = "contentsCreated";
+ 	var ids = req.user._id;
+	var likeList = [];  
 	var noContents = null;
 
-	User.findById(req.user._id, function(err, userFound){
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1;
+
+	User.findById(ids, function(err, userFound){
 		if(err){
 			console.log(err);
-		} else{
-	        Content.find({'author.id': userFound._id}, function(err, myContents){
+		} else {
+	        Content.find({'author.id': userFound._id})
+        	.sort({"createdAt": -1})
+		    .skip((perPage * page) - perPage)
+		    .limit(perPage)
+	        .exec(function(err, myContents){
 	        	if(err){
 	        		console.log(err);
-	        	} else{
-	        		if(myContents < 1) {
-	        			noContents = "Haven't shared anything yet"
-	        		}
-	        		res.render('profile', 
-	        			{
-	        			 request: request,
-	        			 user: userFound,
-	        			 myContents: myContents,
-	        			 noContents: noContents
+	        	} else { 
+	        		Content.find({'author.id': userFound._id}).count().exec(function(err, count){
+	        			if(err) {
+	        				console.log(err);
+	        			} else {
+			        		if(myContents < 1) {
+			        			noContents = "Haven't shared anything yet"
+			        		}
+			        		res.render('profile', 
+			        			{
+			        			 request: request,
+			        			 user: userFound,
+			        			 myContents: myContents,
+			        			 noContents: noContents,
+
+		 		    			current: page,    
+				                pages: Math.ceil(count / perPage),
+
+				                url: req.url
+			        			}
+			        		);
 	        			}
-	        		);
+	        		});
 	        	}
-	        })
+	        });
 		}
-	}) 
+	});
 })
 
 router.get("/:id", middleware.authCheck, function(req, res) {

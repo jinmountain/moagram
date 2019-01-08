@@ -17,7 +17,7 @@
 					<a class="nav-link active" href="/profile/likes"><img width="50" height="50" src="/icons/education.png">Likes</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/contents"><img width="50" height="50" src="/icons/fitness.png">Shares</a>
+					<a class="nav-link active" href="/profile/contents"><img width="50" height="50" src="/icons/fitness.png">Posts</a>
 				</li>
 	        </ul>
 	  	</form>
@@ -186,6 +186,45 @@
 	    <% }); %>
 	</div>
 	<div><%= noContents %></div>
+
+  	<!-- ========Pagination======== -->
+
+	<% if (pages > 0) { %>
+	<form action="/contents<%=url%>" method="GET" class="form-group">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+			<% if (current == 1) { %>
+				<li class="page-item disabled"><a class="page-link">First</a></li>
+				<% } else { %>
+				<li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+				<% } %>
+
+				<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+				<% if (i !== 1) { %>
+				<li class="page-item disabled"><a class="page-link">...</a></li>
+				<% } %>
+
+				<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+				<% if (i == current) { %>
+			  	<li class="page-item active"><a class="page-link"><%= i %></a></li>
+				<% } else { %>
+				  <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+				<% } %>
+				
+				<% if (i == Number(current) + 4 && i < pages) { %>
+				  <li class="page-item disabled"><a class="page-link">...</a></li>
+				<% } %>
+			<% } %>
+
+			<% if (current == pages) { %>
+				<li class="page-item disabled"><a class="page-link">Last</a></li>
+				<% } else { %>
+				<li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+			<% } %>
+			</ul>
+		</nav>
+	</form>
+	<% } %>
 <% } %>
 
 <% include partials/footer %>
