@@ -245,12 +245,16 @@
 
 a { color: inherit; } 
 
-/*========making a vertical line using div========*/
+/*========making a vertical line and putting them in a line using div========*/
 #verticalLine {
 	padding-left: 3px;
 	padding-right: 3px;
   	border-right: 1px solid #DADADA;
   	display:inline;
+}
+/*===only putting together in a line===*/
+#line {
+	display:inline;
 }
 /*================================================*/
 

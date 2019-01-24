@@ -2,27 +2,33 @@
 
 <header class="jumbotron">
 	<div class="container">
-		<h1>Your Profile Page<h1>
-		<p><img src= "<%= user.thumbnail %>" /><%= user.username %></p>
-		<p><%= user._id%></p>
-		<div>Number of followers: <%= user.follower %>
-		<p><%= user.email %></p>
-
+		<div style="font: 20px monospace;">This is the profile page of <%=user.username%></div>
+		<div style="padding-top: 15px;">
+			<p><img style="border-radius: 5px;" src= "<%= user.thumbnail %>"/> <%= user.username %></p>
+			<div style="padding-bottom: 10px;">
+				<div id=line style="font: 18px monospace">Number of followers: </div> 
+				<div id=line><%= user.follower %></div>
+			</div>
+			<div style="padding-bottom: 10px;">
+				<div id=line style="font: 18px monospace">e-mail:</div>
+				<div id=line><%= user.email %></div>
+			</div>
+		</div>
 		<form class="form-group">
 	        <ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="/profile" style="font-size: 25px;">
-						<img style="padding-right: 10px;" width="40" height="30" src="/icons/checkAll.png"/>Overview
+					<a class="nav-link active" href="/profile" style="font: 20px monospace;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-check-all-60.png"/>Overview
 					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/likes" style="font-size: 25px;">
-						<img style="padding-right: 10px;" width="40" height="30" src="/icons/education.png">Likes
+					<a class="nav-link active" href="/profile/likes" style="font: 20px monospace;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-good-quality-60.png">Likes
 					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/contents" style="font-size: 25px;">
-						<img style="padding-right: 10px;" width="40" height="30" src="/icons/fitness.png">Posts
+					<a class="nav-link active" href="/profile/contents" style="font: 20px monospace;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">Posts
 					</a>
 				</li>
 	        </ul>
