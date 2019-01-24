@@ -11,27 +11,34 @@
 		<form class="form-group">
 	        <ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="/profile"><img width="50" height="50" src="/icons/checkAll.png"/>Overview</a>
+					<a class="nav-link active" href="/profile" style="font-size: 25px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/checkAll.png"/>Overview
+					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/likes"><img width="50" height="50" src="/icons/education.png">Likes</a>
+					<a class="nav-link active" href="/profile/likes" style="font-size: 25px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/education.png">Likes
+					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/contents"><img width="50" height="50" src="/icons/fitness.png">Posts</a>
+					<a class="nav-link active" href="/profile/contents" style="font-size: 25px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/fitness.png">Posts
+					</a>
 				</li>
 	        </ul>
 	  	</form>
   	</div>
-
 </header>
 
+<!-- ==== OVERVIEW ===== -->
 <% if(request == "overview"){ %>
 
 	<!-- ========Content Liked======== -->
+	<div style="text-align: center; padding-bottom: 10px; font: 20px/25px monospace;">Contents you liked</div>
 	<div id="profile"></div>
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 	    <% contents.forEach(function(content){ %>
-	        <div class="col-md-3 col-sm-6">
+	        <div class="col-md-3 col-sm-6" id="profile-content-thumbnail">
 	            <div class="thumbnail">
                	<% if(content.video){ %>
 		            <div>
@@ -47,19 +54,23 @@
 		            </div>
           		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><%=content.name %></a>
+	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
 	               	</div>
 	            </div>
 	        </div>
 	    <% }); %>
-	 </div>
+	</div>
+	<div style="text-align: center; font: 15px monospace;">
+		<a class="btn btn-default" id="btn-default" href="/profile/likes" role="button">More</a>
+	</div>
+	<hr>
 
 	<!-- ========Contents Created======== -->
-	<div>Contents you shared</div>
+	<div style="text-align: center; padding-bottom: 15px; font: 20px/25px monospace;">Contents you shared</div>
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 	    <% myContents.forEach(function(content){ %>
 	        <div class="col-md-3 col-sm-6">
-	            <div class="thumbnail">
+	            <div class="thumbnail" id="profile-content-thumbnail">
 	          	<% if(content.video){ %>
 		            <div>
 	            	<% if(content.video.provider == 'youtube'){ %>
@@ -74,21 +85,27 @@
 		            </div>
 	      		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
+	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
 	               	</div>
 	            </div>
 	        </div>
 	    <% }); %>
 	</div>
+	<div style="text-align: center; font: 15px monospace;">
+		<a class="btn btn-default" id="btn-default" href="/profile/contents" role="button">More</a>
+	</div>
+	<hr>
 	<div><%= noContents %></div>
 <% } %>
 
+<!-- ==== LIKES ==== -->
 <% if(request == "contentsLiked"){ %>
 	<!-- ========Content Liked======== -->
+	<div style="text-align: center; padding-bottom: 10px; font: 20px/25px monospace;">Contents you liked</div>
 	<div id="profile"></div>
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 	    <% contents.forEach(function(content){ %>
-	        <div class="col-md-4 col-sm-6">
+	        <div class="col-md-4 col-sm-6" id="profile-content-thumbnail">
         	<!-- <div class="col-md-3 col-sm-6"> -->
 	            <div class="thumbnail">
 	          	<% if(content.video){ %>
@@ -105,7 +122,7 @@
 		            </div>
 	      		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>">
+	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>">
 	               			<div>
 	               				<%=content.name%>
 	               			</div>
@@ -158,12 +175,13 @@
 	<% } %>
 <% } %>
 
+<!-- ==== CONTENTS ==== -->
 <% if(request == "contentsCreated"){ %>
 	<!-- ========Contents Created======== -->
-	<div>Contents you shared</div>
+	<div style="text-align: center; padding-bottom: 15px; font: 20px/25px monospace;">Contents you shared</div>
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 	    <% myContents.forEach(function(content){ %>
-	        <div class="col-md-3 col-sm-6">
+	        <div class="col-md-3 col-sm-6" id="profile-content-thumbnail">
 	            <div class="thumbnail">
 	          	<% if(content.video){ %>
 		            <div>
@@ -179,7 +197,7 @@
 		            </div>
 	      		<% } %>
 	               	<div class="caption">
-	               		<a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><h4><%=content.name %></h4></a>
+	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
 	               	</div>
 	            </div>
 	        </div>

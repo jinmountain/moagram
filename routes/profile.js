@@ -10,12 +10,20 @@ router.get('/', middleware.authCheck, (req, res) => {
 	var ids = req.user.contentLiked;
 	var likeList = []; 
 	var noContents = null;
+	var noLikes = null;
 
-	Content.find({_id: {$in: ids}}, function(err, likedContents){
+	Content.find({_id: {$in: ids}})
+	.limit(8)
+	.sort({"createdAt": -1})
+	.exec(function(err, likedContents){
         if(err){
             console.log(err);
         } else {
-        	likeList = likedContents;
+        	if(likedContents < 1) {
+        		noLikes = "Haven't Liked anything yet"
+        	} else {
+        		likeList = likedContents;
+        	}	
         }
     })
 
@@ -23,7 +31,11 @@ router.get('/', middleware.authCheck, (req, res) => {
 		if(err){
 			console.log(err);
 		} else{
-	        Content.find({'author.id': userFound._id}, function(err, myContents){
+	        Content
+	        .find({'author.id': userFound._id})
+	        .limit(8)
+	        .sort({"createdAt": -1})
+	        .exec(function(err, myContents){
 	        	if(err){
 	        		console.log(err);
 	        	} else{
