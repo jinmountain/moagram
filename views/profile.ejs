@@ -2,16 +2,16 @@
 
 <header class="jumbotron">
 	<div class="container">
-		<div style="font: 20px monospace;">This is the profile page of <%=user.username%></div>
+		<img style="border-radius: 5px;" src= "<%= user.thumbnail %>"/>
+		<div style="font: 20px monospace; padding-top: 15px;">This is the profile page of <%=user.username%></div>
 		<div style="padding-top: 15px;">
-			<p><img style="border-radius: 5px;" src= "<%= user.thumbnail %>"/> <%= user.username %></p>
 			<div style="padding-bottom: 10px;">
-				<div id=line style="font: 18px monospace">Number of followers: </div> 
-				<div id=line><%= user.follower %></div>
+				<div id="line" style="font: 20px monospace">Number of followers: </div> 
+				<div id="line"><%= user.follower %></div>
 			</div>
 			<div style="padding-bottom: 10px;">
-				<div id=line style="font: 18px monospace">e-mail:</div>
-				<div id=line><%= user.email %></div>
+				<div id="line" style="font: 20px monospace">e-mail:</div>
+				<div id="line"><%= user.email %></div>
 			</div>
 		</div>
 		<form class="form-group">
@@ -62,6 +62,12 @@
 	               	<div class="caption">
 	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
 	               	</div>
+	               	<div style="padding-top: 10px;">
+   		              	<a class="noSelect" href="/profile/<%= content.author.id %>">
+		                	<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+		                	<%= content.author.username%> 
+		              	</a>
+	               	</div>
 	            </div>
 	        </div>
 	    <% }); %>
@@ -92,6 +98,12 @@
 	      		<% } %>
 	               	<div class="caption">
 	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+	               	</div>
+	               	<div style="padding-top: 10px;">
+	              		<a class="noSelect" href="/profile/<%= content.author.id %>">
+		                	<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+		                	<%= content.author.username%> 
+		              	</a>
 	               	</div>
 	            </div>
 	        </div>

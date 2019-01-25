@@ -28,10 +28,11 @@
 
                 <div class="content-sidebar-title">
                   <div>
-                    <a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a>
+                    <a style="font-size: 18px;" href="/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
                   </div>
                   <div>
-                    by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
+                    <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" />
+                    <a style="font-size: 15px;" href="/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                   </div>
                 </div>
                 <div class="content-sidebar-infoline" style="font-size: 13px;">
@@ -190,10 +191,11 @@
 
                     <div class="content-mobile-rec-title">
                       <div>
-                        <a href="/contents/<%= slicedContent._id %>"><strong><%= slicedContent.name %></strong></a>
+                        <a style="font-size: 18px;" href="/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
                       </div>
                       <div>
-                        by <a href="/profile/<%= slicedContent.author.id %>"><strong><%= slicedContent.author.username %></strong></a> 
+                        <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" /> 
+                        <a style="font-size: 15px;" href="/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                       </div>
                     </div>
                     <div class="content-mobile-rec-infoline">
@@ -211,7 +213,7 @@
 
                         <div id="verticalLine">
                           <img style="max-width: 30px; max-height: 30px;" 
-                        src="/icons/like.png" /><%= slicedContent.likes %>
+                        src="/icons/like.png" /> <%= slicedContent.likes %>
                         </div>
                         
                         <div id="verticalLine">

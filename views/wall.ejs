@@ -1,33 +1,39 @@
 <% include partials/header %>
 <header class="jumbotron">
   <div class="container">
-    <h1>This is Wall</h1>
-
-    <p><%= olouser.username %></p>
-    <p><%= olouser.email %></p>
-
-    <p>
-    	<img src= "<%= olouser.thumbnail %>" />
-    </p>
-
-    <!-- ========Follow Button======== -->
     <div>
-    	Number of Followers: <%= olouser.follower%>	
+      <img id="line" style="border-radius: 5px;" src= "<%= olouser.thumbnail %>"/>
+
+      <% if(olouser._id != user.id) { %>
+        <form style="padding-left: 10px; font: 15px monospace;" id="line" action="/profile/<%=olouser._id%>" method="POST">                    
+          <%if (user.following.indexOf(olouser._id) != -1) { %>
+            <button class="btn btn-default btn-sm">Unfollow</button> 
+          <% } else { %>
+            <button class="btn btn-default btn-sm">Follow
+            </button>
+          <% } %>
+        </form>
+      <% } %>
+    </div>
+    <div>
+      <div style="font: 20px monospace; padding-top: 15px;">This is the wall of <%=olouser.username%>
+      </div>
+    </div>
+    <div style="padding-top: 15px;">
+      <div style="padding-bottom: 10px;">
+        <div id=line style="font: 20px monospace">Number of followers: </div> 
+        <div id=line><%= olouser.follower %></div>
+      </div>
+      <div style="padding-bottom: 10px;">
+        <div id=line style="font: 20px monospace">e-mail:</div>
+        <div id=line><%= olouser.email %></div>
+      </div>
     </div>
 
-    <% if(olouser._id != user.id) { %>
-    <form action="/profile/<%=olouser._id%>" method="POST">
-                            
-        <%if (user.following.indexOf(olouser._id) != -1) { %>
-            <button style="border: none; background-color: transparent;">Unfollow</button>
+    <!-- ========Follow Button======== -->
 
-            
-        <% } else { %>
-            <button style="border: none; background-color: transparent;">Follow
-            </button>
-        <% } %>
-    </form>
-    <% } %> 
+
+ 
   </div>  
 </header>
 
