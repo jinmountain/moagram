@@ -72,9 +72,15 @@
 	        </div>
 	    <% }); %>
 	</div>
+	<div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noLikes %>
+	</div>
+
+	<% if (moreLikes == 1) {%>
 	<div style="text-align: center; font: 15px monospace;">
 		<a class="btn btn-default" id="btn-default" href="/profile/likes" role="button">More</a>
 	</div>
+	<% } %>
+
 	<hr>
 
 	<!-- ========Contents Created======== -->
@@ -109,11 +115,15 @@
 	        </div>
 	    <% }); %>
 	</div>
+	<div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noContents %>
+	</div>
+	
+	<% if (moreContents == 1) {%>
 	<div style="text-align: center; font: 15px monospace;">
 		<a class="btn btn-default" id="btn-default" href="/profile/contents" role="button">More</a>
 	</div>
+	<% } %>
 	<hr>
-	<div><%= noContents %></div>
 <% } %>
 
 <!-- ==== LIKES ==== -->
@@ -140,18 +150,20 @@
 		            </div>
 	      		<% } %>
 	               	<div class="caption">
-	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>">
-	               			<div>
-	               				<%=content.name%>
-	               			</div>
-	               		</a>
-	               		<!-- <a href="/contents/<%=content._id %>" class="btn btn-outline-secondary"><%=content.name %></a>
- -->	            </div>
+	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+	               	</div>
+	               	<div style="padding-top: 10px;">
+	              		<a class="noSelect" href="/profile/<%= content.author.id %>">
+		                	<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+		                	<%= content.author.username%> 
+		              	</a>
+	               	</div>
 	            </div>
 	        </div>
 	    <% }); %>
 	</div>
- 	<div><%= noContents %></div>
+	<div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noLikes %>
+	</div>
 
   	<!-- ========Pagination======== -->
 
@@ -217,11 +229,18 @@
 	               	<div class="caption">
 	               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
 	               	</div>
+	               	<div style="padding-top: 8px;">
+	              		<a class="noSelect" href="/profile/<%= content.author.id %>">
+		                	<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+		                	<%= content.author.username%> 
+		              	</a>
+	               	</div>
 	            </div>
 	        </div>
 	    <% }); %>
 	</div>
-	<div><%= noContents %></div>
+	<div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noContents %>
+	</div>
 
   	<!-- ========Pagination======== -->
 

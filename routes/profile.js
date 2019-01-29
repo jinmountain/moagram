@@ -11,6 +11,8 @@ router.get('/', middleware.authCheck, (req, res) => {
 	var likeList = []; 
 	var noContents = null;
 	var noLikes = null;
+	var moreContents = null;
+	var moreLikes = null;
 
 	Content.find({_id: {$in: ids}})
 	.limit(8)
@@ -22,6 +24,9 @@ router.get('/', middleware.authCheck, (req, res) => {
         	if(likedContents < 1) {
         		noLikes = "Haven't Liked anything yet"
         	} else {
+        		if(likedContents > 8){
+        			moreLikes = 1;
+        		}
         		likeList = likedContents;
         	}	
         }
@@ -42,12 +47,20 @@ router.get('/', middleware.authCheck, (req, res) => {
 	        		if(myContents < 1) {
 	        			noContents = "Haven't shared anything yet";
 	        		}
+	        		else if(myContents > 8) {
+	        			moreContents = 1;
+	        		}
 	        		res.render('profile', 
 	        			{request: request,
 	        			 contents: likeList,
 	        			 user: userFound,
 	        			 myContents: myContents,
-	        			 noContents: noContents
+
+	        			 noContents: noContents,
+	        			 noLikes: noLikes,
+
+	        			 moreLikes: moreLikes,
+	        			 moreContents: moreContents
 	        			}
 	        		);
 	        	}
@@ -61,7 +74,7 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	var request= "contentsLiked";
 	var ids = req.user.contentLiked;
 	var likeList = []; 
-	var noContents = null;
+	var noLikes = null;
 
 	//pagination
 	var perPage = 16;
@@ -81,13 +94,13 @@ router.get('/likes', middleware.authCheck, (req, res) => {
         			console.log(err);
         		} else {
         			if (likedContents < 1) {
-		        		noContents = "Haven't liked any content";
+		        		noLikes = "Haven't liked any content";
 		        	}
 		        	res.render('profile', {
 		        		request: request,
 					 	contents: likedContents,
 		    			user: req.user,
-		    			noContents: noContents,
+		    			noLikes: noLikes,
 
 		    			current: page,    
 		                pages: Math.ceil(count / perPage),
@@ -97,31 +110,13 @@ router.get('/likes', middleware.authCheck, (req, res) => {
         		}
         	})
         }
-    });
-
-	// Content.find({_id: {$in: ids}}, function(err, likedContents){
- //        if(err){
- //            console.log(err);
- //        } else {
- //        	if (likedContents < 1) {
- //        		noContents = "Haven't liked any content";
- //        	}
- //        	res.render('profile', 
- //    			{request: request,
- //    			 contents: likedContents,
- //    			 user: req.user,
- //    			 noContents: noContents
- //    			}
- //    		)
- //        }
- //    })  
+    }); 
 });
 
 router.get("/contents", function(req, res) {
 
  	var request = "contentsCreated";
- 	var ids = req.user._id;
-	var likeList = [];  
+ 	var ids = req.user._id;  
 	var noContents = null;
 
 	//pagination
@@ -166,44 +161,171 @@ router.get("/contents", function(req, res) {
 	        });
 		}
 	});
-})
+});
 
+//==== Wall Page Backend Code ====
+//================================
 router.get("/:id", middleware.authCheck, function(req, res) {
-	var likeList = []
+	var request = "overview";
+	var likeList = []; 
 	var noContents = null;
+	var noLikes = null;
+	var moreContents = null;
+	var moreLikes = null;
 
 	User.findById(req.params.id, function(err, userFound){
 		if (err) {
 			console.log(err);
 		} else {
 			var ids = userFound.contentLiked;
-			Content.find({_id: {$in: ids}}, function(err, foundContent){
-		        if(err){
+			Content.find({_id: {$in: ids}})
+			.limit(8)
+			.sort({"createdAt": -1})
+			.exec(function(err, likedContents){
+				if(err){
 		            console.log(err);
 		        } else{
-		        	likeList = foundContent;    
+		        	if(likedContents > 8) {
+		        		moreLikes = 1;
+		        	}
+		        	likeList = likedContents;    
         		}
-        	})
+			})
 
-        	Content.find({'author.id': userFound._id}, function(err, myContents){
-	        	if(err){
+        	Content.find({'author.id': userFound._id})
+        	.limit(8)
+        	.sort({"createdAt": -1})
+        	.exec(function(err, myContents){
+        		if(err){
 	        		console.log(err);
 	        	} else{
 	        		if(myContents < 1) {
 	        			noContents = "Haven't shared anything yet"
 	        		}
+	        		else if(myContents > 8) {
+	        			moreContents = 1;
+	        		}
 	        		res.render('wall', 
-	        			{contents: likeList,
+	        			{request: request,
+	        			 contents: likeList,
 	        			 olouser: userFound,
 	        			 myContents: myContents,
-	        			 noContents: noContents
+
+	        			 noContents: noContents,
+	        			 noLikes: noLikes,
+
+	        			 moreLikes: moreLikes,
+	        			 moreContents: moreContents
 	        			}
 	        		);
-	        	}
+	        	} 	
 	        })
     	}
 	})
 });
+
+// ===== Wall Page Likes ======
+
+router.get('/:id/likes', middleware.authCheck, (req, res) => {
+
+	var request= "contentsLiked";
+	var ids = req.user.contentLiked;
+	var likeList = []; 
+	var noLikes = null;
+
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1;
+
+    User.findById(req.params.id, function(err, userFound){
+    	if(err){
+    		console.log(err);
+    	} else {
+    		var ids = userFound.contentLiked;
+
+    		Content.find({_id: {$in: ids}})
+			.sort({"createdAt": -1})
+		    .skip((perPage * page) - perPage)
+		    .limit(perPage)
+		    .exec(function(err, likedContents){
+		        if(err){
+		            console.log(err);
+		        } else {
+		        	Content.find({_id: {$in: ids}}).count().exec(function(err, count){
+		        		if(err) {
+		        			console.log(err);
+		        		} else {
+		        			if (likedContents < 1) {
+				        		noLikes = "Haven't liked any content";
+				        	}
+				        	res.render('wall', {
+				        		request: request,
+							 	contents: likedContents,
+							 	olouser: userFound,
+				    			
+				    			noLikes: noLikes,
+
+				    			current: page,    
+				                pages: Math.ceil(count / perPage),
+
+				                url: req.url
+				    		});
+		        		}
+		        	})
+		        }
+		    });
+    	}
+    }) 
+});
+
+router.get("/:id/contents", function(req, res) {
+
+ 	var request = "contentsCreated";
+ 	var ids = req.user._id;  
+	var noContents = null;
+
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1;
+
+	User.findById(req.params.id, function(err, userFound){
+		if(err){
+			console.log(err);
+		} else {
+	        Content.find({'author.id': userFound._id})
+        	.sort({"createdAt": -1})
+		    .skip((perPage * page) - perPage)
+		    .limit(perPage)
+	        .exec(function(err, myContents){
+	        	if(err){
+	        		console.log(err);
+	        	} else { 
+	        		Content.find({'author.id': userFound._id}).count().exec(function(err, count){
+	        			if(err) {
+	        				console.log(err);
+	        			} else {
+			        		if(myContents < 1) {
+			        			noContents = "Haven't shared anything yet"
+			        		}
+			        		res.render('wall', {
+								request: request,
+								olouser: userFound,
+								myContents: myContents,
+								noContents: noContents,
+
+								current: page,    
+								pages: Math.ceil(count / perPage),
+
+				                url: req.url
+			        		});
+	        			}
+	        		});
+	        	}
+	        });
+		}
+	});
+})
+
 
 //======== FOLLOW and UNFOLLOW ========
 router.post("/:id", function (req, res) {

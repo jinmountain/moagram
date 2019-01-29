@@ -301,6 +301,7 @@ router.post("/:id", function (req, res) {
                         
                         // every time someone like a post,
                         // the post is updated with newly calculated hotness
+                        var dateNow = moment();
                         var now = moment(new Date()); //todays date
                         var end = moment(foundContent.createdAt); // another date
                         var duration = moment.duration(now.diff(end));
