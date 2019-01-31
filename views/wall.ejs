@@ -31,7 +31,7 @@
       </div>
     </div>
     <form class="form-group">
-          <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs">
         <li class="nav-item">
           <a class="nav-link active" href="/profile/<%=olouser._id%>" style="font: 20px monospace;">
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-check-all-60.png"/>Overview
@@ -47,9 +47,13 @@
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">Posts
           </a>
         </li>
-          </ul>
-      </form>
- 
+        <li class="nav-item"> 
+          <a class="nav-link active" href="/profile/<%=olouser._id%>/followers" style="font: 20px monospace;">
+            <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">Followers
+          </a>
+        </li>
+      </ul>
+    </form>
   </div>  
 </header>
 
@@ -259,6 +263,75 @@
   </div>
   <div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noContents %>
   </div>
+
+  <!-- ========Pagination======== -->
+
+  <% if (pages > 0) { %>
+  <form action="/contents<%=url%>" method="GET" class="form-group">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+      <% if (current == 1) { %>
+        <li class="page-item disabled"><a class="page-link">First</a></li>
+        <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+        <% } %>
+
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+        <% if (i == current) { %>
+          <li class="page-item active"><a class="page-link"><%= i %></a></li>
+        <% } else { %>
+          <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+        <% } %>
+        
+        <% if (i == Number(current) + 4 && i < pages) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+      <% } %>
+
+      <% if (current == pages) { %>
+        <li class="page-item disabled"><a class="page-link">Last</a></li>
+        <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+      <% } %>
+      </ul>
+    </nav>
+  </form>
+  <% } %>
+<% } %>
+
+<!-- ==== FOLLOWERS ==== -->
+<% if(request == "followers"){ %>
+  <!-- ========Contents Created======== -->
+  
+    <% myFollowers.forEach(function(follower){ %>
+    <div class="row text-center" style="padding-left: 50px;">
+      <div style="padding-top: 8px;">
+        <a class="noSelect" href="/profile/<%= follower.id %>">
+          <div id="line">
+            <img style="display: inline-block;  border-radius: 50%;" src= "<%= follower.thumbnail %>" width= "80px" height= "80px" />
+          </div>
+          <div style="font-size: 30px;" id="line">
+            <%= follower.username%>
+          </div> 
+          <div style="font: 15px monospace;" id="line">
+            Number of followers: <%= follower.follower%>
+          </div>
+          <div style="font: 15px monospace;" id="line">
+            <%= follower.lastActiveTime%>
+          </div>    
+        </a>
+      </div>
+    </div>
+    <% }); %>
+  
+  <div style="font: 18px monospace; text-align: center; padding-bottom: 15px;"><%= noFollowers %>
+  </div>
+
 
   <!-- ========Pagination======== -->
 

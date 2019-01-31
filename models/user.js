@@ -21,7 +21,7 @@ var userSchema = mongoose.Schema({
 	     	ref: "Content"
 	  	}
 	],
-	lastActiveTime: Date,
+	lastActiveTime: String,
 	follower: Number,
 
 	//users you are following

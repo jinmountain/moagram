@@ -324,7 +324,54 @@ router.get("/:id/contents", function(req, res) {
 	        });
 		}
 	});
-})
+});
+
+router.get("/:id/followers", function(req, res){
+	var request = "followers";
+	var noFollowers = null;
+
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1; 
+
+    User.findById(req.params.id, function(err, userFound){
+		if(err){
+			console.log(err);
+		} else {
+			var ids = userFound.followed;
+
+			User.find({_id: {$in: ids}}).skip((perPage * page) - perPage)
+			.limit(perPage)
+			.exec(function(err, myFollowers){
+				if(err) {
+					console.log(err);
+				} else {
+					User.find({_id: {$in: ids}}).count().exec(function(err, count){
+						if(err) {
+							console.log(err);
+						} else {
+							if(myFollowers < 1){
+								noFollowers = "No followers yet";
+							}
+							res.render('wall', {
+								request: request,
+								olouser: userFound,
+
+								myFollowers: myFollowers,
+								noFollowers: noFollowers,
+
+								current: page,    
+								pages: Math.ceil(count / perPage),
+
+				                url: req.url
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+});
 
 
 //======== FOLLOW and UNFOLLOW ========

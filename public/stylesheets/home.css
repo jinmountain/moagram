@@ -1,5 +1,8 @@
 #educational {
-	
+    src: "/icons/icons8-learning-50.png"
+}
+#educational:hover {
+    src: "/icons/icons8-learning-filled-50.png"
 }
 
 /*.content{

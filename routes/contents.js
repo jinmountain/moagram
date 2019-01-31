@@ -275,7 +275,8 @@ router.post('/', function(req,res){
                 } else {
                     //when a user load a post it will update its 
                     //last active time to the current time
-                    foundUser.lastActiveTime = timeNow;
+                    foundUser.lastActiveTime = dateNow;
+                    foundUser.save();
                 }
 
             })
@@ -286,11 +287,13 @@ router.post('/', function(req,res){
 
 //======== LIKE and UNLIKE ========
 router.post("/:id", function (req, res) {
+
+    var dateNow = moment();
+
     Content.findById(req.params.id, function (err, foundContent) {
         if (err) {
             console.log(err);
         } else { 
-            
             User.findById(req.user._id, function(err, foundUser) {
                 if (err) {
                     console.log(err);
@@ -304,7 +307,8 @@ router.post("/:id", function (req, res) {
                         var dateNow = moment();
                         var now = moment(new Date()); //todays date
                         var end = moment(foundContent.createdAt); // another date
-                        var duration = moment.duration(now.diff(end));
+                        var diff = now.diff(end); //difference between now and end
+                        var duration = moment.duration(diff);
                         var hours = duration.asHours();
                         var growth = (foundContent.views*3) + (foundContent.likes*30);
                         var newHotness = (growth*30)/hours;
@@ -315,6 +319,7 @@ router.post("/:id", function (req, res) {
                         
 
                         foundUser.contentLiked.pull(foundContent._id);
+                        foundUser.lastActiveTime = dateNow;
                         foundUser.save();
 
                         req.flash("error","Successfully Unliked!");
