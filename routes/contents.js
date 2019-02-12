@@ -226,7 +226,12 @@ router.post('/', function(req,res){
         }
     }
     catch(err) {
-        var video = {}
+        var video = {
+            url: '',
+            provider: '',
+            id: ''
+        }
+
     }
 
     var category = req.body.category;

@@ -20,7 +20,7 @@
   <% } %>
 
   <% contents.forEach(function(content){ %>
-    <% if(content.video){ %>
+    
     <div class="contents row">
       <div class="col-md-6" style="padding-left: 0px; padding-right: 0px">
         <!-- ==============Index-like-button=============== -->
@@ -38,25 +38,23 @@
           </div>
 
           <!-- ==============thumnail=============== -->
-          <div class="content-thumbnail col-sm-9">
-          <% if(content.video.provider == 'youtube'){ %>
-            
-              <iframe width="235" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
-            
-          <% } else if(content.video.provider == 'twitch'){ %>
-            
+          <% if(content.video){ %>
+            <div class="content-thumbnail col-sm-9">
+            <% if(content.video.provider == 'youtube'){ %>
+                <iframe width="235" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+            <% } else if(content.video.provider == 'twitch'){ %>
               <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="235" height="135"></iframe>
-            
-          <% } %>
-         
+            <% } %>
+            </div>
           <% } else if(content.image) { %>
-            
+            <div class="content-thumbnail col-sm-9">
               <img width="235" height="135" src="<%= content.image%>">
-            
+            </div>
           <% } %>
-          </div>
+
         </div>
       </div>
+    
     <!-- ==============Title=============== -->
       <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
         <div class="content-title .col-xs-4 .col-sm-4">
@@ -97,7 +95,7 @@
         </div>
       </div>
     </div>
-    <% }); %>
+  <% }); %>
 
     <div class="content-ad"> 
       <div class="content-ad-partition">
@@ -112,24 +110,25 @@
                 <% for (var i = 0, len = sideContents.length; i < len; i++) { %>
                 <div class="contents-rec">
                   <div class="content-sidebar-info" style="margin-bottom: 0px;">
-                    <% if(sideContents[i].video){ %>
+                    <% if(sideContents[i].video.provider){ %>
                       <div class="content-sidebar-thumbnail">
-                      <% if(sideContents[i].video.provider == 'youtube'){ %>
-                        <div>
-                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                      <% } else if(sideContents[i].video.provider == 'twitch'){ %>
-                        <div>
-                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
-                        </div>
-                      <% } %>
-                      </div>
-                    <% } else if(sideContents[i].image) { %>
-                      <div class="content-sidebar-thumbnail">
-                        <img width="260" height="125" src="<%= sideContents[i].image%>">
+                        <% if(sideContents[i].video.provider == 'youtube'){ %>
+                          <div>
+                            <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
+                          </div>
+                        <% } else if(sideContents[i].video.provider == 'twitch'){ %>
+                          <div>
+                            <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                          </div>
+                        <% } else if(sideContents[i].image) { %>
+                          <img width="260" height="125" src="<%= sideContents[i].image%>"> 
+                        <% } else { %>
+                          <div>
+                            No thumbnail
+                          </div>
+                        <% } %>
                       </div>
                     <% } %>
-
                     <div class="content-sidebar-title">
                       <div>
                         <a href="/contents/<%= sideContents[i]._id %>">

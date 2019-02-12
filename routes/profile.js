@@ -163,8 +163,69 @@ router.get("/contents", function(req, res) {
 	});
 });
 
-//==== Wall Page Backend Code ====
-//================================
+router.get("/followers", function(req, res){
+	var request = "followers";
+	var noFollowers = null;
+	var id = req.user._id;
+	//pagination
+	var perPage = 16;
+    var page = req.query.page || 1; 
+    var firstSixteenFollowers = [];
+
+    User.findById(id, function(err, userFound){
+		if(err){
+			console.log(err);
+		} else {
+			var ids = userFound.followed;
+
+			User.find({_id: {$in: ids}})
+			.limit(perPage)
+			.exec(function(err, myFollowers){
+				if(err) {
+					console.log(err);
+				} else {
+					if(myFollowers < 1){
+						noFollowers = "No followers yet";
+					}
+					
+					firstSixteenFollowers = myFollowers;
+				}
+			});
+
+			User.find({_id: {$in: ids}}).skip((perPage * page))
+			.limit(perPage)
+			.exec(function(err, myFollowers){
+				if(err) {
+					console.log(err);
+				} else {
+					User.find({_id: {$in: ids}}).count().exec(function(err, count){
+						if(err) {
+							console.log(err);
+						} else {
+							res.render('profile', {
+								request: request,
+								user: userFound,
+
+								myFollowers: myFollowers,
+								firstSixteenFollowers: firstSixteenFollowers,
+								noFollowers: noFollowers,
+
+								current: page,    
+								pages: Math.ceil(count / perPage),
+
+				                url: req.url
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+});
+
+
+//==== Wall Page Backend Code Start Here====
+//==========================================
 router.get("/:id", middleware.authCheck, function(req, res) {
 	var request = "overview";
 	var likeList = []; 
@@ -326,6 +387,7 @@ router.get("/:id/contents", function(req, res) {
 	});
 });
 
+//==== Wall Followers Seciton ====
 router.get("/:id/followers", function(req, res){
 	var request = "followers";
 	var noFollowers = null;
