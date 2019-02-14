@@ -38,19 +38,19 @@
           </div>
 
           <!-- ==============thumnail=============== -->
-          <% if(content.video){ %>
-            <div class="content-thumbnail col-sm-9">
+          <div class="content-thumbnail col-sm-9">
+          <% if(content.video.provider){ %>
             <% if(content.video.provider == 'youtube'){ %>
-                <iframe width="235" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+              <iframe width="235" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
             <% } else if(content.video.provider == 'twitch'){ %>
               <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="235" height="135"></iframe>
             <% } %>
-            </div>
           <% } else if(content.image) { %>
             <div class="content-thumbnail col-sm-9">
               <img width="235" height="135" src="<%= content.image%>">
             </div>
           <% } %>
+          </div>
 
         </div>
       </div>
@@ -110,25 +110,26 @@
                 <% for (var i = 0, len = sideContents.length; i < len; i++) { %>
                 <div class="contents-rec">
                   <div class="content-sidebar-info" style="margin-bottom: 0px;">
+                    <div class="content-sidebar-thumbnail">
                     <% if(sideContents[i].video.provider){ %>
-                      <div class="content-sidebar-thumbnail">
-                        <% if(sideContents[i].video.provider == 'youtube'){ %>
-                          <div>
-                            <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
-                          </div>
-                        <% } else if(sideContents[i].video.provider == 'twitch'){ %>
-                          <div>
-                            <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
-                          </div>
-                        <% } else if(sideContents[i].image) { %>
-                          <img width="260" height="125" src="<%= sideContents[i].image%>"> 
-                        <% } else { %>
-                          <div>
-                            No thumbnail
-                          </div>
-                        <% } %>
+                      <% if(sideContents[i].video.provider == 'youtube'){ %>
+                        <div>
+                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      <% } else if(sideContents[i].video.provider == 'twitch'){ %>
+                        <div>
+                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                        </div>
+                      <% } %>
+                    <% } else if(sideContents[i].image) { %>
+                      <img width="260" height="125" src="<%= sideContents[i].image%>"> 
+                    <% } else { %>
+                      <div>
+                        No thumbnail
                       </div>
                     <% } %>
+                    </div>
+                    
                     <div class="content-sidebar-title">
                       <div>
                         <a href="/contents/<%= sideContents[i]._id %>">

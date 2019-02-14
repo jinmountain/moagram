@@ -8,8 +8,8 @@
             <% sideContents.forEach(function(slicedContent){ %>
             <div class="contents-rec">
               <div class="content-sidebar-info">
-                <% if(slicedContent.video){ %>
-                  <div class="content-sidebar-thumbnail">
+                <div class="content-sidebar-thumbnail">
+                <% if(slicedContent.video.provider){ %>
                   <% if(slicedContent.video.provider == 'youtube'){ %>
                     <div>
                       <iframe width="260" height="125" src="//www.youtube.com/embed/<%= slicedContent.video.id %>" frameborder="0" allowfullscreen></iframe>
@@ -19,12 +19,12 @@
                       <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= slicedContent.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
                     </div>
                   <% } %>
-                  </div>
                 <% } else if(slicedContent.image) { %>
                   <div class="content-sidebar-thumbnail">
                     <img width="260" height="125" src="<%= slicedContent.image%>">
                   </div>
                 <% } %>
+                </div>
 
                 <div class="content-sidebar-title">
                   <div>
