@@ -15,28 +15,28 @@
 	
 	<% if (user) { %>
 		<% if (user.lang == 'en') { %>
-			<a href="en/contents" class="btn btn-default btn-lg" >
+			<a class="responsiveText" href="en/contents" class="btn btn-default btn-lg" >
 	    		<img src="/icons/moa-picture.png" width="50px" height="50px"/>
 	    		&nbsp; Share videos and pictures you loved watching!
 	    	</a>
 		<% } else if (user.lang == 'ko') { %>
-			<a href="ko/contents" class="btn btn-default btn-lg" >
+			<a class="responsiveText" href="ko/contents" class="btn btn-default btn-lg" >
 	    		<img src="/icons/moa-picture.png" width="50px" height="50px"/>
 	    		&nbsp; 나누고 싶은 영상과 사진들을 올려주세요!
 	    	</a>
 	    <% } %>	   	
 	<% } else if (moment.locale() == 'en'){ %>
-		<a href="en/contents" class="btn btn-default btn-lg" >
+		<a class="responsiveText" href="en/contents" class="btn btn-default btn-lg" >
 			<img src="/icons/moa-picture.png" width="50px" height="50px"/>
     		&nbsp; Share videos and pictures you loved watching!
     	</a>
    	<% } else if (moment.local() == 'ko'){ %>
-			<a href="ko/contents" class="btn btn-default btn-lg" >
+		<a class="responsiveText" href="ko/contents" class="btn btn-default btn-lg" >
     		<img src="/icons/moa-picture.png" width="50px" height="50px"/>
     		&nbsp; 나누고 싶은 영상과 사진들을 올려주세요!
     	</a>
    	<% }  else { %>
-   		<a href="en/contents" class="btn btn-default btn-lg" >
+   		<a class="responsiveText" href="en/contents" class="btn btn-default btn-lg" >
 			<img src="/icons/moa-picture.png" width="50px" height="50px"/>
     		&nbsp; Share videos and pictures you loved watching!
     	</a>

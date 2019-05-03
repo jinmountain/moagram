@@ -124,5 +124,9 @@ a:hover, a:active { text-decoration: none; color:black }
 body { -webkit-text-size-adjust: none; }
 
 .breakWord { 
-  word-break: break-word; 
+  	word-break: break-word; 
 } 
+
+.responsiveText {
+	font-size: 3vw;
+}
