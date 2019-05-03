@@ -86,7 +86,7 @@ if (app.get('env') === 'development') {
 };
 
 // ======== DATABASE AND SERVER ========
-mongoose.connect(configDB.url, { useNewUrlParser: true })
+mongoose.connect(process.env.configDB_url, { useNewUrlParser: true })
 	.then(() => console.log('Connected to MongoDB...'))
 	.catch(err => console.error("could not connect to mongoDB"));
 
