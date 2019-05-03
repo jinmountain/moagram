@@ -1,3 +1,3 @@
 module.exports = {
-	'url' : 'mongodb+srv://jinmountain:jS645959#@cluster0-vcspg.mongodb.net/test?retryWrites=true'
+	'url' : 'mongodb+srv://jinmountain:jS645959@moagram-k6fw7.mongodb.net/test?retryWrites=true'
 };
