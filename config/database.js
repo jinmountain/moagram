@@ -1,3 +1,3 @@
 module.exports = {
-	'url' : 'mongodb://localhost/moagram'
+	'url' : 'mongodb+srv://jinmountain:jS645959#@cluster0-vcspg.mongodb.net/test?retryWrites=true'
 };
