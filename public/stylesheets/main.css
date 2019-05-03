@@ -22,7 +22,7 @@
 
 #btn-default{
 	border:1px solid #DADADA;
-	background-color: transparent;
+	background-color: white;
 }
 
 #search-bar {
@@ -41,8 +41,8 @@
 }
 
 #loginForm{
-	width:280px;
-	height: 300px;
+	width:320px;
+	height: 320px;
 	background-color: #fff;
 	border-radius: 5px;
 	box-shadow: 0 0 3px 0 #000;
@@ -51,6 +51,10 @@
 
 #loginForm .form-signin {
 	margin: 40px auto;
+}
+
+.roundImage {
+	border-radius: 50%;
 }
 
 #formName {
@@ -73,7 +77,13 @@
 	}
 }
 
-
+/*Center an Image*/
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 
 
 /*removing bullets on the lists*/
@@ -94,3 +104,25 @@ a:visited { text-decoration: none; color:black; }
 a:hover { text-decoration: none; color:blue; }
 a:focus { text-decoration: none; color:black; }
 a:hover, a:active { text-decoration: none; color:black }
+
+/* Paginationa style */
+/*.pagination a {
+  border-radius: 5px;
+}*/
+
+.pagination a.active {
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {background-color: #FFFFFF; border-radius: 10px; border-width: 1.5px;}
+
+/*footer text color to light gray*/
+#footer div {
+	color: #DAD9DA;
+}
+
+body { -webkit-text-size-adjust: none; }
+
+.breakWord { 
+  word-break: break-word; 
+} 

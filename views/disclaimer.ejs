@@ -1,0 +1,28 @@
+<% if (user) { %>
+	<% if (user.lang == 'en') { %>
+		<% include en/partials/header %>
+	<% } else if (user.lang == 'ko') { %>
+		<% include ko/partials/header %>
+	<% } else { %>
+		<% include en/partials/header %>
+   	<% } %>
+<% } else { %>
+	<% include en/partials/header %>
+<% } %>
+
+<link rel="stylesheet" href="/stylesheets/home.css">
+<div id="content-index">
+	
+</div>
+
+<% if (user) { %>
+	<% if (user.lang == 'en') { %>
+		<% include en/partials/footer %>
+	<% } else if (user.lang == 'ko') { %>
+		<% include ko/partials/footer %>
+	<% } else { %>
+		<% include en/partials/footer %>
+   	<% } %>
+<% } else { %>
+	<% include en/partials/footer %>
+<% } %>

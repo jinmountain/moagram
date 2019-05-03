@@ -5,9 +5,14 @@
 #content-index{
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
-/*	grid-template-rows: repeat(6, minmax(0px, auto));*/
+	grid-template-rows: repeat(12, minmax(0px, auto));
 	grid-gap: 3px;
 	margin: 10px auto;
+}
+
+.home {
+	grid-column: 4/8;
+	padding-top: 30%;
 }
 
 .contents {
@@ -16,7 +21,9 @@
 	border-bottom: 5px solid #DADADA;
 	border-left: 3px solid #DADADA;
 	background-color: white;
-	margin-top: 15px;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	max-height: 155px;
 }
 
 /*========= content ad section partition ========*/
@@ -24,7 +31,7 @@
 .content-ad {
 	border-radius: 5px;
 	grid-column: 8/10;
-	grid-row: 1/7;
+	grid-row: 1/13;
 	margin-left: 20px;
 }
 
@@ -78,7 +85,6 @@
 	padding-top: 15px; 
 /*	grid-column: 4/7;
 	grid-row: 1/2;*/
-
 }
 
 .content-infoline {
@@ -86,11 +92,11 @@
 	padding-bottom: 3px;
 /*	grid-column: 4/7;
 	grid-row: 2/3;*/
-
+	line-height: 20px;
 }
 
 /*====when screen is smaller than 1320px====*/
-@media only screen and (max-width: 1320px) {
+@media only screen and (max-width: 1220px) {
     .content-ad{
     	grid-column: 8/8;
     	display: none;
@@ -119,6 +125,10 @@
 	.content-title {
 		text-align: center; 
 		font-size: 18px;
+	}
+
+	.contents{
+		max-height: none;
 	}
 }
 
@@ -254,7 +264,7 @@ a { color: inherit; }
 }
 /*===only putting together in a line===*/
 #line {
-	display:inline;
+	display: inline;
 }
 /*================================================*/
 
@@ -266,6 +276,18 @@ a { color: inherit; }
 		grid-column: 11/11;
 		grid-row: 1/6;
 		display: none;
+	}	
+	.content-show-main {
+		grid-column: 1/11;
+		grid-row: 1/6;
+	}
+}
+
+/*========When screen < 565px==================*/
+@media only screen and (max-width: 565px) {
+    .content-mobile-rec-thumbnail .content-mobile-rec-thumbnail-iframe{
+		width: 180px;
+		height: 100px;
 	}	
 	.content-show-main {
 		grid-column: 1/11;

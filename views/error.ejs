@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>moagram</title>
+        <link rel="icon" type="image/png" href="/icons/moa-picture-favicon.png" sizes="16x16">
+        <!-- <link rel="stylesheet" href="/public/stylesheets/main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+    </head>
+    <body>  
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src=url("") width="30" height="30" alt="">CoolJamTank
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <% if (!user) { %>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/auth/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/register">Sign Up</a>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile/"> <%= user.username %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/logout">Logout</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>    
+        </nav> -->
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/content.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
+    </head>
+	
+	<body>
+		<div id='main-nav'>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="/">
+                    <img src="/icons/moa-picture.png" width="30px" height="30px"> Moagram
+                </a>    
+            </nav>
+        </div>
+		<div class="jumbotron">
+		  	<h1 class="display-4"><%= err %>, <%= message %></h1>
+	  		<hr class="my-4">
+		  	<img id="line" src="/icons/moa_mock_hunt.jpg" width="350px" height="350px"/>
+		  	<div style="padding-top: 20px;">
+		  		<a href="/" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Back to Home</a>
+		  	</div>
+		</div>
+	</body>
+
+	<script>
+	  	setTimeout(function () {
+	     	// after 2 seconds
+	     	window.location = "/";
+	  	}, 3000)
+	</script>
+</html>

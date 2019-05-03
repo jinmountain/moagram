@@ -1,21 +1,16 @@
-#educational {
-    src: "/icons/icons8-learning-50.png"
-}
-#educational:hover {
-    src: "/icons/icons8-learning-filled-50.png"
-}
 
-/*.content{
+.content{
 	padding-top: 20%;
 	text-align: center;
+	margin-bottom: 30%;
 }
 
-.content h1, .content h3{
+/*.content h1, .content h3{
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                  0px 8px 13px rgba(0,0,0,0.1),
                  0px 18px 23px rgba(0,0,0,0.1);
-}
-*/
+}*/
+
 
 /*====bj icons====*/
 /*#bjs{

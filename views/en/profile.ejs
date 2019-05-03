@@ -1,0 +1,417 @@
+<% include partials/header %>
+
+<header class="jumbotron">
+	<div class="container">
+		<div>
+			<img id="line" style="border-radius: 5px;" src= "<%= user.thumbnail %>"/>
+			<div id="verticalLine" style="font-size: 25px; padding-top: 5px; padding-left: 10px;"><%=user.username%></div>
+			<div style="color: #000000;" id="line"><%= user.status %></div>
+		</div>
+		<div style="padding-top: 15px;">
+			<div style="color: #7C7F81;">
+				<div id="line" style="font-size: 18px">Number of followers: </div> 
+				<div style="color: #000000;" id="line"><%= user.follower %></div>
+			</div>
+			<div style="padding-bottom: 10px; color: #7C7F81; font-size: 18px;">
+				<div id="line">e-mail:</div>
+				<div style="color: #000000;" id="line"><%= user.email %></div>
+			</div>
+		</div>
+		<form class="form-group">
+	        <ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link active" href="/en/profile" style="font-size: 20px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-check-all-60.png"/>Overview
+					</a>
+				</li>
+				<li class="nav-item"> 
+					<a class="nav-link active" href="/en/profile/likes" style="font-size: 20px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-good-quality-60.png">Likes
+					</a>
+				</li>
+				<li class="nav-item"> 
+					<a class="nav-link active" href="/en/profile/contents" style="font-size: 20px;">
+						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">Posts
+					</a>
+				</li>
+				<li class="nav-item"> 
+		          	<a class="nav-link active" href="/en/profile/following" style="font-size: 20px;">
+		            	<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-checked-user-male-48.png">Following
+		          	</a>
+		        </li>
+	        </ul>
+	  	</form>
+
+	  	<% if(request == "contentsLiked"){ %>
+			<form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+		    </form>
+		<% } %>
+
+		<% if(request == "contentsCreated"){ %>
+			<!-- <form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="profileContentSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/profile/contents/search/'+ document.getElementsByName('profileContentSearch')[0].value; document.getElementsByName('profileContentSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2">
+		    </form> -->
+		    <form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+		    </form>
+		<% } %>
+
+		<% if(request == "followers"){ %>
+			<form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+		    </form>
+		<% } %>
+  	</div>
+</header>
+
+<div>
+<!-- ==== OVERVIEW ===== -->
+<% if(request == "overview"){ %>
+
+	<!-- ========Content Liked======== -->
+	<div style="text-align: center; padding-bottom: 10px; font-size: 20px;">Contents you liked</div>
+	<div id="profile"></div>
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+	    <% contents.forEach(function(content){ %>
+	        <div class="col-md-3 col-sm-6" >
+	            <div class="thumbnail" id="profile-content-thumbnail">
+               	<% if(content.video.provider){ %>
+		            <div>
+	            	<% if(content.video.provider == 'youtube'){ %>
+                      	<div>
+                        	<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+                      	</div>
+                    <% } else if(content.video.provider == 'twitch'){ %>
+                      	<div>
+                        	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+                      	</div>
+                    <% } %>
+		            </div>
+          		<% } else if (content.image){ %>
+          			<a href="/en/contents/<%=content._id %>">
+      					<img width="180" height="100" src="<%= content.image%>"> 
+      				</a>
+          		<% } %>
+          		</div>
+               	<div class="caption breakWord">
+               		<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
+               	</div>
+               	<div class="breakWord" style="padding-top: 5px;">
+	              	<a class="noSelect" href="/en/profile/<%= content.author.id %>">
+	                	<div style="font-size: 15px; color: #7C7F81;">
+	                		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+	                		<%= content.author.username%> 
+	                	</div> 
+	              	</a>
+               	</div>
+	        </div>
+	    <% }); %>
+	</div>
+	<div style="font-size: 16px; text-align: center; padding-bottom: 15px;"><%= noLikes %>
+	</div>
+
+	<% if (moreLikes == 1) {%>
+	<div style="text-align: center; font-size: 15px;">
+		<a class="btn btn-default" id="btn-default" href="/en/profile/likes" role="button">More</a>
+	</div>
+	<% } %>
+
+	<hr>
+
+	<!-- ========Contents Created======== -->
+	<div style="text-align: center; padding-bottom: 15px; font-size: 20px;">Contents you shared</div>
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+	    <% myContents.forEach(function(content){ %>
+	        <div class="col-md-3 col-sm-6">
+	            <div class="thumbnail" id="profile-content-thumbnail">
+	          	<% if(content.video.provider){ %>
+	            	<% if(content.video.provider == 'youtube'){ %>
+	                  	<div>
+	                		<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+	                  	</div>
+	                <% } else if(content.video.provider == 'twitch'){ %>
+	                  	<div>
+	                    	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+	                  	</div>
+	                <% } %>  
+	      		<% } else if(content.image){ %>
+      				<a href="/en/contents/<%=content._id %>">
+      					<img width="180" height="100" src="<%= content.image %>"> 
+      				</a> 
+	      		<% } %>
+		      	</div>
+               	<div class="caption breakWord">
+               		<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
+               	</div>
+               	<div class="breakWord" style="padding-top: 5px;">
+              		<a class="noSelect" href="/en/profile/<%= content.author.id %>">
+              			<div style="font-size: 15px; color: #7C7F81;">
+	                		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+	                	<%= content.author.username%> 
+	                	</div>
+	              	</a>
+               	</div>
+	        </div>
+	    <% }); %>
+	</div>
+	<div style="font-size: 16px; text-align: center; padding-bottom: 15px;"><%= noContents %>
+	</div>
+	
+	<% if (moreContents == 1) {%>
+	<div style="text-align: center; font-size: 15px;">
+		<a class="btn btn-default" id="btn-default" href="/en/profile/contents" role="button">More</a>
+	</div>
+	<% } %>
+	<hr>
+<% } %>
+
+<!-- ==== LIKES ==== -->
+<% if(request == "contentsLiked"){ %>
+	<!-- ========Content Liked======== -->
+	<div style="text-align: center; padding-bottom: 10px; font-size: 20px;">Contents you liked</div>
+	<div id="profile"></div>
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+	    <% contents.forEach(function(content){ %>
+	        <div class="col-md-3 col-sm-6">
+		        <div class="thumbnail" id="profile-content-thumbnail">
+		        <% if(content.video.provider){ %>
+		          <% if(content.video.provider == 'youtube'){ %>
+		            <div>
+		              	<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+		            </div>
+		          <% } else if(content.video.provider == 'twitch'){ %>
+		            <div>
+		              	<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+		            </div>
+		          <% } %>
+		        <% } else if(content.image) {%>
+		          	<a href="/en/contents/<%=content._id %>">
+		            	<img width="180" height="100" src="<%= content.image%>"> 
+		          	</a>
+		        <% } %>
+		        </div>
+		        <div class="caption breakWord">
+		          	<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
+		        </div>
+		        <div class="breakWord" style="padding-top: 5px;">
+					<a class="noSelect" href="/en/profile/<%= content.author.id %>">
+						<div style="font-size: 15px; color: #7C7F81;">
+					  		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+							<%= content.author.username%> 
+						</div>
+					</a>
+		        </div>
+			</div>
+	    <% }); %>
+	</div>
+	<div style="font-size: 16px; text-align: center; padding-bottom: 15px;"><%= noLikes %>
+	</div>
+	
+  	<!-- ========Pagination======== -->
+
+	<% if (pages > 0) { %>
+		<form action="/en/contents<%=url%>" method="GET" class="form-group">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+				<% if (current == 1) { %>
+					<li class="page-item disabled"><a class="page-link">First</a></li>
+					<% } else { %>
+					<li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+					<% } %>
+
+					<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+					<% if (i !== 1) { %>
+					<li class="page-item disabled"><a class="page-link">...</a></li>
+					<% } %>
+
+					<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+					<% if (i == current) { %>
+				  	<li class="page-item active"><a class="page-link"><%= i %></a></li>
+					<% } else { %>
+					  <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+					<% } %>
+					
+					<% if (i == Number(current) + 4 && i < pages) { %>
+					  <li class="page-item disabled"><a class="page-link">...</a></li>
+					<% } %>
+				<% } %>
+
+				<% if (current == pages) { %>
+					<li class="page-item disabled"><a class="page-link">Last</a></li>
+					<% } else { %>
+					<li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+				<% } %>
+				</ul>
+			</nav>
+		</form>
+	<% } %>
+	<hr>
+<% } %>
+
+
+<!-- ==== CONTENTS ==== -->
+<% if(request == "contentsCreated"){ %>
+	<!-- ========Contents Created======== -->
+	<div style="text-align: center; padding-bottom: 15px; font-size: 20px;">Contents you shared</div>
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+	    <% myContents.forEach(function(content){ %>
+	        <div class="col-md-3 col-sm-6">
+		        <div class="thumbnail" id="profile-content-thumbnail">
+		        <% if(content.video.provider){ %>
+		          	<% if(content.video.provider == 'youtube'){ %>
+		            	<div>
+		              		<iframe width="180" height="100" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+		            	</div>
+		          	<% } else if(content.video.provider == 'twitch'){ %>
+		            	<div>
+		              		<iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="180" height="100"></iframe>
+		            	</div>
+		          	<% } %>
+		        <% } else if(content.image) {%>
+		          	<a href="/en/contents/<%=content._id %>">
+		            	<img width="180" height="100" src="<%= content.image %>"> 
+		          	</a>
+		        <% } %>
+		        </div>
+		        <div class="caption breakWord">
+		          	<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
+		        </div>
+		        <div class="breakWord" style="padding-top: 5px;">
+					<a class="noSelect" href="/en/profile/<%= content.author.id %>">
+						<div style="font-size: 15px; color: #7C7F81;">
+					  		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+							<%= content.author.username%> 
+						</div>
+					</a>
+		        </div>
+			</div>
+	    <% }); %>
+	</div>
+	<div style="font-size: 16px; text-align: center; padding-bottom: 15px;"><%= noContents %>
+	</div>
+
+  	<!-- ========Pagination======== -->
+
+	<% if (pages > 0) { %>
+		<form action="/en/contents<%=url%>" method="GET" class="form-group">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+				<% if (current == 1) { %>
+					<li class="page-item disabled"><a class="page-link">First</a></li>
+					<% } else { %>
+					<li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+					<% } %>
+
+					<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+					<% if (i !== 1) { %>
+					<li class="page-item disabled"><a class="page-link">...</a></li>
+					<% } %>
+
+					<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+					<% if (i == current) { %>
+				  	<li class="page-item active"><a class="page-link"><%= i %></a></li>
+					<% } else { %>
+					  <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+					<% } %>
+					
+					<% if (i == Number(current) + 4 && i < pages) { %>
+					  <li class="page-item disabled"><a class="page-link">...</a></li>
+					<% } %>
+				<% } %>
+
+				<% if (current == pages) { %>
+					<li class="page-item disabled"><a class="page-link">Last</a></li>
+					<% } else { %>
+					<li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+				<% } %>
+				</ul>
+			</nav>
+		</form>
+	<% } %>
+	<hr>
+<% } %>
+	
+
+<!-- ==== Followings ==== -->
+
+<% if(request == "following"){ %>
+	<div id="followerBox">
+		<div class="followerBoxInfo">
+			<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+				<% myFollowings.forEach(function(following){ %>
+					<div class="col-md-6 col-sm-6">
+					  	<div class="followerIndex">
+				          	<div class="followerUsername">
+				          		<a href="/en/profile/<%= following.id %>">
+				          			<img id="line" style="display: inline-block;  border-radius: 50%;" src= "<%= following.thumbnail %>" width= "30px" height= "30px" />
+				            		<div id="line" style="font-size: 20px;">
+				            			<%= following.username %>
+				            		</div>
+				            		
+				            	</a>
+				            </div>	
+				            <div class="followerInfo breakWord">
+				            	<a href="/en/profile/<%= following.id %>">
+					            	<div style="font-size: 18px; color: #7C7F81;">
+				           				Number of followers: <%= following.follower%>
+						          	</div>
+						          	<div style="font-size: 18px; color: #7C7F81;">
+						            	<%= moment(following.lastActiveTime).format('LL'); %>
+						          	</div> 
+						        </a>  	
+				            </div>
+					    </div>
+					</div>
+			    <% }); %>
+			</div>
+		</div>
+	</div>			
+
+	<div style="font-size: 16px; text-align: center; padding-bottom: 15px;"><%= noFollowings %>
+	</div>
+
+
+  	<!-- ========Pagination======== -->
+
+	<% if (pages > 0) { %>
+		<form action="/en/contents<%=url%>" method="GET" class="form-group">
+			<nav aria-label="Page navigation example">
+			  	<ul class="pagination justify-content-center">
+				  	<% if (current == 1) { %>
+				    	<li class="page-item disabled"><a class="page-link">First</a></li>
+			    	<% } else { %>
+				    	<li class="page-item"><button class="page-link" name="page" value="1">First</button></li>
+				    <% } %>
+
+				    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+				    <% if (i !== 1) { %>
+				    	<li class="page-item disabled"><a class="page-link">...</a></li>
+				    <% } %>
+
+				    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+				    	<% if (i == current) { %>
+				      		<li class="page-item active"><a class="page-link"><%= i %></a></li>
+				    	<% } else { %>
+				      		<li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+				    	<% } %>
+				    
+				    	<% if (i == Number(current) + 4 && i < pages) { %>
+				      		<li class="page-item disabled"><a class="page-link">...</a></li>
+				    	<% } %>
+		 		 	<% } %>
+
+				  	<% if (current == pages) { %>
+					    <li class="page-item disabled"><a class="page-link">Last</a></li>
+				    <% } else { %>
+					    <li class="page-item"><button class="page-link" name="page" value="<%= pages %>">Last</button></li>
+				  	<% } %>
+			  	</ul>
+			</nav>
+		</form>
+	<% } %> 
+	<hr>
+<% } %>
+	
+
+<% include partials/footer %>

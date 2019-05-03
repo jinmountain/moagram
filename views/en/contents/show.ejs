@@ -1,0 +1,271 @@
+<% include ../partials/header %>
+  <div id="content-show">
+    <div class="content-show-sidebar">
+      <form action="/en/contents" method="GET" class="form-group">
+        <div class="list-group" style="max-width: 260px;">
+          <h5 style="text-align: center; border-bottom: 1px solid #DADADA; padding-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-r-52.png"/>ECENT <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
+          <li class="list-group-item" id="content-show-rec-list">
+            <% sideContents.forEach(function(slicedContent){ %>
+            <div class="contents-rec">
+              <div class="content-sidebar-info">
+                <div class="content-sidebar-thumbnail">
+                <% if(slicedContent.video.provider){ %>
+                  <% if(slicedContent.video.provider == 'youtube'){ %>
+                    <div>
+                      <iframe width="260" height="125" src="//www.youtube.com/embed/<%= slicedContent.video.id %>" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                  <% } else if(slicedContent.video.provider == 'twitch'){ %>
+                    <div>
+                      <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= slicedContent.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                    </div>
+                  <% } %>
+                <% } else if(slicedContent.image) { %>
+                  <div class="content-sidebar-thumbnail">
+                    <img width="260" height="125" src="<%= slicedContent.image %>">
+                  </div>
+                <% } %>
+                </div>
+
+                <div class="content-sidebar-title breakWord">
+                  <div>
+                    <a style="font-size: 18px;" href="/en/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
+                  </div>
+                  <div>
+                    <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" />
+                    <a style="font-size: 15px;" href="/en/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                  </div>
+                </div>
+                <div class="content-sidebar-infoline" style="font-size: 13px;">
+                  <div id="show-sidebar-vertical-group">
+                    <div id="verticalLine"> 
+                      <% if(slicedContent.views > 1000) { %>
+                      views <%= Math.floor(slicedContent.views/1000) %>K 
+                      <% } else { %>
+                      views <%= slicedContent.views %> 
+                      <% } %>
+                      | 
+                      <!-- Momentjs Ago --> 
+                      <%= moment(slicedContent.date).fromNow()%>
+                    </div>
+                    <div id="line">
+                      <!-- DISQUS Comments Count -->
+                      &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>Comments
+                    </div>
+                  </div>
+                </div>     
+              </div>          
+            </div>
+            <% }); %>
+          </li>
+        </div>
+      </form>
+    </div>
+
+    <div class="content-show-main">
+      <div class="content-show-main-info">
+        <div class="content-show-main-header">
+          <ul style="padding-left: 10px;">
+
+            <li>
+              <!-- Author of the content -->
+              <div id="verticalLine">
+                Posted By <a href="/en/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
+              </div>
+
+              <!-- Follow button -->
+              <% if(content.author.id != user.id) { %>
+              <form id="verticalLine" action="/en/profile/<%=content.author.id%>" method="POST">
+                                      
+              <%if (user.following.indexOf(content.author.id) != -1) { %>
+                <button class="btn btn-default btn-sm" id="btn-default"><h6>Unfollow</h6></button>
+
+                
+              <% } else { %>
+                <button class="btn btn-default btn-sm" id="btn-default"><h6>Follow
+                </button></h6>
+              <% } %>
+              </form>
+              <% } %> 
+
+              <div id="verticalLine">
+                <% if(contentAuthor.follower > 1000) { %>
+                <%= contentAuthor.follower/1000 %> K followers
+                <% } else { %>
+                <%= contentAuthor.follower %> followers
+                <% } %>
+              </div>
+            </li>
+            <li>
+              <form id="verticalLine" action="/en/contents/category/<%=content.category%>" method="GET">
+                <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
+                  <h6><%= content.category %></h6>
+                </button>
+              </form>
+              <div id="verticalLine">
+                <% if(content.views > 1000) { %>
+                views <%= Math.floor(content.views/1000) %>K 
+                <% } else { %>
+                views <%= content.views %> 
+                <% } %>
+              </div>
+              
+              <div id="verticalLine"><%= moment(content.date).format('LLLL'); %></div>
+            </li>
+          </ul>
+
+          <div class="breakWord" id="content-show-name">
+            <div id="line">
+              <%=content.name%>
+            </div>
+            <!-- ================================================================= -->
+            <!-- Show "New" sign when the content is created in less than 24 hours -->
+            <!-- ================================================================= -->
+            <% var end = Date.now(); %>
+            <% var start = content.createdAt; %>
+            <% var elapsed = end - start; %>
+            <% var difference = new Date(elapsed); %>
+            <% var diff_hours = elapsed / (60*60*1000);%>
+
+            <% if (diff_hours < 24) { %>
+              <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+            <% } %>
+          </div>
+          <hr>
+        </div>
+
+        <!-- ================== contents show ============================== -->
+
+        <div class="content-show-main-thumbnail">
+        <% if(content.image) { %>
+          <img id="show-main-thumbnail" width="580" height="350" style=" padding: 5px;" class="img-responsive" src="<%= content.image %>">
+        <% } %>
+
+        <% if(content.video.provider == 'youtube'){ %>
+          <div>
+            <iframe id="show-main-thumbnail" width="580" height="350" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+          </div>
+        <% } else if(content.video.provider == 'twitch'){ %>
+          <div>
+            <iframe id="show-main-thumbnail" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="580" height="350"></iframe>
+          </div>
+        <% } %>
+          <div>
+          <%- content.description %>
+          </div>
+          
+          <div>
+            <form action="/en/contents/<%=content._id%>" method="POST">
+                
+                <%if (user.contentLiked.indexOf(content._id) != -1) { %>
+                    <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/><%= content.likes %></button>
+
+                    
+                <% } else { %>
+                    <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/><%= content.likes %>
+                    </button>
+                <% } %>
+            </form>
+            <% if(user && content.author.id.equals(user._id)){ %>
+              <form style="display: inline" class="pull-right" action="/en/contents/<%=content._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-default btn-sm" id="btn-default" 
+                  onclick="return confirm('Are you sure you want to delete <%= content.name %> ?');">DELETE
+                </button>
+                <a class="btn btn-default btn-sm" id="btn-default" href="/en/contents/<%= content._id %>/edit">Edit content</a>                       
+              </form>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- mobile size page rec contents -->
+        <div class="content-show-mobile-rec">
+          <form action="/en/contents" method="GET" class="form-group">
+            <div class="list-group">
+              <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">RECENT POSTS</h5>
+              <li class="list-group-item" id="content-show-rec-list">
+                <% sideContents.forEach(function(slicedContent){ %>
+                <div class="content-mobile-rec" href="/contents/<%= slicedContent._id %>" >
+                  <div class="content-mobile-rec-info">
+                    
+                    <div class="content-mobile-rec-thumbnail">
+                    <% if(slicedContent.video.provider){ %>
+                      <% if(slicedContent.video.provider == 'youtube'){ %>
+                        <div>
+                          <iframe class="content-mobile-rec-thumbnail-iframe" width="260" height="125" src="//www.youtube.com/embed/<%= slicedContent.video.id %>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      <% } else if(slicedContent.video.provider == 'twitch'){ %>
+                        <div>
+                          <iframe class="content-mobile-rec-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= slicedContent.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
+                        </div>
+                      <% } %>
+                    <% } else if(slicedContent.image) { %>
+                      <img class="content-mobile-rec-thumbnail-iframe" width="260" height="125" src="<%= slicedContent.image %>">
+                    <% } %>
+                    </div>
+                    
+
+                    <div class="content-mobile-rec-title breakWord">
+                      <div>
+                        <a style="font-size: 18px;" href="/en/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
+                      </div>
+                      <div>
+                        <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" /> 
+                        <a style="font-size: 15px;" href="/en/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                      </div>
+                    </div>
+                    <div class="content-mobile-rec-infoline">
+                      <!-- Momentjs Ago --> 
+                      <div id="show-mobile-rec-vertical-group">
+                        <div> 
+                          <% if(slicedContent.views > 1000) { %>
+                          views <%= Math.floor(slicedContent.views/1000) %>K 
+                          <% } else { %>
+                          views <%= slicedContent.views %> 
+                          <% } %>
+                          | 
+                          <%= moment(slicedContent.date).fromNow()%>
+                        </div>
+
+                        <div id="verticalLine">
+                          <img style="max-width: 30px; max-height: 30px;" 
+                        src="/icons/like.png" /> <%= slicedContent.likes %>
+                        </div>
+                        <div id="line">
+                          <!-- DISQUS Comments Count -->
+                          &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>Comments
+                        </div>
+                      </div>
+                    </div>     
+                  </div>          
+                </div>
+                <% }); %>
+              </li>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="disqus_thread"></div>
+
+      <script>
+      /**
+      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+      
+      var disqus_config = function () {
+      // this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          var pageId = "<%= content._id %>";
+          this.page.identifier = pageId;
+          DISQUSWIDGETS.getCount({reset: true});
+       // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://<%=shortname%>.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+
+      </script>
+    </div>
+  </div>
+<% include ../partials/footer %>

@@ -6,32 +6,39 @@ const bodyParser = require('body-parser');
 const User = require("../models/user");
 
 router.get('/login', (req, res) => {
-	res.render('login');
+    if(req.query.language){
+        if(req.query.language == "en"){
+            res.render('en/login');
+        } else if(req.query.language == "ko"){
+            res.render('ko/login');
+        } else {
+            res.render('en/login');
+        }
+    } else {
+        res.render('en/login');
+    }
 });
-
-// process the login form
-router.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/contents', // redirect to the secure profile section
-    failureRedirect : '/login', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-}));
-
-router.get('/register', (req, res) => {
-	res.render('register');
-});
-
-router.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/login', // redirect to the secure profile section
-    failureRedirect : '/register', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-}));
 
 // =====================================
 // LOGOUT ==============================
 // =====================================
 router.get('/logout', (req, res) => {
-	req.logout();
-    req.flash("success", "LOGGED YOU OUT!");
+    if (req.user.lang == 'en'){
+        req.logout();
+        req.flash("success", "Logged You Out :D");
+    } else if (req.user.lang == 'ko'){
+        req.logout();
+        req.flash("success", "로그아웃 되었습니다 :D");
+    } else if (moment.locale() == 'en'){
+        req.logout();
+        req.flash("success", "Logged You Out :D");
+    } else if (moment.locale() == 'ko'){
+        req.logout();
+        req.flash("success", "로그아웃 되었습니다 :D");
+    } else {
+        req.logout();
+        req.flash("success", "Logged You Out :D");
+    }
 	res.redirect('/');
 });
 
@@ -42,8 +49,17 @@ router.get('/google', passport.authenticate('google', {
 
 //callback route for google to redirect to 
 router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
-    backURL=req.header('Referer') || '/';
-    res.redirect(backURL);
+    // backURL = req.header('Referer') || '/';
+    // res.redirec(backURL);
+    if (req.user.lang){
+    	res.redirect('/' + req.user.lang + '/contents');
+    } else if (moment.locale() == 'en'){
+        res.redirect('/en/contents');
+    } else if (moment.locale() == 'ko'){
+    	res.redirect('/ko/contents');
+    } else {
+        res.redirect('/en/contents');
+    }
 });
 
 module.exports = router;

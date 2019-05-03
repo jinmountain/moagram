@@ -5,7 +5,7 @@ const Content = require("../models/content");
 
 module.exports = {
   // Require a user to login
-	authCheck: (req, res, next) => {
+	authCheck: function(req, res, next){
 	    if(!req.user){
 	        // if user is not looged in
 	        res.redirect('/auth/login');
@@ -16,36 +16,38 @@ module.exports = {
 	},
   // Verify ownership of a content
 	checkUserContent: function(req, res, next){
-        if(req.user){
-            Content.findById(req.params.id, function(err, content){
-               if(content.author.id.equals(req.user._id)){
-                   next();
-               } else {
-                   req.flash("error", "You don't have permission to do that!");
-                   console.log("BADD!!!");
-                   res.redirect("/contents/" + req.params.id);
-               }
-            });
+    if(req.user){
+      Content.findById(req.params.id, function(err, content){
+        if(err){
+          req.flash("error", "Unauthorized Access");
+          res.redirect("back");
+        } else if(content.author.id.equals(req.user._id)){
+          next();
         } else {
-            req.flash("error", "You need to be signed in to do that!");
-            res.redirect("/login");
+          req.flash("error", "You don't have permission");
+          console.log("error");
+          res.redirect("/contents/" + req.params.id);
         }
-    },
+      });
+    } else {
+        req.flash("error", "You need to be signed in to do that!");
+        res.redirect("/login");
+    }
+  },
   // Verify ownership of a comment
   checkUserComment: function(req, res, next){
-      console.log("YOU MADE IT!");
-      if(req.user){
-          Comment.findById(req.params.commentId, function(err, comment){
-             if(comment.author.id.equals(req.user._id)){
-                 next();
-             } else {
-                 req.flash("error", "You don't have permission to do that!");
-                 res.redirect("/contents/" + req.params.id);
-             }
-          });
-      } else {
-          req.flash("error", "You need to be signed in to do that!");
-          res.redirect("login");
-      }
+    if(req.user){
+      Comment.findById(req.params.commentId, function(err, comment){
+        if(comment.author.id.equals(req.user._id)){
+          next();
+        } else {
+          req.flash("error", "You don't have permission");
+          res.redirect("/contents/" + req.params.id);
+        }
+      });
+    } else {
+      req.flash("error", "You need to be signed in");
+      res.redirect("/login");
+    }
   }
 }

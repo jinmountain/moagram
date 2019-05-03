@@ -1,0 +1,152 @@
+<% include ../partials/header %>
+    <div class="container">
+        <h2 style="text-align: center">Update <%= content.name %></h2>
+        <div style="width: 60%; margin: 25px auto;">
+            <form action="/en/contents/<%=content._id%>?_method=PUT" method="POST">
+                <label for="contentName">Title</label>
+                <div id="contentName" class="form-group">
+                    <input class="form-control" type="text" name="name" value="<%= content.name %>">
+                </div>
+                <label for="contentImage">Image URL</label>
+                <div id="contentImage" class="form-group">
+                    <input class="form-control" type="text" name="image" value="<%= content.image %>">
+                </div>
+                <label for="contentVideo">Video URL</label>
+                <div id="contentVideo" class="form-group">
+                    <input class="form-control" type="text" name="video" value="<%= content.video.url %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="ctg">Select Category</label>
+                    <select class="form-control" id="ctg" name="category">
+                        <optgroup label="Catergory of your video">
+                            <% if(content.category == "educational"){ %>
+                                <option selected value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "fitness"){ %>
+                                <option value="educational">Educational</option>
+                                <option selected value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "motivation"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option selected value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "music"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option selected value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "beauty"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option selected value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "gaming"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option selected value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "vlog"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option selected value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "animal"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option selected value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "others"){ %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option selected value="other">Others</option>
+                            <% } else { %>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="others">Others</option>
+                            <% } %>
+                        </optgroup>
+                    </select>                   
+                </div>
+                                
+                <div class="form-group">
+                    <textarea id="editor" type="text" name="description">
+                        <%= content.description %>
+                    </textarea>
+                </div>
+
+                <script>
+                    CKEDITOR.replace('editor');
+                    
+                    // editor.setData(description);
+                    // CKEDITOR.instances.editor.setData("content.description");
+                    
+                </script>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Update</button>
+                </div>
+            </form>
+            <div class="text-right">
+                <a href="/en/contents" class="btn btn-default btn-sm" id="btn-default">Go Back</a>
+            </div>
+        </div>
+    </div>
+<% include ../partials/footer %>
+

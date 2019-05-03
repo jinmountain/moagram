@@ -1,0 +1,58 @@
+<% include partials/header %>
+
+<div class="container">
+  <h2 style="text-align: center">Profile Setting</h1>
+  <div style="width: 60%; margin: 25px auto; max-width: 500px">
+    <form action="/en/profile/?_method=PUT" method="POST">
+      <div id="emailSetting" class="form-group">
+        <label for="emailSetting">Email Privacy Setting</label>
+        <select class="form-control" id="emailSetting" name="emailSetting">
+          <% if(user.emailPrivacy == "public") { %>
+            <optgroup label="Email Privacy Setting">
+              <option selected value="public">Public</option>
+              <option value="private">Private</option>
+            </optgroup>
+          <% } else { %>
+            <optgroup label="Email Privacy Setting">
+              <option value="public">Public</option>
+              <option selected value="private">Private</option>
+            </optgroup>
+          <% } %>
+        </select>                    
+      </div>
+      <div id="languageSetting" class="form-group">
+        <label for="languageSetting">Language Setting</label>
+        <select class="form-control" id="languageSetting" name="languageSetting">
+          <% if(user.lang == "en") { %>
+            <optgroup label="Language Setting">
+              <option selected value="en">English</option>
+              <option value="ko">한국어</option>
+            </optgroup>
+          <% } else if(user.lang == 'ko') { %>
+            <optgroup label="Language Setting">
+              <option value="en">English</option>
+              <option selected value="ko">한국어</option>
+            </optgroup>
+          <% } else { %>
+            <optgroup label="Language Setting">
+              <option value="en">English</option>
+              <option value="ko">한국어</option>
+            </optgroup>
+          <% } %>
+        </select>                    
+      </div>
+      <label for="status">Status Message</label>
+      <div id="status" class="form-group">
+          <textarea class="form-control" type="text" name="status"><%= user.status %></textarea>
+      </div> 
+      <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block">Submit</button>
+      </div>
+    </form>
+    <div class="text-right">
+        <a class="btn btn-default btn-sm" id="btn-default" href="/en/contents">Back</a>
+    </div>
+  </div>
+</div>
+
+<% include partials/footer %>

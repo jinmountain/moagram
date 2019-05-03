@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="youtube, twitch, videos, creators, bj, 인방, 유튜브, 트위치, 동영상">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>moagram</title>
+
+        <link rel="icon" type="image/png" href="/icons/moa-picture-favicon.png" sizes="16x16">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/content.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
+        
+    </head>
+    <body>
+        <div id='main-nav'>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="/">
+                    <img src="/icons/moa-picture.png" width="30px" height="30px"> Moagram
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> 
+                        <li class="nav-item dropdown d-lg-none">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h5><strong>MOA</strong></h5></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/en/contents"><h6><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h6></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/en/contents/popular"><h6><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> Popular</h6>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/en/contents/new"><h6><img style="width: 15px; height: 15px;" src="/icons/icons8-c-52.png"/>REATE <img style="width: 15px; height: 15px;" src="/icons/icons8-p-52.png"/>OST <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown d-none d-lg-block">
+                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="margin-bottom: 0px;">MOA</h5></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/en/contents"><h5><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h5></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/en/contents/popular"><h5 style="margin-bottom: 0px;"><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> Popular</h5>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item" id="main-nav-item">
+        <!-- Responsive Icons -->
+        <!-- <div class="d-lg-none">hide on screens wider than lg</div>
+        <div class="d-none d-lg-block">hide on screens smaller than lg</div> -->
+                            <a class="btn btn-default btn-sm d-none d-lg-block" id="btn-default" href="/en/contents/new"><h5 style="margin-bottom: 0px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-c-52.png"/>REATE <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OST <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h5>
+                            </a>
+                        </li>
+                        
+                        <!-- ======== Search bar ======== -->
+
+                    </ul>
+                    
+                    <% if(user){ %>
+                        <form style="padding-right: 30px;" class="form-inline" >
+                        
+                            <!-- ======== Old Search bar ======== -->
+                            <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
+
+                            <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+
+                        </form>
+                    <% } %> 
+                    
+                    <% if (!user) { %>
+                        <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />Login</a>
+                        <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> Login in with Google </a>
+
+                    <% } else { %>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img style="border-radius: 5px;" src= "<%= user.thumbnail %>" width= "45px" height= "45px" />
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="nav-link" href="/en/profile"> 
+                                    <strong><%= user.username %></strong>
+                                </a>
+                                 
+                                <a class="nav-link" href="/en/profile/setting"> 
+                                    <strong>Setting</strong>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link" href="/auth/logout"><h6>Logout</h6></a>
+                            </div>
+                        </div>                 
+                    <% } %>
+                </div>             
+            </nav>
+        </div>
+
+        <div id="ctg-nav">
+          <form action="/en/contents/category" method="GET" class="form-group">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents"><img height="35" width="35" id="cat-icons" src="/icons/icons8-check-all-60.png"/> All</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents" name="category" value="educational"><img height="35" width="35" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational</a>
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link active" href="/en/contents/category/fitness" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness</a>
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link active" href="/en/contents/category/motivational" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents/category/music" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music</a>
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link active" href="/en/contents/category/beauty" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents/category/gaming" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents/category/vlog" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents/category/animal" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/en/contents/category/others" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-xd-50.png"/>
+                    Others
+                </a>
+              </li>
+            </ul>
+          </form>
+        </div>
+
+        <!-- ========flash npm======== -->
+        <div class="flash-box">
+            <% if(error && error.length > 0) { %>
+                <div style="text-align: center;" class="alert alert-danger"><p><%=error %></p></div>
+            <% } %>
+
+            <% if(success && success.length > 0) { %>
+                <div style="text-align: center;" class="alert alert-success"><p><%= success %></p></div>
+            <% } %>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- =====ckeditor====== -->
+        <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>

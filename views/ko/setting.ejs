@@ -1,0 +1,58 @@
+<% include partials/header %>
+
+<div class="container">
+  <h2 style="text-align: center">프로필 설정</h1>
+  <div style="width: 60%; margin: 25px auto; max-width: 500px">
+    <form action="/ko/profile/?_method=PUT" method="POST">
+      <div id="emailSetting" class="form-group">
+        <label for="emailSetting">이메일 주소 공개설정</label>
+        <select class="form-control" id="emailSetting" name="emailSetting">
+          <% if(user.emailPrivacy == "public") { %>
+            <optgroup label="이메일 주소 공개설정">
+              <option selected value="public">공개</option>
+              <option value="private">비공개</option>
+            </optgroup>
+          <% } else { %>
+            <optgroup label="Email Privacy Setting">
+              <option value="public">공개</option>
+              <option selected value="private">비공개</option>
+            </optgroup>
+          <% } %>
+        </select>                    
+      </div>
+      <div id="languageSetting" class="form-group">
+        <label for="languageSetting">기본 언어 설정</label>
+        <select class="form-control" id="languageSetting" name="languageSetting">
+          <% if(user.lang == "en") { %>
+            <optgroup label="기본 언어 설정">
+              <option selected value="en">English</option>
+              <option value="ko">한국어</option>
+            </optgroup>
+          <% } else if(user.lang == 'ko') { %>
+            <optgroup label="기본 언어 설정">
+              <option value="en">English</option>
+              <option selected value="ko">한국어</option>
+            </optgroup>
+          <% } else { %>
+            <optgroup label="기본 언어 설정">
+              <option value="en">English</option>
+              <option value="ko">한국어</option>
+            </optgroup>
+          <% } %>  
+        </select>                    
+      </div>
+      <label for="status">상태 메세지</label>
+      <div id="status" class="form-group">
+          <textarea class="form-control" type="text" name="status"><%= user.status %></textarea>
+      </div> 
+      <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block">Submit</button>
+      </div>
+    </form>
+    <div class="text-right">
+        <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents">뒤로가기</a>
+    </div>
+  </div>
+</div>
+
+<% include partials/footer %>

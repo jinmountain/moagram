@@ -6,13 +6,22 @@ var bcrypt   = require('bcrypt-nodejs');
 var userSchema = mongoose.Schema({
     username: String,
 	googleId: String,
-
+	lang: String,
+	
 	email: {
 		type: String,
 		lowercase: true
 		},
 
 	thumbnail: String,
+
+	//contents you created
+	contentCreated: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "content"
+		}
+	],
 
 	//contents you liked
     contentLiked: [
@@ -21,7 +30,9 @@ var userSchema = mongoose.Schema({
 	     	ref: "Content"
 	  	}
 	],
+
 	lastActiveTime: String,
+
 	follower: Number,
 
 	//users you are following
@@ -46,8 +57,13 @@ var userSchema = mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Content"
 		}
-	]
+	],
 
+	//introduction
+	status: String,
+
+	//email privacy setting
+	emailPrivacy: String
 });
 
 

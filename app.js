@@ -59,10 +59,19 @@ app.use(function(req, res, next){
 });
 
 // ======== Fast Route ========
-app.use("/contents/:id/comments", comments);
-app.use('/contents', contents);
+app.use(function(req, res, next){
+	if (req.user) {
+		app.use('/' + req.user.lang + '/contents', contents);
+		app.use('/' + req.user.lang + '/profile', profile);
+		next();
+	} else {
+		app.use('/en/contents', contents);
+		app.use('/en/profile', profile);
+		next();
+	}
+});
+
 app.use('/auth', auth);
-app.use('/profile', profile);
 app.use('/', home);
 
 // ========= Using EJS View Engine ========
