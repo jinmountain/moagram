@@ -92,7 +92,7 @@ mongoose.connect(configDB.url, { useNewUrlParser: true })
 	.then(() => console.log('Connected to MongoDB...'))
 	.catch(err => console.error("could not connect to mongoDB"));
 
-app.use(enforce.HTTPS());
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 const port  = process.env.PORT || 3000;
 // app.listen(port, () => console.log(`Listening on port ${port}...`));
