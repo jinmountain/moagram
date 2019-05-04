@@ -5,6 +5,8 @@ const flash = require("connect-flash");
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const http = require('http');
+const enforce = require('express-sslify');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -90,5 +92,8 @@ mongoose.connect(configDB.url, { useNewUrlParser: true })
 	.then(() => console.log('Connected to MongoDB...'))
 	.catch(err => console.error("could not connect to mongoDB"));
 
+app.use(enforce.HTTPS());
+
 const port  = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+// app.listen(port, () => console.log(`Listening on port ${port}...`));
+http.createServer(app).listen(port, () => console.log(`Listening on port ${port}...`));
