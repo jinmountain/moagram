@@ -1,7 +1,7 @@
 <% include ../partials/header %>
     <div class="container">
         <h2 style="text-align: center">Update <%= content.name %></h2>
-        <div style="width: 60%; margin: 25px auto;">
+        <div class="inputForm">
             <form action="/en/contents/<%=content._id%>?_method=PUT" method="POST">
                 <label for="contentName">Title</label>
                 <div id="contentName" class="form-group">

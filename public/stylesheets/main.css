@@ -130,3 +130,9 @@ body { -webkit-text-size-adjust: none; }
 .responsiveText {
 	font-size: 3vw;
 }
+
+.inputForm {
+    width: 90%;
+    margin: 15px auto;
+    max-width: 500px;
+}
