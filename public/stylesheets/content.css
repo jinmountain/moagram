@@ -26,6 +26,10 @@
 	max-height: 155px;
 }
 
+.content-res {
+	padding-right: 12px;
+}
+
 /*========= content ad section partition ========*/
 
 .content-ad {
@@ -270,6 +274,15 @@ a { color: inherit; }
 
 
 /*========Responsive Show Page=================*/
+
+/*========When screen < 900px==================*/
+@media only screen and (max-width: 900px) {
+    .content-show-main-thumbnail #show-main-thumbnail {
+    	width: 400px;
+    	height: 250px;
+    }
+}
+
 /*========When screen < 600px==================*/
 @media only screen and (max-width: 600px) {
     .content-show-sidebar {
