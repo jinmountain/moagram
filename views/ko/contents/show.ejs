@@ -99,7 +99,9 @@
             <li>
               <form id="verticalLine" action="/en/contents/category/<%=content.category%>" method="GET">
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
-                  <% if(content.category == 'educational'){ %>
+                  <% if(content.category == 'tntl'){ %>
+                    <h6>웃긴영상 | TNTL</h6>
+                  <% } else if(content.category == 'educational'){ %>
                     <h6>교육</h6>
                   <% } else if(content.category == 'exercise'){ %>
                     <h6>운동</h6>

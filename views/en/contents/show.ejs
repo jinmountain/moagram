@@ -98,7 +98,11 @@
             <li>
               <form id="verticalLine" action="/en/contents/category/<%=content.category%>" method="GET">
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
-                  <h6><%= content.category %></h6>
+                  <% if(content.category == 'tntl'){ %>
+                    <h6>TNTL | 웃긴영상</h6>
+                  <% } else { %>
+                    <h6><%= content.category %></h6>
+                  <% } %>
                 </button>
               </form>
               <div id="verticalLine">
