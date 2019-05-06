@@ -103,7 +103,7 @@
                     <h6>웃긴영상 | TNTL</h6>
                   <% } else if(content.category == 'educational'){ %>
                     <h6>교육</h6>
-                  <% } else if(content.category == 'exercise'){ %>
+                  <% } else if(content.category == 'fitness'){ %>
                     <h6>운동</h6>
                   <% } else if(content.category == 'motivational'){%>
                     <h6>동기부여</h6>
@@ -114,7 +114,7 @@
                   <% } else if(content.category == 'gaming'){ %>
                     <h6>게임</h6>
                   <% } else if(content.category == 'vlog'){ %>
-                    <h6>브이로그// VLOG</h6>
+                    <h6>브이로그 | VLOG</h6>
                   <% } else if(content.category == 'animal'){ %>
                     <h6>동물</h6>
                   <% } else if(content.category == 'others'){ %> 
@@ -242,10 +242,6 @@
                         </div>
                         <div id="verticalLine">   
                           &nbsp; <%= moment(slicedContent.date).fromNow()%>
-                        </div>
-                        <div id="verticalLine">
-                          <img style="max-width: 30px; max-height: 30px;" 
-                        src="/icons/like.png" /> <%= slicedContent.likes %>
                         </div>
                         <div id="line">
                           &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>

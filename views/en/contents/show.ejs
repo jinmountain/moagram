@@ -43,7 +43,8 @@
                       <% } else { %>
                       views <%= slicedContent.views %> 
                       <% } %>
-                      | 
+                    </div>
+                    <div id="verticalLine">
                       <!-- Momentjs Ago --> 
                       <%= moment(slicedContent.date).fromNow()%>
                     </div>
@@ -219,19 +220,15 @@
                     <div class="content-mobile-rec-infoline">
                       <!-- Momentjs Ago --> 
                       <div id="show-mobile-rec-vertical-group">
-                        <div> 
+                        <div id="verticalLine"> 
                           <% if(slicedContent.views > 1000) { %>
                           views <%= Math.floor(slicedContent.views/1000) %>K 
                           <% } else { %>
                           views <%= slicedContent.views %> 
                           <% } %>
-                          | 
-                          <%= moment(slicedContent.date).fromNow()%>
                         </div>
-
                         <div id="verticalLine">
-                          <img style="max-width: 30px; max-height: 30px;" 
-                        src="/icons/like.png" /> <%= slicedContent.likes %>
+                          &nbsp;<%= moment(slicedContent.date).fromNow()%>
                         </div>
                         <div id="line">
                           <!-- DISQUS Comments Count -->

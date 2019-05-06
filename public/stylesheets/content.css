@@ -294,14 +294,14 @@ a { color: inherit; }
 		grid-column: 1/11;
 		grid-row: 1/6;
 	}
+	.content-mobile-rec-thumbnail .content-mobile-rec-thumbnail-iframe{
+		width: 180px;
+		height: 100px;
+	}	
 }
 
 /*========When screen < 565px==================*/
 @media only screen and (max-width: 565px) {
-    .content-mobile-rec-thumbnail .content-mobile-rec-thumbnail-iframe{
-		width: 180px;
-		height: 100px;
-	}	
 	.content-show-main {
 		grid-column: 1/11;
 		grid-row: 1/6;
