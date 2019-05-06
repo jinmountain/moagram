@@ -40,14 +40,16 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/ko/contents/popular"><h6><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> 인기순 </h6>
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/ko/contents/new"><h6> 새로운 포스트 <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
-                                </a>
+                                <!-- <div class="dropdown-divider"></div> -->
+                                <!-- <a class="dropdown-item" href="/ko/contents/new"><h6> 새로운 포스트 <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
+                                </a> -->
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown d-none d-lg-block">
-                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="margin-bottom: 0px;">MOA</h5></a>
+                        <li class="nav-item dropdown d-none d-lg-block" id="main-nav-item">
+                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false">
+                                <h5 style="margin-bottom: 0px;">MOA</h5>
+                            </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="/ko/contents"><h5><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h5></a>
                                 <div class="dropdown-divider"></div>
@@ -57,19 +59,18 @@
                         </li>
 
                         <li class="nav-item" id="main-nav-item">
-        <!-- Responsive Icons -->
-        <!-- <div class="d-lg-none">hide on screens wider than lg</div>
-        <div class="d-none d-lg-block">hide on screens smaller than lg</div> -->
-                            <a class="btn btn-default btn-sm d-none d-lg-block" id="btn-default" href="/ko/contents/new"><h5 style="margin-bottom: 0px;">새로운 포스트 <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h5>
+                            <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents/new">
+                                <h5 style="margin-bottom: 0px;">새로운 포스트 
+                                    <img id="nav-icons" width="35" height="33" src="/icons/youtube.png">
+                                    <img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png">
+                                </h5>
                             </a>
                         </li>
-                        
-                        <!-- ======== Search bar ======== -->
-
                     </ul>
-                    
+
+                    <!-- ======== Search bar ======== -->
                     <% if(user){ %>
-                        <form style="padding-right: 30px;" class="form-inline" >
+                        <form style="padding-right: 30px;" class="form-inline nav-item" >
                         
                             <!-- ======== Old Search bar ======== -->
                             <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
@@ -80,9 +81,10 @@
                     <% } %>
 
                     <% if (!user) { %>
-                        <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />로그인</a>
-                        <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> 구글계정으로 로그인 </a>
-
+                        <div class="nav-item">
+                            <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />로그인</a>
+                            <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> 구글계정으로 로그인 </a>
+                        </div>
                     <% } else { %>
                         <div class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

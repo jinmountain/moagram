@@ -41,13 +41,15 @@
                                 <a class="dropdown-item" href="/en/contents/popular"><h6><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> Popular</h6>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/en/contents/new"><h6><img style="width: 15px; height: 15px;" src="/icons/icons8-c-52.png"/>REATE <img style="width: 15px; height: 15px;" src="/icons/icons8-p-52.png"/>OST <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
-                                </a>
+                                <!-- <a class="dropdown-item" href="/en/contents/new"><h6><img style="width: 15px; height: 15px;" src="/icons/icons8-c-52.png"/>REATE <img style="width: 15px; height: 15px;" src="/icons/icons8-p-52.png"/>OST <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
+                                </a> -->
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown d-none d-lg-block">
-                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false"><h5 style="margin-bottom: 0px;">MOA</h5></a>
+                        <li class="nav-item dropdown d-none d-lg-block" id="main-nav-item">
+                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false">
+                                <h5 style="margin-bottom: 0px;">MOA</h5>
+                            </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="/en/contents"><h5><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h5></a>
                                 <div class="dropdown-divider"></div>
@@ -57,36 +59,38 @@
                         </li>
 
                         <li class="nav-item" id="main-nav-item">
-        <!-- Responsive Icons -->
-        <!-- <div class="d-lg-none">hide on screens wider than lg</div>
-        <div class="d-none d-lg-block">hide on screens smaller than lg</div> -->
-                            <a class="btn btn-default btn-sm d-none d-lg-block" id="btn-default" href="/en/contents/new"><h5 style="margin-bottom: 0px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-c-52.png"/>REATE <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OST <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h5>
+                            <a class="btn btn-default btn-sm" id="btn-default" href="/en/contents/new">
+                                <h5 style="margin-bottom: 0px;">
+                                    <img style="width: 20px; height: 20px;" src="/icons/icons8-c-52.png"/>REATE 
+                                    <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OST 
+                                    <img id="nav-icons" width="35" height="33" src="/icons/youtube.png">
+                                    <img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png">
+                                </h5>
                             </a>
                         </li>
-                        
-                        <!-- ======== Search bar ======== -->
-
                     </ul>
                     
+                    <!-- ======== Search bar ======== -->
                     <% if(user){ %>
-                        <form style="padding-right: 30px;" class="form-inline" >
+                        <form style="padding-right: 30px;" class="form-inline nav-item" >
                         
                             <!-- ======== Old Search bar ======== -->
                             <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
 
                             <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
-
                         </form>
                     <% } %> 
                     
                     <% if (!user) { %>
-                        <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />Login</a>
-                        <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> Login in with Google </a>
-
+                        <div class="nav-item">
+                            <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />Login</a>
+                            <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> Login in with Google </a>
+                        </div>
                     <% } else { %>
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img style="border-radius: 5px;" src= "<%= user.thumbnail %>" width= "45px" height= "45px" />
+                            <a class="nav-link dropdown-toggle" style="padding-left: 0px;" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img style="border-radius: 5px;" src= "<%= user.thumbnail %>" width= "45px" height= "45px" />&nbsp;
+                                <strong><%= user.username %></strong>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="nav-link" href="/en/profile"> 
