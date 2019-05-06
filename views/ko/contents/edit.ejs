@@ -20,7 +20,19 @@
                     <label for="ctg">이 글의 카테고리를 선택해주세요</label>
                     <select class="form-control" id="ctg" name="category">
                         <optgroup label="Catergory of your video">
-                            <% if(content.category == "educational"){ %>
+                            <% if(content.category == "tntl"){ %>
+                                <option selected value="tntl">웃긴영상// TNTL</option>
+                                <option selected value="educational">교육</option>
+                                <option value="fitness">운동</option>
+                                <option value="motivational">동기부여</option>
+                                <option value="music">음악</option>
+                                <option value="beauty">뷰티// Beauty</option>
+                                <option value="gaming">게임</option>
+                                <option value="vlog">브이로그// VLOG</option>
+                                <option value="animal">동물</option>
+                                <option value="others">Others</option>
+                            <% } else if(content.category == "educational"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option selected value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -31,6 +43,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "fitness"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option selected value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -41,6 +54,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "motivation"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option selected value="motivational">동기부여</option>
@@ -51,6 +65,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "music"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -61,6 +76,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "beauty"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -71,6 +87,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "gaming"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -81,6 +98,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "vlog"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -91,6 +109,7 @@
                                 <option value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "animal"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -101,6 +120,7 @@
                                 <option selected value="animal">동물</option>
                                 <option value="others">Others</option>
                             <% } else if(content.category == "others"){ %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>
@@ -111,6 +131,7 @@
                                 <option value="animal">동물</option>
                                 <option selected value="others">Others</option>
                             <% } else { %>
+                                <option value="tntl">웃긴영상// TNTL</option>
                                 <option value="educational">교육</option>
                                 <option value="fitness">운동</option>
                                 <option value="motivational">동기부여</option>

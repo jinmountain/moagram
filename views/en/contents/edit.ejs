@@ -20,7 +20,19 @@
                     <label for="ctg">Select Category</label>
                     <select class="form-control" id="ctg" name="category">
                         <optgroup label="Catergory of your video">
-                            <% if(content.category == "educational"){ %>
+                            <% if(content.category == "tntl"){ %>
+                                <option selected value="tntl">TNTL</option>
+                                <option value="educational">Educational</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="motivational">Motivation</option>
+                                <option value="music">Music</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="vlog">VLOG</option>
+                                <option value="animal">Animal</option>
+                                <option value="other">Others</option>
+                            <% } else if(content.category == "educational"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option selected value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -31,6 +43,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "fitness"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option selected value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -41,6 +54,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "motivation"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option selected value="motivational">Motivation</option>
@@ -51,6 +65,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "music"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -61,6 +76,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "beauty"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -71,6 +87,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "gaming"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -81,6 +98,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "vlog"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -91,6 +109,7 @@
                                 <option value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "animal"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -101,6 +120,7 @@
                                 <option selected value="animal">Animal</option>
                                 <option value="other">Others</option>
                             <% } else if(content.category == "others"){ %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
@@ -111,6 +131,7 @@
                                 <option value="animal">Animal</option>
                                 <option selected value="other">Others</option>
                             <% } else { %>
+                                <option value="tntl">TNTL</option>
                                 <option value="educational">Educational</option>
                                 <option value="fitness">Fitness</option>
                                 <option value="motivational">Motivation</option>
