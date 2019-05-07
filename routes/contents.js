@@ -5,6 +5,7 @@ const passport = require('passport');
 const moment = require('moment');
 const urlParser = require('js-video-url-parser');
 const querystring = require('querystring');
+const clipboardy = require('clipboardy');
 
 // ======== routes ========
 const Content = require('../models/content');
