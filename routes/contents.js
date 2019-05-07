@@ -474,7 +474,22 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-   	res.render(req.user.lang + "/contents/new"); 
+   	var paste = clipboardy.readSync();
+    var videoParse = urlParser.parse(paste);
+    var provider = "";
+
+    try {
+        provider = videoParse.provider 
+    }
+    catch(err) {
+        provider = ""
+    }
+
+    res.render(req.user.lang + "/contents/new",
+        {paste: paste,
+        provider: provider
+        }
+    ); 
 });
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
