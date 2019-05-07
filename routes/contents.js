@@ -16,7 +16,6 @@ const profile = require("./profile");
 const middleware = require("../middleware");
 const configDB = require('../config/keys.js');
 
-
 //find every content
 router.get('/', middleware.authCheck, (req, res, next) => {
     var noMatch = null;
@@ -225,6 +224,56 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
     }     
 });
 
+//find contents that match the inserted search query
+// router.get('/search/:search', middleware.authCheck, (req, res) => {
+//     var noMatch = null;
+//     var perPage = 9;
+//     var page = req.query.page || 1;
+//     var count;
+
+//     // Search with name
+    
+//     const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+//     // Get all contentes from DB
+//     Content.find({name: regex})
+//     .sort({"createdAt": -1})
+//     .skip((perPage * page) - perPage)
+//     .limit(perPage)
+//     .exec(function(err, allContents){
+//         if(err){
+//             console.log(err);
+//         } else{
+//             Content.find({name: regex}).count().exec(function(err, count){
+//                 if(err) {
+//                     console.log(err);
+//                 } else {
+//                     if(allContents.length <1 ) {
+//                         noMatch = "Don't let what you saw disappear. Share with Others";
+//                     } 
+
+//                     Content.find({})
+//                     .sort({"hotness": -1})
+//                     .limit(3)
+//                     .exec(function(err, foundSideContents){
+//                         if(err){
+//                             console.log(err);
+//                         } else {
+//                             res.render(req.user.lang + '/contents/index', {
+//                                 contents: allContents, 
+//                                 noMatch: noMatch,
+//                                 current: page,    
+//                                 pages: Math.ceil(count / perPage),
+//                                 url: req.url,
+//                                 sideContents: foundSideContents
+//                             });   
+//                         }
+//                     });
+//                 }
+//             });
+//         }
+//     })
+// });
 
 //found popular contents
 router.get('/popular', middleware.authCheck, (req, res) => {
@@ -274,8 +323,8 @@ router.get('/popular', middleware.authCheck, (req, res) => {
 
 router.post('/', function(req,res){
 
-	var name = req.body.name;
-	var image = req.body.image;
+    var name = req.body.name;
+    var image = req.body.image;
 
     var videoParse = urlParser.parse(req.body.video);
 
@@ -296,12 +345,12 @@ router.post('/', function(req,res){
     }
 
     var category = req.body.category;
-	var desc = req.body.description;
-	var author = {
-		id: req.user._id,
-		username: req.user.username,
+    var desc = req.body.description;
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
         thumbnail: req.user.thumbnail
-	};
+    };
     var likes = 0;
     var views = 0;
     
@@ -312,7 +361,7 @@ router.post('/', function(req,res){
 
     var hottness = 0;
 
-	var newContent = {
+    var newContent = {
         name: name, 
         image: image, 
         video: video, 
@@ -425,31 +474,29 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-    // var paste = clipboardy.readSync();
-    // var videoParse = urlParser.parse(paste);
+    var paste = clipboardy.readSync();
+    var videoParse = urlParser.parse(paste);
     
-    // if(paste != undefined){
-    //     if(videoParse != undefined){
-    //         var pvd = videoParse.provider;
-    //         res.render(req.user.lang + "/contents/new", {
-    //             paste: paste,
-    //             provider: pvd
-    //         });
-    //     } else {
-    //         res.render(req.user.lang + "/contents/new", {
-    //             paste: paste,
-    //             provider: ""
-    //         });
-    //     }
-    // } else {
-    //     res.render(req.user.lang + "/contents/new", {
-    //         paste: "",
-    //         provider: "" 
-    //     });
-    // }
-    res.render(req.user.lang + "/contents/new");
+    if(paste != undefined){
+        if(videoParse != undefined){
+            var pvd = videoParse.provider;
+            res.render(req.user.lang + "/contents/new", {
+                paste: paste,
+                provider: pvd
+            });
+        } else {
+            res.render(req.user.lang + "/contents/new", {
+                paste: paste,
+                provider: ""
+            });
+        }
+    } else {
+        res.render(req.user.lang + "/contents/new", {
+            paste: "",
+            provider: "" 
+        });
+    }
 });
-
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
     Content.findById(req.params.id, function(err, foundContent){
@@ -552,7 +599,6 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
 });
 
 router.put("/:id", function(req, res){
-    
     var videoParse = urlParser.parse(req.body.video);
 
     if(videoParse != undefined){
