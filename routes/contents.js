@@ -425,28 +425,29 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-    var paste = clipboardy.readSync();
-    var videoParse = urlParser.parse(paste);
+    // var paste = clipboardy.readSync();
+    // var videoParse = urlParser.parse(paste);
     
-    if(paste != undefined){
-        if(videoParse != undefined){
-            var pvd = videoParse.provider;
-            res.render(req.user.lang + "/contents/new", {
-                paste: paste,
-                provider: pvd
-            });
-        } else {
-            res.render(req.user.lang + "/contents/new", {
-                paste: paste,
-                provider: ""
-            });
-        }
-    } else {
-        res.render(req.user.lang + "/contents/new", {
-            paste: "",
-            provider: "" 
-        });
-    }
+    // if(paste != undefined){
+    //     if(videoParse != undefined){
+    //         var pvd = videoParse.provider;
+    //         res.render(req.user.lang + "/contents/new", {
+    //             paste: paste,
+    //             provider: pvd
+    //         });
+    //     } else {
+    //         res.render(req.user.lang + "/contents/new", {
+    //             paste: paste,
+    //             provider: ""
+    //         });
+    //     }
+    // } else {
+    //     res.render(req.user.lang + "/contents/new", {
+    //         paste: "",
+    //         provider: "" 
+    //     });
+    // }
+    res.render(req.user.lang + "/contents/new");
 });
 
 
