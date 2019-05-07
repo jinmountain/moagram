@@ -425,23 +425,30 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-   	var paste = clipboardy.readSync();
+    var paste = clipboardy.readSync();
     var videoParse = urlParser.parse(paste);
-    var provider = "";
-
-    try {
-        provider = videoParse.provider 
-    }
-    catch(err) {
-        provider = ""
-    }
-
-    res.render(req.user.lang + "/contents/new",
-        {paste: paste,
-        provider: provider
+    
+    if(paste != undefined){
+        if(videoParse != undefined){
+            var pvd = videoParse.provider;
+            res.render(req.user.lang + "/contents/new", {
+                paste: paste,
+                provider: pvd
+            });
+        } else {
+            res.render(req.user.lang + "/contents/new", {
+                paste: paste,
+                provider: ""
+            });
         }
-    ); 
+    } else {
+        res.render(req.user.lang + "/contents/new", {
+            paste: "",
+            provider: "" 
+        });
+    }
 });
+
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
     Content.findById(req.params.id, function(err, foundContent){
