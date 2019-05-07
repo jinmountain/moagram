@@ -3,36 +3,86 @@
         <h2 style="text-align: center">새로운 포스트 만들기</h1>
         <div class="inputForm">
             <form action="/ko/contents" method="POST">
-                <label for="contentName">제목</label>
+                <label for="contentName"><strong>제목</strong></label>
                 <div id="contentName" class="form-group">
                     <input class="form-control" type="text" name="name" maxlength="50" placeholder="Title" required>
                 </div>
-                <label for="contentImage">이미지 URL</label>
+                <label for="contentImage"><strong>이미지 URL</strong></label>
                 <div id="contentImage" class="form-group">
                     <input class="form-control" type="text" name="image" placeholder="image url">
                 </div>
-                <label for="contentVideo">영상 URL <img id="nav-icons" width="25" height="23" src="/icons/youtube.png"><img id="nav-icons" width="25" height="23" src="/icons/icons8-twitch-48.png"></label>
+                <label for="contentVideo"><strong>영상 URL</strong> <img id="nav-icons" width="25" height="23" src="/icons/youtube.png"><img id="nav-icons" width="25" height="23" src="/icons/icons8-twitch-48.png"></label>
                 <div id="contentVideo" class="form-group">
-                    <input class="form-control" type="text" name="video" placeholder="유튜브 또는 트위치 영상의 주소">
+                    <input class="form-control" type="text" name="video" placeholder="유튜브 또는 트위치 영상의 주소" value="<% if(provider == "youtube" || provider == "twitch"){ %><%= paste %><% } %>">
                 </div>
 
-                <div class="form-group">
-                    <label for="ctg">이 글의 카테고리를 선택해주세요</label>
-                    <select class="form-control" id="ctg" name="category">
-                        <optgroup label="Catergory of your video">
-                            <option value="tntl">웃긴영상 | TNTL</option>
-                            <option value="educational">교육</option>
-                            <option value="fitness">운동</option>
-                            <option value="motivational">동기부여</option>
-                            <option value="music">음악</option>
-                            <option value="beauty">뷰티 | Beauty</option>
-                            <option value="gaming">게임</option>
-                            <option value="vlog">브이로그 | VLOG</option>
-                            <option value="animal">동물</option>
-                            <option value="other">Others</option>
-                        </optgroup>
-                    </select>                    
+                <div>
+                    <label><strong>이 글의 카테고리를 선택해주세요</strong></label>
                 </div>
+
+                <div data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> 웃긴영상 | TNTL
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> 먹방
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                    </label>
+                
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> 다큐
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> 교육
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> 운동
+                    </label>
+                
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> 동기부여
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> 음악
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> 뷰티 | Beauty
+                    </label>
+                
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> 게임
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> 브이로그 | VLOG
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> 동물
+                    </label>
+        
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                        <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                    </label>
+                </div>
+
+                <div>
+                    <label><strong>이 글에 대해 적어주세요</strong></label>
+                </div> 
+
                 <div class="form-group">
                     <textarea id="editor" type="text" name="description"></textarea>
                 </div>

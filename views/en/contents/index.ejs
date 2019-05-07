@@ -61,6 +61,17 @@
             <% if (diff_hours < 24) { %>
               <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
             <% } %>
+          <h6 style="padding-left: 5px;" id="line">
+            <span class="badge badge-pill badge-info">
+              <% if(content.category == 'tntl'){ %>
+                TNTL | 웃긴영상
+              <% } else if(content.category == 'mukbang'){ %>
+                Mukbang | 먹방
+              <% } else { %>
+                <%= content.category %>
+              <% } %>
+            </span>
+          </h6>
         </div>
       <!-- ==============Infoline=============== -->
         <div class="content-infoline .col-xs-8 .col-sm-8 breakWord">

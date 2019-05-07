@@ -101,6 +101,8 @@
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <% if(content.category == 'tntl'){ %>
                     <h6>TNTL | 웃긴영상</h6>
+                  <% } else if(content.category == 'mukbang'){ %>
+                    <h6>Mukbang | 먹방</h6>
                   <% } else { %>
                     <h6><%= content.category %></h6>
                   <% } %>

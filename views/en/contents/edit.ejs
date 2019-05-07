@@ -3,147 +3,826 @@
         <h2 style="text-align: center">Update <%= content.name %></h2>
         <div class="inputForm">
             <form action="/en/contents/<%=content._id%>?_method=PUT" method="POST">
-                <label for="contentName">Title</label>
+                <label for="contentName"><strong>Title</strong></label>
                 <div id="contentName" class="form-group">
                     <input class="form-control" type="text" name="name" value="<%= content.name %>">
                 </div>
-                <label for="contentImage">Image URL</label>
+                <label for="contentImage"><strong>Image URL</strong></label>
                 <div id="contentImage" class="form-group">
                     <input class="form-control" type="text" name="image" value="<%= content.image %>">
                 </div>
-                <label for="contentVideo">Video URL</label>
+                <label for="contentVideo"><strong>Video URL</strong></label>
                 <div id="contentVideo" class="form-group">
                     <input class="form-control" type="text" name="video" value="<%= content.video.url %>">
                 </div>
 
-                <div class="form-group">
-                    <label for="ctg">Select Category</label>
-                    <select class="form-control" id="ctg" name="category">
-                        <optgroup label="Catergory of your video">
-                            <% if(content.category == "tntl"){ %>
-                                <option selected value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "educational"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option selected value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "fitness"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option selected value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "motivation"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option selected value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "music"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option selected value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "beauty"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option selected value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "gaming"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option selected value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "vlog"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option selected value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "animal"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option selected value="animal">Animal</option>
-                                <option value="other">Others</option>
-                            <% } else if(content.category == "others"){ %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option selected value="other">Others</option>
-                            <% } else { %>
-                                <option value="tntl">TNTL</option>
-                                <option value="educational">Educational</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="motivational">Motivation</option>
-                                <option value="music">Music</option>
-                                <option value="beauty">Beauty</option>
-                                <option value="gaming">Gaming</option>
-                                <option value="vlog">VLOG</option>
-                                <option value="animal">Animal</option>
-                                <option value="others">Others</option>
-                            <% } %>
-                        </optgroup>
-                    </select>                   
+                <div>
+                    <label><strong>Select Category of Content</strong></label>
+                </div>
+
+                <div data-toggle="buttons">
+                    <% if(content.category == "tntl"){ %>   
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "mukbang"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "news"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "documentary"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "educational"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "fitness"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "motivational"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "music"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "beauty"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "gaming"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "vlog"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "animal"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } else if(content.category == "others"){ %>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                        <option selected value="others">Others</option>
+                    <% } else { %>
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="mukbang"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="news"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="documentary"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary 
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="educational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="fitness"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="motivational"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="music"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="beauty"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                        </label>
+                    
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="gaming"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="vlog"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="animal"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-pig-100.png"/> Animal
+                        </label>
+            
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="category" id="ctg" autocomplete="off" value="others"> 
+                            <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                        </label>
+                    <% } %>       
+                </div>
+
+                <div>
+                    <label><strong>Write about your post</strong></label>
                 </div>
                                 
                 <div class="form-group">

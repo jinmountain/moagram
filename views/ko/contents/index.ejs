@@ -61,6 +61,37 @@
             <% if (diff_hours < 24) { %>
               <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
             <% } %>
+          <h6 style="padding-left: 5px;" id="line">
+            <span class="badge badge-pill badge-info">
+              <% if(content.category == 'tntl'){ %>
+                웃긴영상 | TNTL
+              <% } else if(content.category == 'mukbang'){ %>
+                먹방
+              <% } else if(content.category == 'news'){ %>
+                News
+              <% } else if(content.category == 'documentary'){ %>
+                다큐
+              <% } else if(content.category == 'educational'){ %>
+                교육
+              <% } else if(content.category == 'fitness'){ %>
+                운동
+              <% } else if(content.category == 'motivational'){%>
+                동기부여
+              <% } else if(content.category == 'music'){ %>
+                음악
+              <% } else if(content.category == 'beauty'){ %>
+                뷰티
+              <% } else if(content.category == 'gaming'){ %>
+                게임
+              <% } else if(content.category == 'vlog'){ %>
+                브이로그 | VLOG
+              <% } else if(content.category == 'animal'){ %>
+                동물
+              <% } else if(content.category == 'others'){ %> 
+                Others
+              <% } %>
+            </span>
+          </h6>
         </div>
       <!-- ==============Infoline=============== -->
         <div class="content-infoline .col-xs-8 .col-sm-8 breakWord">

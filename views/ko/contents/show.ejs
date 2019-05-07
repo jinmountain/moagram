@@ -101,6 +101,12 @@
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <% if(content.category == 'tntl'){ %>
                     <h6>웃긴영상 | TNTL</h6>
+                  <% } else if(content.category == 'mukbang'){ %>
+                    <h6>먹방</h6>
+                  <% } else if(content.category == 'news'){ %>
+                    <h6>News</h6>
+                  <% } else if(content.category == 'documentary'){ %>
+                    <h6>다큐</h6>
                   <% } else if(content.category == 'educational'){ %>
                     <h6>교육</h6>
                   <% } else if(content.category == 'fitness'){ %>
