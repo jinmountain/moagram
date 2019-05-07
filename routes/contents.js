@@ -554,7 +554,7 @@ router.put("/:id", function(req, res){
     
     var videoParse = urlParser.parse(req.body.video);
 
-    if(req.body.video){
+    if(videoParse != undefined){
         var newData = {
             name: req.body.name, 
             image: req.body.image, 
@@ -579,8 +579,6 @@ router.put("/:id", function(req, res){
             description: req.body.description
         };
     }
-
-    
 
     Content.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, content){
         if(err){
