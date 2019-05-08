@@ -127,29 +127,28 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-    res.send("WHY THIS IS HAPPENING")
-    // var paste = clipboardy.readSync();
-    // var videoParse = urlParser.parse(paste);
+    var paste = clipboardy.readSync();
+    var videoParse = urlParser.parse(paste);
 
-    // var pst = "";
-    // var pvd = "";
+    var pst = "";
+    var pvd = "";
     
-    // if(paste != undefined){
-    //     if(videoParse != undefined){
-    //         pst = paste;
-    //         pvd = videoParse.provider;
-    //     } else {
-    //         pst = paste;
-    //         pvd = ""
-    //     }
-    // } else {
-    //     pst = "";
-    //     pvd = "";
-    // }
-    // res.render(req.user.lang + "/contents/new", {
-    //     paste: pst,
-    //     provider: pvd 
-    // });
+    if(paste != undefined){
+        if(videoParse != undefined){
+            pst = paste;
+            pvd = videoParse.provider;
+        } else {
+            pst = paste;
+            pvd = ""
+        }
+    } else {
+        pst = "";
+        pvd = "";
+    }
+    res.render(req.user.lang + "/contents/new", {
+        paste: pst,
+        provider: pvd 
+    });
 });
 
 //Find all contents within the selected category
