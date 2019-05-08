@@ -472,7 +472,7 @@ router.post("/:id", function (req, res, next) {
     });
 });
 
-router.get("/new", middleware.authCheck, function(req, res){
+router.get("/new", middleware.authCheck, function(req, res, next){
     var paste = clipboardy.readSync();
     var videoParse = urlParser.parse(paste);
     
