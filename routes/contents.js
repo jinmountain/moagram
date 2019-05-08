@@ -473,122 +473,116 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
-    if (req.params.id == "new"){
-        next();
-    } else {
-        Content.findById(req.params.id, function(err, foundContent){
-            if (err){
-                err.httpStatusCode = 500
-                return next(err);
-            } else {
-                User.findById(req.user._id, function(err, foundUser) {
-                    if (err) {
-                        err.httpStatusCode = 500
-                        return next(err);
+    
+    Content.findById(req.params.id, function(err, foundContent){
+        if (err){
+            err.httpStatusCode = 500
+            return next(err);
+        } else {
+            User.findById(req.user._id, function(err, foundUser) {
+                if (err) {
+                    err.httpStatusCode = 500
+                    return next(err);
+                } else {
+                    //if the id of content is in the user's contentViewed list
+                    //increase the view by 1
+                    //============================================================
+                    // if there is the content id in the user's contentViewed list
+                    // don't add view count
+                    if (foundUser.contentViewed.indexOf(foundContent._id) != -1) {
+                        foundContent.views += 0;
+
+                        // every time someone views a post,
+                        // the post.hotness is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*30)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
+                        foundContent.save();
+
+                    // if not, add view count by 1 
+                    // and push the content id into the user's viewed list
                     } else {
-                        //if the id of content is in the user's contentViewed list
-                        //increase the view by 1
-                        //============================================================
-                        // if there is the content id in the user's contentViewed list
-                        // don't add view count
-                        if (foundUser.contentViewed.indexOf(foundContent._id) != -1) {
-                            foundContent.views += 0;
+                        foundContent.views += 1;
 
-                            // every time someone views a post,
-                            // the post.hotness is updated with newly calculated hotness
-                            var now = moment(new Date()); //todays date
-                            var end = moment(foundContent.createdAt); // another date
-                            var duration = moment.duration(now.diff(end));
-                            var hours = duration.asHours();
-                            var growth = (foundContent.views*3) + (foundContent.likes*30);
-                            var newHotness = (growth*30)/hours;
-                            foundContent.hotness = newHotness;
-                            //================================
-                            foundContent.save();
+                        // every time someone views a post,
+                        // the post.hotness is updated with newly calculated hotness
+                        var now = moment(new Date()); //todays date
+                        var end = moment(foundContent.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var hours = duration.asHours();
+                        var growth = (foundContent.views*3) + (foundContent.likes*30);
+                        var newHotness = (growth*30)/hours;
+                        foundContent.hotness = newHotness;
+                        //================================
+                        foundContent.save();
 
-                        // if not, add view count by 1 
-                        // and push the content id into the user's viewed list
-                        } else {
-                            foundContent.views += 1;
-
-                            // every time someone views a post,
-                            // the post.hotness is updated with newly calculated hotness
-                            var now = moment(new Date()); //todays date
-                            var end = moment(foundContent.createdAt); // another date
-                            var duration = moment.duration(now.diff(end));
-                            var hours = duration.asHours();
-                            var growth = (foundContent.views*3) + (foundContent.likes*30);
-                            var newHotness = (growth*30)/hours;
-                            foundContent.hotness = newHotness;
-                            //================================
-                            foundContent.save();
-
-                            foundUser.contentViewed.push(foundContent._id);
-                            foundUser.save();
-                        }
-
-                        //find the author of the content to view one's followers
-                        User.findById(foundContent.author.id, function(err, contentAuthor){
-                            if(err) {
-                                err.httpStatusCode = 500;
-                                return next(err);
-                            } else if(contentAuthor == null){
-                                req.flash("error", "The author is not found");
-                                res.redirect("back");
-                            } else {
-                                //display contents with the same category on the side
-                                var ctg = foundContent.category;
-                                Content.find({category: ctg}).sort({"createdAt": -1}).limit(5).exec(function(err, foundSideContents){
-                                    if(err){
-                                        console.log(err);
-                                    } else{
-                                        
-                                    res.render(req.user.lang + "/contents/show", 
-                                        {shortname: configDB.shortname,
-                                         sideContents: foundSideContents,
-                                         content: foundContent,
-                                         olouser: foundUser,
-                                         url: req.url,
-                                         contentAuthor: contentAuthor
-                                        });
-                                    }
-                                });
-                            }
-                        }) 
+                        foundUser.contentViewed.push(foundContent._id);
+                        foundUser.save();
                     }
-                });
-            }
-        });
-    };
+
+                    //find the author of the content to view one's followers
+                    User.findById(foundContent.author.id, function(err, contentAuthor){
+                        if(err) {
+                            err.httpStatusCode = 500;
+                            return next(err);
+                        } else if(contentAuthor == null){
+                            req.flash("error", "The author is not found");
+                            res.redirect("back");
+                        } else {
+                            //display contents with the same category on the side
+                            var ctg = foundContent.category;
+                            Content.find({category: ctg}).sort({"createdAt": -1}).limit(5).exec(function(err, foundSideContents){
+                                if(err){
+                                    console.log(err);
+                                } else{
+                                    
+                                res.render(req.user.lang + "/contents/show", 
+                                    {shortname: configDB.shortname,
+                                     sideContents: foundSideContents,
+                                     content: foundContent,
+                                     olouser: foundUser,
+                                     url: req.url,
+                                     contentAuthor: contentAuthor
+                                    });
+                                }
+                            });
+                        }
+                    }) 
+                }
+            });
+        }
+    });
 });
 
 router.get("/new", middleware.authCheck, function(req, res){
-    
-    var paste = clipboardy.readSync();
-    var videoParse = urlParser.parse(paste);
+    res.send("WHY THIS IS HAPPENING")
+    // var paste = clipboardy.readSync();
+    // var videoParse = urlParser.parse(paste);
 
-    var pst = "";
-    var pvd = "";
+    // var pst = "";
+    // var pvd = "";
     
-    if(paste != undefined){
-        if(videoParse != undefined){
-            pst = paste;
-            pvd = videoParse.provider;
-        } else {
-            pst = paste;
-            pvd = ""
-        }
-    } else {
-        pst = "";
-        pvd = "";
-    }
-    res.render(req.user.lang + "/contents/new", {
-        paste: pst,
-        provider: pvd 
-    }, function(err, html){
-        console.log(html);
-        res.send('done');
-    });
+    // if(paste != undefined){
+    //     if(videoParse != undefined){
+    //         pst = paste;
+    //         pvd = videoParse.provider;
+    //     } else {
+    //         pst = paste;
+    //         pvd = ""
+    //     }
+    // } else {
+    //     pst = "";
+    //     pvd = "";
+    // }
+    // res.render(req.user.lang + "/contents/new", {
+    //     paste: pst,
+    //     provider: pvd 
+    // });
 });
 
 router.get("/:id/edit", middleware.checkUserContent, function(req, res){
