@@ -149,7 +149,7 @@ router.get("/new", middleware.authCheck, function(req, res){
     //     paste: pst,
     //     provider: pvd 
     // });
-    res.render("en/contents/new");
+    res.send("WHAT THE")
 });
 
 //Find all contents within the selected category
@@ -500,7 +500,8 @@ router.post("/:id", function (req, res, next) {
 router.get("/:id", middleware.authCheck, function(req, res, next){
     Content.findById(req.params.id, function(err, foundContent){
         if (err){
-            console.log(err)
+            err.httpStatusCode = 500
+            return next(err);
         } else {
             User.findById(req.user._id, function(err, foundUser) {
                 if (err) {
