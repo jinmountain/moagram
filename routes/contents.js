@@ -9,7 +9,6 @@ const clipboardy = require('clipboardy');
 
 // ======== routes ========
 const Content = require('../models/content');
-const Comment = require("../models/comment");
 const User    = require("../models/user"); 
 
 const profile = require("./profile");
