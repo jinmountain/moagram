@@ -4,8 +4,8 @@
   <%if(noMatch!== null) {%>
     <div class="contents">
       <div>
-        <img width="235" height="135" src="/icons/220px-Moa_Heinrich_Harder.jpg"/><h5 style="padding-left: 30px; padding-right: 30px;" id="line" style="margin-bottom: 0px;"><%=noMatch %></h5>
-      </div>    
+        <img width="235" height="135" src="/icons/220px-Moa_Heinrich_Harder.jpg"/><h5 style="padding-left: 30px; padding-right: 30px;" id="line" style="margin-bottom: 0px;"><%= noMatch %></h5>
+      </div>  
     </div>
   <% } %>
 
@@ -52,15 +52,16 @@
             <!-- ================================================================= -->
             <!-- Show "New" sign when the content is created in less than 24 hours -->
             <!-- ================================================================= -->
-            <% var end = Date.now(); %>
-            <% var start = content.createdAt; %>
-            <% var elapsed = end - start; %>
-            <% var difference = new Date(elapsed); %>
-            <% var diff_hours = elapsed / (60*60*1000);%>
+          <% var end = Date.now(); %>
+          <% var start = content.createdAt; %>
+          <% var elapsed = end - start; %>
+          <% var difference = new Date(elapsed); %>
+          <% var diff_hours = elapsed / (60*60*1000);%>
 
-            <% if (diff_hours < 24) { %>
-              <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
-            <% } %>
+          <% if (diff_hours < 24) { %>
+            <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+          <% } %>
+          
           <h6 style="padding-left: 5px;" id="line">
             <span class="badge badge-pill badge-info">
               <% if(content.category == 'tntl'){ %>

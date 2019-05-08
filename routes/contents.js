@@ -323,8 +323,8 @@ router.get('/popular', middleware.authCheck, (req, res) => {
 
 router.post('/', function(req,res){
 
-    var name = req.body.name;
-    var image = req.body.image;
+	var name = req.body.name;
+	var image = req.body.image;
 
     var videoParse = urlParser.parse(req.body.video);
 
@@ -345,12 +345,12 @@ router.post('/', function(req,res){
     }
 
     var category = req.body.category;
-    var desc = req.body.description;
-    var author = {
-        id: req.user._id,
-        username: req.user.username,
+	var desc = req.body.description;
+	var author = {
+		id: req.user._id,
+		username: req.user.username,
         thumbnail: req.user.thumbnail
-    };
+	};
     var likes = 0;
     var views = 0;
     
@@ -361,7 +361,7 @@ router.post('/', function(req,res){
 
     var hottness = 0;
 
-    var newContent = {
+	var newContent = {
         name: name, 
         image: image, 
         video: video, 

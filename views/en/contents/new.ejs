@@ -17,10 +17,30 @@
                     value="<%if(provider == "youtube" || provider == "twitch"){%><%=paste%><%}%>">
                 </div>
 
+                <!-- <div class="form-group">
+                    <label for="ctg">Select Category of Content</label>
+                    <select class="form-control" id="ctg" name="category">
+                        <optgroup label="Catergory of your video">
+                            <option value="tntl">TNTL</option>
+                            <option value="mukbang">Mukbang | 먹방</option>
+                            <option value="news">News</option>
+                            <option value="documentary">Documentary</option>
+                            <option value="educational">Educational</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="motivational">Motivational</option>
+                            <option value="music">Music</option>
+                            <option value="beauty">Beauty</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="vlog">VLOG</option>
+                            <option value="animal">Animal</option>
+                            <option value="others">Others</option>
+                        </optgroup>
+                    </select>                   
+                </div> -->
                 <div>
                     <label><strong>Select Category of Content</strong></label>
                 </div>
-
+                
                 <div data-toggle="buttons">
                     <label class="btn btn-secondary active">
                         <input type="radio" name="category" id="ctg" autocomplete="off" value="tntl" checked> 
@@ -79,11 +99,11 @@
                         <img height="25" width="25" id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
                     </label>
                 </div>
-
+                
                 <div>
                     <label><strong>Write about your post</strong></label>
-                </div> 
-                        
+                </div>
+                          
                 <div class="form-group">
                     <textarea id="editor" type="text" name="description"></textarea>
                 </div>
