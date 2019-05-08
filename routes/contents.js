@@ -9,6 +9,7 @@ const clipboardy = require('clipboardy');
 
 // ======== routes ========
 const Content = require('../models/content');
+const Comment = require("../models/comment");
 const User    = require("../models/user"); 
 
 const profile = require("./profile");
@@ -223,6 +224,57 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
     }     
 });
 
+//find contents that match the inserted search query
+// router.get('/search/:search', middleware.authCheck, (req, res) => {
+//     var noMatch = null;
+//     var perPage = 9;
+//     var page = req.query.page || 1;
+//     var count;
+
+//     // Search with name
+    
+//     const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+//     // Get all contentes from DB
+//     Content.find({name: regex})
+//     .sort({"createdAt": -1})
+//     .skip((perPage * page) - perPage)
+//     .limit(perPage)
+//     .exec(function(err, allContents){
+//         if(err){
+//             console.log(err);
+//         } else{
+//             Content.find({name: regex}).count().exec(function(err, count){
+//                 if(err) {
+//                     console.log(err);
+//                 } else {
+//                     if(allContents.length <1 ) {
+//                         noMatch = "Don't let what you saw disappear. Share with Others";
+//                     } 
+
+//                     Content.find({})
+//                     .sort({"hotness": -1})
+//                     .limit(3)
+//                     .exec(function(err, foundSideContents){
+//                         if(err){
+//                             console.log(err);
+//                         } else {
+//                             res.render(req.user.lang + '/contents/index', {
+//                                 contents: allContents, 
+//                                 noMatch: noMatch,
+//                                 current: page,    
+//                                 pages: Math.ceil(count / perPage),
+//                                 url: req.url,
+//                                 sideContents: foundSideContents
+//                             });   
+//                         }
+//                     });
+//                 }
+//             });
+//         }
+//     })
+// });
+
 //found popular contents
 router.get('/popular', middleware.authCheck, (req, res) => {
     var noMatch = null;
@@ -427,10 +479,9 @@ router.get("/new", middleware.authCheck, function(req, res){
     
     if(paste != undefined){
         if(videoParse != undefined){
-            var pvd = videoParse.provider;
             res.render(req.user.lang + "/contents/new", {
                 paste: paste,
-                provider: pvd
+                provider: videoParse.provider
             });
         } else {
             res.render(req.user.lang + "/contents/new", {

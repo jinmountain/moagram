@@ -374,6 +374,167 @@ router.get("/following", middleware.authCheck, function(req, res){
     }
 });
 
+// router.get('/likes/search/:search', middleware.authCheck, (req, res) => {
+
+// 	var request= "contentsLiked";
+// 	var ids = req.user.contentLiked;
+// 	var noLikes = null;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1;
+//     var count;
+
+// 	Content.find({
+// 		_id: {$in: ids},
+// 		name: regex
+// 	})
+// 	.sort({"createdAt": -1})
+//     .skip((perPage * page) - perPage)
+//     .limit(perPage)
+//     .exec(function(err, likedContents){
+//         if(err){
+//             console.log(err);
+//         } else {
+//         	Content.find({
+// 				_id: {$in: ids},
+// 				name: regex
+// 			}).exec(function(err, count){
+//                 if(err) {
+//                     console.log(err);
+//                 } else {
+//         			if (likedContents < 1) {
+// 		        		noLikes = "Haven't liked any content";
+// 		        	}
+// 		        	res.render(req.user.lang + '/profile', {
+// 		        		request: request,
+// 					 	contents: likedContents,
+// 		    			user: req.user,
+// 		    			noLikes: noLikes,
+
+// 		    			current: page,    
+// 		                pages: Math.ceil(count / perPage),
+
+// 		                url: req.url
+// 		    		});	
+// 		        }
+// 	        });
+//         }
+//     }); 
+// });
+
+// router.get("/contents/search/:search", middleware.authCheck, function(req, res) {
+
+//  	var request = "contentsCreated";
+//  	var ids = req.user._id;  
+// 	var noContents = null;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1;
+
+// 	User.findById(ids, function(err, userFound){
+// 		if(err){
+// 			console.log(err);
+// 		} else {
+// 	        Content.find({
+// 	        	'author.id': userFound._id,
+// 	        	name: regex
+// 	        })
+//         	.sort({"createdAt": -1})
+// 		    .skip((perPage * page) - perPage)
+// 		    .limit(perPage)
+// 	        .exec(function(err, myContents){
+// 	        	if(err){
+// 	        		console.log(err);
+// 	        	} else { 
+// 	        		Content.find({'author.id': userFound._id}).count().exec(function(err, count){
+// 	        			if(err) {
+// 	        				console.log("gagag");
+// 	        			} else {
+// 			        		if(myContents < 1) {
+// 			        			noContents = "Haven't shared anything yet"
+// 			        		}
+// 			        		res.render(req.user.lang + '/profile', 
+// 			        			{
+// 			        			 request: request,
+// 			        			 user: userFound,
+// 			        			 myContents: myContents,
+// 			        			 noContents: noContents,
+
+// 		 		    			current: page,    
+// 				                pages: Math.ceil(count / perPage),
+
+// 				                url: req.url
+// 			        			}
+// 			        		);
+// 	        			}
+// 	        		});
+// 	        	}
+// 	        });
+// 		}
+// 	});
+// });
+
+// router.get("/followers/search/:search", middleware.authCheck, function(req, res){
+// 	var request = "followers";
+// 	var noFollowers = null;
+// 	var id = req.user._id;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1; 
+
+//     User.findById(id, function(err, userFound){
+// 		if(err){
+// 			console.log(err);
+// 		} else {
+// 			var ids = userFound.followed;
+
+// 			User.find({
+// 				_id: {$in: ids},
+// 				username: regex
+// 			})
+// 			.skip((perPage * page) - perPage)
+// 			.limit(perPage)
+// 			.exec(function(err, myFollowers){
+// 				if(err) {
+// 					console.log(err);
+// 				} else {
+// 					User.find({_id: {$in: ids}}).count().exec(function(err, count){
+// 						if(err) {
+// 							console.log(err);
+// 							console.log(myFollowers);
+// 						} else {
+// 							if(ids < 1) {
+// 								noFollowers = "No one followed you yet :D"
+// 							}
+// 								res.render(req.user.lang + '/profile', {
+// 								request: request,
+// 								user: userFound,
+
+// 								myFollowers: myFollowers,
+// 								noFollowers: noFollowers,
+
+// 								current: page,    
+// 								pages: Math.ceil(count / perPage),
+
+// 				                url: req.url
+// 							});	
+// 						}
+// 					});
+// 				}
+// 			});
+// 		}
+// 	});
+// });
+
 //==== Wall Page Backend Code Start Here====
 //==========================================
 router.get("/:id", middleware.authCheck, function(req, res, next) {
@@ -722,6 +883,177 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 	});
 });
 
+// //================= Wall Like Search =========================
+
+// router.get('/:id/likes/search/:search', middleware.authCheck, (req, res) => {
+
+// 	var request= "contentsLiked";
+// 	var ids = [];
+// 	var likeList = []; 
+// 	var noLikes = null;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1;
+
+//     User.findById(req.params.id, function(err, userFound){
+//     	if(err){
+//     		err.httpStatusCode = 404;
+//             return next(err);
+//     	} else {
+//     		var ids = userFound.contentLiked;
+
+//     		Content.find({
+//     			_id: {$in: ids},
+//     			name: regex
+//     		})
+// 			.sort({"createdAt": -1})
+// 		    .skip((perPage * page) - perPage)
+// 		    .limit(perPage)
+// 		    .exec(function(err, likedContents){
+// 		        if(err){
+// 		            console.log(err);
+// 		        } else {
+// 		        	Content.find({_id: {$in: ids}}).count().exec(function(err, count){
+// 		        		if(err) {
+// 		        			console.log(err);
+// 		        		} else {
+// 		        			if (likedContents < 1) {
+// 				        		noLikes = "Haven't liked any content";
+// 				        	}
+// 				        	res.render(req.user.lang + '/wall', {
+// 				        		request: request,
+// 							 	contents: likedContents,
+// 							 	olouser: userFound,
+				    			
+// 				    			noLikes: noLikes,
+
+// 				    			current: page,    
+// 				                pages: Math.ceil(count / perPage),
+
+// 				                url: req.url
+// 				    		});
+// 		        		}
+// 		        	})
+// 		        }
+// 		    });
+//     	}
+//     }) 
+// });
+
+// //========= Wall Content Search =========
+
+// router.get("/:id/contents/search/:search", middleware.authCheck, function(req, res) {
+
+//  	var request = "contentsCreated";
+//  	var ids = req.user._id;  
+// 	var noContents = null;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1;
+
+// 	User.findById(req.params.id, function(err, userFound){
+// 		if(err){
+// 			err.httpStatusCode = 404;
+//             return next(err);
+// 		} else {
+// 	        Content.find({
+// 	        	'author.id': userFound._id,
+// 	        	name: regex
+// 	        })
+//         	.sort({"createdAt": -1})
+// 		    .skip((perPage * page) - perPage)
+// 		    .limit(perPage)
+// 	        .exec(function(err, myContents){
+// 	        	if(err){
+// 	        		console.log(err);
+// 	        	} else { 
+// 	        		Content.find({'author.id': userFound._id}).count().exec(function(err, count){
+// 	        			if(err) {
+// 	        				console.log(err);
+// 	        			} else {
+// 			        		if(myContents < 1) {
+// 			        			noContents = "Haven't shared anything yet"
+// 			        		}
+// 			        		res.render(req.user.lang + '/wall', {
+// 								request: request,
+// 								olouser: userFound,
+// 								myContents: myContents,
+// 								noContents: noContents,
+
+// 								current: page,    
+// 								pages: Math.ceil(count / perPage),
+
+// 				                url: req.url
+// 			        		});
+// 	        			}
+// 	        		});
+// 	        	}
+// 	        });
+// 		}
+// 	});
+// });
+
+// //========= Wall Follower Search =======
+
+// router.get("/:id/followers/search/:search", middleware.authCheck, function(req, res){
+// 	var request = "followers";
+// 	var noFollowers = null;
+
+// 	const regex = new RegExp(escapeRegex(req.params.search), 'gi');
+
+// 	//pagination
+// 	var perPage = 16;
+//     var page = req.query.page || 1; 
+    
+//     User.findById(req.params.id, function(err, userFound){
+// 		if(err){
+// 			err.httpStatusCode = 404;
+//             return next(err);
+// 		} else {
+// 			var ids = userFound.followed;
+
+// 			User.find({
+// 				_id: {$in: ids},
+// 				name: regex
+// 			}).skip((perPage * page) - perPage)
+// 			.limit(perPage)
+// 			.exec(function(err, myFollowers){
+// 				if(err) {
+// 					console.log(err);
+// 				} else {
+// 					User.find({_id: {$in: ids}}).count().exec(function(err, count){
+// 						if(err) {
+// 							console.log(err);
+// 						} else {
+// 							if(myFollowers < 1){
+// 								noFollowers = "No one followed " + userFound.username + " yet :D";
+// 							}
+// 							res.render(req.user.lang + '/wall', {
+// 								request: request,
+// 								olouser: userFound,
+
+// 								myFollowers: myFollowers,
+// 								noFollowers: noFollowers,
+
+// 								current: page,    
+// 								pages: Math.ceil(count / perPage),
+
+// 				                url: req.url
+// 							});
+// 						}
+// 					});
+// 				}
+// 			});
+// 		}
+// 	});
+// });
+
 //======== FOLLOW and UNFOLLOW ========
 router.post("/:id", function (req, res) {
     User.findById(req.user._id, function (err, foundUser) {
@@ -776,6 +1108,17 @@ router.post("/:id", function (req, res) {
         }
     });
 });
+
+// router.get("/", function(req, res, next){
+// 	if(req.params.params == "contents" || req.params.params == "profile"){
+// 		next();
+// 	} else {
+// 		res.status(404).render('./error', {
+// 	        err: "404",
+// 	        message: "Oops. Page not found"
+// 	    });
+// 	}
+// });
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

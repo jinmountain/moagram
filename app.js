@@ -1,14 +1,15 @@
 // ======== NPMS ========
+const express = require('express');
+const http = require('http');
+const enforce = require('express-sslify');
 const debug = require('debug')('app:startup');
 const morgan = require('morgan');
 const flash = require("connect-flash");
 const express = require('express');
 const mongoose = require('mongoose');
-const http = require('http');
-const enforce = require('express-sslify');
+const app = express();
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const app = express();
 const passport = require('passport');
 const LocalStrategy = require("passport-local")
 const passportSetup = require('./config/passport-setup');
@@ -23,6 +24,7 @@ const ObjectId = require("mongodb").ObjectID;
 
 // ======== ROUTES ========
 const contents = require('./routes/contents');
+const comments = require('./routes/comments');
 const replies = require('./routes/replies');
 const home = require('./routes/home');
 const profile = require('./routes/profile');
@@ -90,9 +92,9 @@ if (app.get('env') === 'development') {
 mongoose.connect(configDB.url, { useNewUrlParser: true })
 	.then(() => console.log('Connected to MongoDB...'))
 	.catch(err => console.error("could not connect to mongoDB"));
-
+	
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
-
 const port  = process.env.PORT || 3000;
-// app.listen(port, () => console.log(`Listening on port ${port}...`));
-http.createServer(app).listen(port, () => console.log('Listening on port ${port}...'));
+http.createServer(app).listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'));
+});

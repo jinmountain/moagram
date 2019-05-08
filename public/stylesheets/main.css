@@ -108,7 +108,7 @@ a { color:red } /* Globally */
 
 /* Each state */
 
-a:visited { text-decoration: none; color:black; }
+a:http://localhost:3000/ko/contents/category/beautyvisited { text-decoration: none; color:black; }
 a:hover { text-decoration: none; color:blue; }
 a:focus { text-decoration: none; color:black; }
 a:hover, a:active { text-decoration: none; color:black }
@@ -132,7 +132,7 @@ a:hover, a:active { text-decoration: none; color:black }
 body { -webkit-text-size-adjust: none; }
 
 .breakWord { 
-  	word-break: break-word; 
+  word-break: break-word; 
 } 
 
 .responsiveText {

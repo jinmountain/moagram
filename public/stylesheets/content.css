@@ -274,7 +274,6 @@ a { color: inherit; }
 
 
 /*========Responsive Show Page=================*/
-
 /*========When screen < 900px==================*/
 @media only screen and (max-width: 900px) {
     .content-show-main-thumbnail #show-main-thumbnail {
