@@ -472,34 +472,6 @@ router.post("/:id", function (req, res, next) {
     });
 });
 
-router.get("/new", middleware.authCheck, function(req, res){
-    var paste = clipboardy.readSync();
-    var videoParse = urlParser.parse(paste);
-
-    var pst = "";
-    var pvd = "";
-    
-    if(paste != undefined){
-        if(videoParse != undefined){
-            pst = paste;
-            pvd = videoParse.provider;
-        } else {
-            pst = paste;
-            pvd = ""
-        }
-    } else {
-        pst = "";
-        pvd = "";
-    }
-    res.render(req.user.lang + "/contents/new", {
-        paste: pst,
-        provider: pvd 
-    }, function(err, html){
-        console.log(html);
-        res.send('done');
-    });
-});
-
 router.get("/:id", middleware.authCheck, function(req, res, next){
     Content.findById(req.params.id, function(err, foundContent){
         if (err){
@@ -583,6 +555,34 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                 }
             });
         }
+    });
+});
+
+router.get("/new", middleware.authCheck, function(req, res){
+    var paste = clipboardy.readSync();
+    var videoParse = urlParser.parse(paste);
+
+    var pst = "";
+    var pvd = "";
+    
+    if(paste != undefined){
+        if(videoParse != undefined){
+            pst = paste;
+            pvd = videoParse.provider;
+        } else {
+            pst = paste;
+            pvd = ""
+        }
+    } else {
+        pst = "";
+        pvd = "";
+    }
+    res.render(req.user.lang + "/contents/new", {
+        paste: pst,
+        provider: pvd 
+    }, function(err, html){
+        console.log(html);
+        res.send('done');
     });
 });
 
