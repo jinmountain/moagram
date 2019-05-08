@@ -36,13 +36,3 @@ const contentSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Content', contentSchema);
-
-// function validateContent(content) {
-//    const schema = {
-//       name: Joi.string().min(5).max(50).required(),
-//       description: Joi.string().min(5).max(255).required()
-//    };
-//   return Joi.validate(content, schema);
-// }
-// exports.Content = Content;
-// exports.validate = validateContent;
