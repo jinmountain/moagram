@@ -93,5 +93,5 @@ mongoose.connect(configDB.url, { useNewUrlParser: true })
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
 const port  = process.env.PORT || 3000;
 http.createServer(app).listen(app.get(port), function() {
-	console.log('Listening on port ${port}...');
+	console.log('Express server listening on port ' + app.get(port));
 });
