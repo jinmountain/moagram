@@ -2,14 +2,14 @@
   "name": "moagram",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.9.0"
+  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
-  },
-  "engines": {
-    "node": "=10.15.3",
-    "npm": "=6.9.0"
   },
   "author": "moagram",
   "license": "ISC",
