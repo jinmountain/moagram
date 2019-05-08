@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require("../models/comment");
 const Content = require("../models/content");
 
 module.exports = {
@@ -32,22 +31,6 @@ module.exports = {
     } else {
         req.flash("error", "You need to be signed in to do that!");
         res.redirect("/login");
-    }
-  },
-  // Verify ownership of a comment
-  checkUserComment: function(req, res, next){
-    if(req.user){
-      Comment.findById(req.params.commentId, function(err, comment){
-        if(comment.author.id.equals(req.user._id)){
-          next();
-        } else {
-          req.flash("error", "You don't have permission");
-          res.redirect("/contents/" + req.params.id);
-        }
-      });
-    } else {
-      req.flash("error", "You need to be signed in");
-      res.redirect("/login");
     }
   }
 }

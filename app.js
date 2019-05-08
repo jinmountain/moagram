@@ -24,7 +24,6 @@ const ObjectId = require("mongodb").ObjectID;
 
 // ======== ROUTES ========
 const contents = require('./routes/contents');
-const comments = require('./routes/comments');
 const replies = require('./routes/replies');
 const home = require('./routes/home');
 const profile = require('./routes/profile');
