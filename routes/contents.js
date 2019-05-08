@@ -149,7 +149,7 @@ router.get("/new", middleware.authCheck, function(req, res){
     //     paste: pst,
     //     provider: pvd 
     // });
-    res.render(req.user.lang + "/contents/new");
+    res.render("en/contents/new");
 });
 
 //Find all contents within the selected category
