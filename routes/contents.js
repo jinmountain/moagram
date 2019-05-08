@@ -126,6 +126,32 @@ router.get('/', middleware.authCheck, (req, res, next) => {
     }
 });
 
+router.get("/new", middleware.authCheck, function(req, res){
+    res.send("WHY THIS IS HAPPENING")
+    // var paste = clipboardy.readSync();
+    // var videoParse = urlParser.parse(paste);
+
+    // var pst = "";
+    // var pvd = "";
+    
+    // if(paste != undefined){
+    //     if(videoParse != undefined){
+    //         pst = paste;
+    //         pvd = videoParse.provider;
+    //     } else {
+    //         pst = paste;
+    //         pvd = ""
+    //     }
+    // } else {
+    //     pst = "";
+    //     pvd = "";
+    // }
+    // res.render(req.user.lang + "/contents/new", {
+    //     paste: pst,
+    //     provider: pvd 
+    // });
+});
+
 //Find all contents within the selected category
 router.get('/category/:category', middleware.authCheck, (req, res) => {
     var noMatch = null;
@@ -340,7 +366,6 @@ router.post('/', function(req,res){
             provider: '',
             id: ''
         }
-
     }
 
     var category = req.body.category;
@@ -473,7 +498,6 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
-    
     Content.findById(req.params.id, function(err, foundContent){
         if (err){
             err.httpStatusCode = 500
@@ -557,32 +581,6 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
             });
         }
     });
-});
-
-router.get("/new", middleware.authCheck, function(req, res){
-    res.send("WHY THIS IS HAPPENING")
-    // var paste = clipboardy.readSync();
-    // var videoParse = urlParser.parse(paste);
-
-    // var pst = "";
-    // var pvd = "";
-    
-    // if(paste != undefined){
-    //     if(videoParse != undefined){
-    //         pst = paste;
-    //         pvd = videoParse.provider;
-    //     } else {
-    //         pst = paste;
-    //         pvd = ""
-    //     }
-    // } else {
-    //     pst = "";
-    //     pvd = "";
-    // }
-    // res.render(req.user.lang + "/contents/new", {
-    //     paste: pst,
-    //     provider: pvd 
-    // });
 });
 
 router.get("/:id/edit", middleware.checkUserContent, function(req, res){
