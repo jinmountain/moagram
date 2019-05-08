@@ -500,8 +500,7 @@ router.post("/:id", function (req, res, next) {
 router.get("/:id", middleware.authCheck, function(req, res, next){
     Content.findById(req.params.id, function(err, foundContent){
         if (err){
-            err.httpStatusCode = 500
-            return next(err);
+            console.log(err)
         } else {
             User.findById(req.user._id, function(err, foundUser) {
                 if (err) {
