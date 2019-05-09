@@ -128,13 +128,12 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 router.get("/new", middleware.authCheck, (req, res) => {
     var paste = clipboardy.readSync();
-    
+    var videoParse = urlParser.parse(paste);
+
     var pst = "";
     var pvd = "";
     
     if(paste != undefined){
-        var videoParse = urlParser.parse(paste);
-
         if(videoParse != undefined){
             pst = paste;
             pvd = videoParse.provider;
@@ -146,7 +145,10 @@ router.get("/new", middleware.authCheck, (req, res) => {
         pst = "";
         pvd = "";
     }
-    res.render(req.user.lang + "/contents/new");
+    res.render(req.user.lang + "/contents/new", {
+        paste: pst,
+        provider: pvd 
+    });
 });
 
 //Find all contents within the selected category
