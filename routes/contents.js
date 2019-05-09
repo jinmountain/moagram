@@ -145,10 +145,7 @@ router.get("/new", middleware.authCheck, (req, res) => {
         pst = "";
         pvd = "";
     }
-    res.render(req.user.lang + "/contents/new", {
-        paste: pst,
-        provider: pvd 
-    });
+    res.render(req.user.lang + "/contents/new");
 });
 
 //Find all contents within the selected category
