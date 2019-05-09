@@ -185,16 +185,27 @@
           <div>
             <form action="/ko/contents/<%=content._id%>" method="POST">
               <%if (user.contentLiked.indexOf(content._id) != -1) { %>
-                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-64.png"/><%= content.likes %></button>
+                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-48.png"/>
+                  <% if(content.likes == 1) { %> 
+                    One Like
+                  <% } else { %>
+                    <%= content.likes %> Likes
+                  <% } %>
+                </button>
               <% } else { %>
-                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-48.png"/><%= content.likes %>
-                  </button>
+                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-64.png"/>
+                  <% if(content.likes == 1) { %> 
+                    One Like
+                  <% } else { %>
+                    <%= content.likes %> Likes
+                  <% } %>
+                </button>
               <% } %>
             </form>
             <% if(user && content.author.id.equals(user._id)){ %>
                 <form style="display: inline" class="pull-right" action="/ko/contents/<%=content._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-default btn-sm" id="btn-default" onclick="return confirm('<%= content.name %>를 삭제할까요?');">삭제</button>
-                    <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents/<%= content._id %>/edit">수정하기</a>                       
+                    <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents/<%= content._id %>/edit">수정하기</a>              
                 </form>
             <% } %>
           </div>
