@@ -31,12 +31,12 @@
           <div class="content-thumbnail col-sm-9">
           <% if(content.video.provider){ %>
             <% if(content.video.provider == 'youtube'){ %>
-              <iframe width="243" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+              <iframe class="content-thumbnail-iframe" width="243" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
             <% } else if(content.video.provider == 'twitch'){ %>
-              <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="243" height="135"></iframe>
+              <iframe class="content-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="243" height="135"></iframe>
             <% } %>
           <% } else if(content.image) { %>
-            <img width="243" height="135" src="<%= content.image%>">
+            <img class="content-thumbnail-iframe" width="243" height="135" src="<%= content.image%>">
           <% } %>
           </div>
 

@@ -136,7 +136,17 @@
 	}
 }
 
+@media only screen and (max-width: 361px) {
+	.content-thumbnail{
+		display: block;
+	    margin-left: auto;
+	    margin-right: 87px;
+	}
 
+	.content-thumbnail-iframe{
+		width: 302px;
+	}
+}
 
 /*============Content Show=======================*/
 #content-show{
