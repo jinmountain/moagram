@@ -1,7 +1,7 @@
 <% include ../partials/header %>
   <div id="content-show">
     <div class="content-show-sidebar">
-      <form action="/en/contents" method="GET" class="form-group">
+      <form action="/ko/contents" method="GET" class="form-group">
         <div class="list-group" style="max-width: 260px;">
           <h5 style="text-align: center; border-bottom: 1px solid #DADADA; padding-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-r-52.png"/>ECENT <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
           <li class="list-group-item" id="content-show-rec-list">
@@ -32,7 +32,7 @@
                   </div>
                   <div>
                     <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" />
-                    <a style="font-size: 15px;" href="/en/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                    <a style="font-size: 15px;" href="/ko/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                   </div>
                 </div>
                 <div class="content-sidebar-infoline" style="font-size: 13px;">
@@ -70,7 +70,7 @@
             <li>
               <!-- Author of the content -->
               <div id="verticalLine">
-                Posted By <a href="/en/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
+                Posted By <a href="/ko/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
               </div>
 
               <!-- Follow button -->
@@ -213,7 +213,7 @@
 
         <!-- mobile size page rec contents -->
         <div class="content-show-mobile-rec">
-          <form action="/en/contents" method="GET" class="form-group">
+          <form action="/ko/contents" method="GET" class="form-group">
             <div class="list-group">
               <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">RECENT POSTS</h5>
               <li class="list-group-item" id="content-show-rec-list">
@@ -240,11 +240,11 @@
 
                     <div class="content-mobile-rec-title breakWord">
                       <div>
-                        <a style="font-size: 18px;" href="/en/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
+                        <a style="font-size: 18px;" href="/ko/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
                       </div>
                       <div>
                         <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" /> 
-                        <a style="font-size: 15px;" href="/en/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                        <a style="font-size: 15px;" href="/ko/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                       </div>
                     </div>
                     <div class="content-mobile-rec-infoline">
