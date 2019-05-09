@@ -128,7 +128,7 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 router.get("/new", middleware.authCheck, (req, res) => {
 
-    const parseClipboard => {
+    function parseClipboard {
         try {
             var paste = clipboardy.readSync();
             return {
