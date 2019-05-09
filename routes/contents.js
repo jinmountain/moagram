@@ -127,7 +127,7 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    var videoParse = urlParser.parse(paste);
+    // var videoParse = urlParser.parse(paste);
 
     var pst = "";
     var pvd = "";
