@@ -127,28 +127,35 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    // var paste = "";
-    var videoParse = urlParser.parse(clipboardy.readSync());
 
-    var pst = "";
-    var pvd = "";
-    
-    if(paste != undefined){
-        if(videoParse != undefined){
-            pst = paste;
-            pvd = videoParse.provider;
-        } else {
-            pst = paste;
-            pvd = ""
+    const parseClipboard => {
+        try {
+            var paste = clipboardy.readSync();
+            return {
+                videoParse: urlParser.parse(paste),
+                paste
+            }
+        } catch (error) {
+            return {
+                videoParse: undefined
+                error
+            };
         }
-    } else {
-        pst = "";
-        pvd = "";
     }
-    res.render(req.user.lang + "/contents/new", {
-        paste: pst,
-        provider: pvd 
-    });
+    
+    const result = parseClipboard();
+
+    if(result.videoParse != undefined){
+        res.render(req.user.lang + "/contents/new", {
+            paste: paste,
+            provider: result.videoParse.provider 
+        });
+    } else {
+        res.render(req.user.lang + "/contents/new", {
+            paste: "",
+            provider: ""
+        });
+    }
 });
 
 //Find all contents within the selected category
