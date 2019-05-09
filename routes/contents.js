@@ -131,13 +131,16 @@ router.get("/new", middleware.authCheck, (req, res) => {
     var pvd = "";
 
     var paste = clipboardy.readSync();
-    
-    if(urlParser.parse(paste) != undefined) {
-        var pvd = urlParser.parse(paste);
-    }
+    urlParser.parse(paste, function(err, source){
+        if(err){
+            console.log(err);
+        } else {
+            pvd = source
+        }
+    })
     
     if(paste != undefined){
-        if(pvd){
+        if(pvd != undefined){
             pst = paste;
             pvd = pvd.provider;
         } else {
