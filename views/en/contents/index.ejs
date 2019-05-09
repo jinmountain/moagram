@@ -18,10 +18,10 @@
           <div class="content-hotness col-sm-3" style="padding-right: 0px;">
             <form action="/en/contents/<%=content._id%>" method="POST">  
               <%if (user.contentLiked.indexOf(content._id) != -1) { %>
-              <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/>
+              <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-64.png"/>
               </button>
               <% } else { %>
-              <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/>
+              <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-48.png"/>
               </button>
               <% } %>
             </form>
@@ -84,7 +84,7 @@
               <%= content.author.username%> 
             </a>
           </div>
-          <div id="verticalLine" style="font-size: 15px;"><img style="width: 33px; height: 33px;" src="/icons/like.png"/>
+          <div id="verticalLine" style="font-size: 15px;"><img style="width: 33px; height: 33px;" src="/icons/icons8-facebook-like-64.png"/>
             <% if(content.likes > 1000) { %>
             <bold> <%= Math.floor(content.likes/1000) %>K</bold> 
             <% } else { %>

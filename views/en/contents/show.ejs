@@ -164,11 +164,11 @@
             <form action="/en/contents/<%=content._id%>" method="POST">
                 
                 <%if (user.contentLiked.indexOf(content._id) != -1) { %>
-                    <button style="border: none; background-color: transparent;"><img src="/icons/unlike.png"/><%= content.likes %></button>
+                    <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-64.png"/><%= content.likes %></button>
 
                     
                 <% } else { %>
-                    <button style="border: none; background-color: transparent;"><img src="/icons/like.png"/><%= content.likes %>
+                    <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-48.png.png"/><%= content.likes %>
                     </button>
                 <% } %>
             </form>

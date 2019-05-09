@@ -136,6 +136,7 @@
 	}
 }
 
+/* =============galaxy phone has 360px size======*/
 @media only screen and (max-width: 361px) {
 	.content-thumbnail{
 		display: block;
