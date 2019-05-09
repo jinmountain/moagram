@@ -53,21 +53,9 @@
       </ul>
     </form>
 
-    <% if(request == "contentsLiked"){ %>
+    <% if(request == "contentsLiked" || request == "contentsCreated" || request == "following"){ %>
       <form style="padding-right: 30px;" class="form-inline" >      
-        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
-      </form>
-    <% } %>
-
-    <% if(request == "contentsCreated"){ %>
-      <form style="padding-right: 30px;" class="form-inline" >      
-        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
-        </form>
-    <% } %>
-
-    <% if(request == "following"){ %>
-      <form style="padding-right: 30px;" class="form-inline" >      
-        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="검색" class="form-control mr-sm-2">
       </form>
     <% } %>
   </div>  
