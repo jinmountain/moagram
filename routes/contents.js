@@ -5,7 +5,7 @@ const passport = require('passport');
 const moment = require('moment');
 const urlParser = require('js-video-url-parser');
 const querystring = require('querystring');
-// const clipboardy = require('clipboardy');
+const clipboardy = require('clipboardy');
 
 // ======== routes ========
 const Content = require('../models/content');
@@ -127,29 +127,28 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    // var paste = clipboardy.readSync();
-    // var videoParse = urlParser.parse(paste);
+    var paste = clipboardy.readSync();
+    var videoParse = urlParser.parse(paste);
 
-    // var pst = "";
-    // var pvd = "";
+    var pst = "";
+    var pvd = "";
     
-    // if(paste != undefined){
-    //     if(videoParse != undefined){
-    //         pst = paste;
-    //         pvd = videoParse.provider;
-    //     } else {
-    //         pst = paste;
-    //         pvd = ""
-    //     }
-    // } else {
-    //     pst = "";
-    //     pvd = "";
-    // }
-    // res.render(req.user.lang + "/contents/new", {
-    //     paste: pst,
-    //     provider: pvd 
-    // });
-    res.render("home");
+    if(paste != undefined){
+        if(videoParse != undefined){
+            pst = paste;
+            pvd = videoParse.provider;
+        } else {
+            pst = paste;
+            pvd = ""
+        }
+    } else {
+        pst = "";
+        pvd = "";
+    }
+    res.render(req.user.lang + "/contents/new", {
+        paste: pst,
+        provider: pvd 
+    });
 });
 
 //Find all contents within the selected category
