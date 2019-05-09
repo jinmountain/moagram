@@ -18,8 +18,6 @@ const ejsLint = require('ejs-lint');
 const methodOverride = require("method-override");
 const moment = require('moment');
 const urlParser = require('js-video-url-parser');
-const MongoClient = require("mongodb").MongoClient;
-const ObjectId = require("mongodb").ObjectID;
 
 // ======== ROUTES ========
 const contents = require('./routes/contents');
