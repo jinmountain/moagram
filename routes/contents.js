@@ -127,9 +127,8 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    var paste = "";
-    var paste = clipboardy.readSync();
-    var videoParse = urlParser.parse(req.body.haha);
+    // var paste = "";
+    var videoParse = urlParser.parse(clipboardy.readSync());
 
     var pst = "";
     var pvd = "";
