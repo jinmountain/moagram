@@ -5,7 +5,6 @@ const passport = require('passport');
 const moment = require('moment');
 const urlParser = require('js-video-url-parser');
 const querystring = require('querystring');
-const clipboardy = require('clipboardy');
 
 // ======== routes ========
 const Content = require('../models/content');
@@ -128,34 +127,8 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 router.get("/new", middleware.authCheck, (req, res) => {
 
-    function parseClipboard() {
-        try {
-            var paste = clipboardy.readSync();
-            return {
-                videoParse: urlParser.parse(paste),
-                paste
-            };
-        } catch (error) {
-            return {
-                videoParse: undefined,
-                error
-            };
-        }
-    };
-    
-    const result = parseClipboard();
+    res.render(req.user.lang + "/contents/new");
 
-    if(result.videoParse != undefined){
-        res.render(req.user.lang + "/contents/new", {
-            paste: paste,
-            provider: result.videoParse.provider 
-        });
-    } else {
-        res.render(req.user.lang + "/contents/new", {
-            paste: "",
-            provider: ""
-        });
-    };
 });
 
 //Find all contents within the selected category
