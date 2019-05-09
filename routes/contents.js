@@ -134,14 +134,14 @@ router.get("/new", middleware.authCheck, (req, res) => {
             return {
                 videoParse: urlParser.parse(paste),
                 paste
-            }
+            };
         } catch (error) {
             return {
-                videoParse: undefined
+                videoParse: undefined,
                 error
             };
         }
-    }
+    };
     
     const result = parseClipboard();
 
@@ -155,7 +155,7 @@ router.get("/new", middleware.authCheck, (req, res) => {
             paste: "",
             provider: ""
         });
-    }
+    };
 });
 
 //Find all contents within the selected category
