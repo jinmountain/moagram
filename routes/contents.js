@@ -127,24 +127,23 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    var paste = clipboardy.readSync();
     var videoParse = urlParser.parse(paste);
 
     var pst = "";
     var pvd = "";
     
-    if(paste != undefined){
-        if(videoParse != undefined){
-            pst = paste;
-            pvd = videoParse.provider;
-        } else {
-            pst = paste;
-            pvd = ""
-        }
-    } else {
-        pst = "";
-        pvd = "";
-    }
+    // if(paste != undefined){
+    //     if(videoParse != undefined){
+    //         pst = paste;
+    //         pvd = videoParse.provider;
+    //     } else {
+    //         pst = paste;
+    //         pvd = ""
+    //     }
+    // } else {
+    //     pst = "";
+    //     pvd = "";
+    // }
     res.render(req.user.lang + "/contents/new");
 });
 
