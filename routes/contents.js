@@ -127,16 +127,19 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 });
 
 router.get("/new", middleware.authCheck, (req, res) => {
-    var paste = clipboardy.readSync();
-    var videoParse = urlParser.parse(paste);
-
     var pst = "";
     var pvd = "";
+
+    var paste = clipboardy.readSync();
+    
+    if(urlParser.parse(paste) != undefined) {
+        var pvd = urlParser.parse(paste);
+    }
     
     if(paste != undefined){
-        if(videoParse != undefined){
+        if(pvd){
             pst = paste;
-            pvd = videoParse.provider;
+            pvd = pvd.provider;
         } else {
             pst = paste;
             pvd = ""
