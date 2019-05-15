@@ -126,8 +126,22 @@ passport.use(
         console.log(profile);
 		User.findOne({googleId: profile.id}).then((currentUser) => {
             if(currentUser){
-                console.log('user is: ', currentUser);
-                done(null, currentUser);
+                if(currentUser.username != profile.displayName || currentUser.thumbnail != profile._json.image.url){
+                    var newData = {
+                        username: profile.displayName,
+                        thumbnail: profile._json.image.url
+                    };
+
+                    User.findByIdAndUpdate(currentUser.id, {$set: newData}, function(err, foundUser){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            done(null, foundUser);
+                        }
+                    });
+                } else {
+                    done(null, currentUser);
+                }
             } else {
                 new User({
                     username: profile.displayName,
