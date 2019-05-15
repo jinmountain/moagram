@@ -8,12 +8,17 @@ const middleware = require("../middleware");
 
 
 router.get("/", function (req, res) {
+
 	if(req.query.search){
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
 		var search = regex
-		res.render("home")
+		res.render("home", {
+			ctgCount: []
+		})
 	} else {
-		res.render("home");
+		res.render("home", {
+			ctgCount: []
+		});
 	}
 });
 
