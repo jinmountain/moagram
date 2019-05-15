@@ -9,6 +9,33 @@ const middleware = require("../middleware");
 const Content = require('../models/content');
 const User    = require("../models/user");
 
+// =========Count Newly Upadated Content in Each CTG==========
+function ctgCount(ctgCountArray) {
+    var contentCtg = ["tntl", "mukbang", "news", "documentary", 
+                    "educational", "fitness", "motivational", "music",
+                    "beauty", "gaming", "vlog", "animal", "others"];
+
+    var end = Date.now();
+    var contentCreatedToday = end - 86400000;
+
+    contentCtg.forEach(function(ctg, i, array) {
+        Content.countDocuments({
+            category: ctg,
+            createdAt: {$gt: contentCreatedToday}
+        }, function(err, count){
+            if(err){
+                err.httpStatusCode = 500
+                return next(err);
+            } else {
+                ctgCountArray.splice(i, 1, count);
+            }
+        });
+    });
+}
+
+var ctgCountArray = [];
+// =============================================================
+
 router.get('/', middleware.authCheck, (req, res) => {
 
 	var request = "overview";
@@ -18,6 +45,8 @@ router.get('/', middleware.authCheck, (req, res) => {
 	var noLikes = null;
 	var moreContents = null;
 	var moreLikes = null;
+
+	ctgCount(ctgCountArray);
 
 	Content.find({_id: {$in: ids}})
 	.limit(8)
@@ -65,7 +94,8 @@ router.get('/', middleware.authCheck, (req, res) => {
 	        			 noLikes: noLikes,
 
 	        			 moreLikes: moreLikes,
-	        			 moreContents: moreContents
+	        			 moreContents: moreContents,
+	        			 ctgCount: ctgCountArray
 	        			}
 	        		);
 	        	}
@@ -75,7 +105,12 @@ router.get('/', middleware.authCheck, (req, res) => {
 });
 
 router.get('/setting', middleware.authCheck, (req, res) => {
-	res.render(req.user.lang + '/setting');
+
+	ctgCount(ctgCountArray);
+
+	res.render(req.user.lang + '/setting', {
+		ctgCount: []
+	});
 });
 
 router.put('/', middleware.authCheck, (req, res) => {
@@ -114,6 +149,8 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	var perPage = 16;
     var page = req.query.page || 1;
 
+    ctgCount(ctgCountArray);
+
     if(req.query.search){
     	const regex = new RegExp(escapeRegex(req.query.search), 'gi');
     	Content.find({
@@ -146,7 +183,8 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			    			current: page,    
 			                pages: Math.ceil(count / perPage),
 
-			                url: req.url
+			                url: req.url,
+			                ctgCount: ctgCountArray
 			    		});
 	        		}
 	        	})
@@ -177,7 +215,8 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			    			current: page,    
 			                pages: Math.ceil(count / perPage),
 
-			                url: req.url
+			                url: req.url,
+			                ctgCount: ctgCountArray
 			    		});
 	        		}
 	        	})
@@ -195,6 +234,8 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 	//pagination
 	var perPage = 16;
     var page = req.query.page || 1;
+
+    ctgCount(ctgCountArray);
 
 	User.findById(ids, function(err, userFound){
 		if(err){
@@ -233,7 +274,8 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 			 		    			current: page,    
 					                pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 				        			}
 				        		);
 		        			}
@@ -266,7 +308,8 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 			 		    			current: page,    
 					                pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 				        			}
 				        		);
 		        			}
@@ -285,6 +328,8 @@ router.get("/following", middleware.authCheck, function(req, res){
 	//pagination
 	var perPage = 16;
     var page = req.query.page || 1; 
+
+    ctgCount(ctgCountArray);
 
     if(req.query.search) {
     	const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -324,7 +369,8 @@ router.get("/following", middleware.authCheck, function(req, res){
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 								});	
 							}
 						});
@@ -363,7 +409,8 @@ router.get("/following", middleware.authCheck, function(req, res){
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 								});	
 							}
 						});
@@ -545,6 +592,8 @@ router.get("/:id", middleware.authCheck, function(req, res, next) {
 	var moreContents = null;
 	var moreLikes = null;
 
+	ctgCount(ctgCountArray);
+
 	User.findById(req.params.id, function(err, userFound){
 		if (err) {
 			err.httpStatusCode = 500;
@@ -590,7 +639,8 @@ router.get("/:id", middleware.authCheck, function(req, res, next) {
 			        			 noLikes: noLikes,
 
 			        			 moreLikes: moreLikes,
-			        			 moreContents: moreContents
+			        			 moreContents: moreContents,
+			        			 ctgCount: ctgCountArray
 			        			}
 			        		);
 			        	} 	
@@ -613,6 +663,8 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 	//pagination
 	var perPage = 16;
     var page = req.query.page || 1;
+
+    ctgCount(ctgCountArray);
 
     User.findById(req.params.id, function(err, userFound){
     	if(err){
@@ -654,7 +706,8 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					    			current: page,    
 					                pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 					    		});
 			        		}
 			        	})
@@ -686,7 +739,8 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					    			current: page,    
 					                pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 					    		});
 			        		}
 			        	})
@@ -707,7 +761,7 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 	var perPage = 16;
     var page = req.query.page || 1;
 
-    
+    ctgCount(ctgCountArray);
 
 	User.findById(req.params.id, function(err, userFound){
 		if(err){
@@ -748,7 +802,8 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 				        		});
 		        			}
 		        		});
@@ -784,7 +839,8 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 				        		});
 		        			}
 		        		});
@@ -803,6 +859,8 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 	//pagination
 	var perPage = 16;
     var page = req.query.page || 1; 
+
+    ctgCount(ctgCountArray);
     
     User.findById(req.params.id, function(err, userFound){
 		if(err){
@@ -842,7 +900,8 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 								});
 							}
 						});
@@ -872,7 +931,8 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									current: page,    
 									pages: Math.ceil(count / perPage),
 
-					                url: req.url
+					                url: req.url,
+					                ctgCount: ctgCountArray
 								});
 							}
 						});
@@ -1109,17 +1169,6 @@ router.post("/:id", function (req, res) {
     });
 });
 
-// router.get("/", function(req, res, next){
-// 	if(req.params.params == "contents" || req.params.params == "profile"){
-// 		next();
-// 	} else {
-// 		res.status(404).render('./error', {
-// 	        err: "404",
-// 	        message: "Oops. Page not found"
-// 	    });
-// 	}
-// });
-
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
@@ -1152,10 +1201,11 @@ router.use((err, req, res, next) => {
         });
     } else {
         res.status(err.httpStatusCode).render('./error', {
-            err: "",
+            err: "Unknown",
             message: "Oops. Something went wrong"
         });
     }
 });
 
 module.exports = router;
+

@@ -108,58 +108,83 @@
         </div>
 
         <div id="ctg-nav">
-          <form action="/en/contents/category" method="GET" class="form-group">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents"><img height="35" width="35" id="cat-icons" src="/icons/icons8-check-all-60.png"/> All</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/tntl" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL | 웃긴영상</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/mukbang" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/news" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-about-64.png"> News</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/documentary" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/educational" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/fitness" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/motivational" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/music" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music</a>
-              </li>
-              <li class="nav-item"> 
-                <a class="nav-link active" href="/en/contents/category/beauty" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/gaming" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/vlog" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/animal" name="category">
-                    <img height="35" width="35" id="cat-icons" 
-                    src='/icons/icons8-pig-100.png' onmouseover="this.src='/icons/icons8-pinkpig-100.png';" onmouseout="this.src='/icons/icons8-pig-100.png';"/> 
-                    Animal
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/en/contents/category/others" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-xd-50.png"/>
-                    Others
-                </a>
-              </li>
-            </ul>
-          </form>
+            <form action="/en/contents/category" method="GET" class="form-group">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents"><img height="35" width="35" id="cat-icons" src="/icons/icons8-check-all-60.png"/> All</a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/tntl" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lol-64.png"> TNTL | 웃긴영상 
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[0]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/mukbang" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[1]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/news" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[2]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/documentary" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[3]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/educational" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[4]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/fitness" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[5]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/motivational" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[6]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/music" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[7]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" href="/en/contents/category/beauty" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[8]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/gaming" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[9]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/vlog" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[10]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/animal" name="category">
+                            <img height="35" width="35" id="cat-icons" 
+                            src='/icons/icons8-pig-100.png' onmouseover="this.src='/icons/icons8-pinkpig-100.png';" onmouseout="this.src='/icons/icons8-pig-100.png';"/> 
+                            Animal
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[11]%></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/en/contents/category/others" name="category">
+                            <img height="35" width="35" id="cat-icons" src="/icons/icons8-xd-50.png"/>
+                            Others
+                            <span class="badge badge-pill badge-warning"><%=ctgCount[12]%></span>
+                        </a>
+                    </li>
+                </ul>
+            </form>
         </div>
 
         <!-- ========flash npm======== -->

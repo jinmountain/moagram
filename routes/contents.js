@@ -14,11 +14,41 @@ const profile = require("./profile");
 const middleware = require("../middleware");
 const configDB = require('../config/keys.js');
 
+// =========Count Newly Upadated Content in Each CTG==========
+function ctgCount(ctgCountArray) {
+    var contentCtg = ["tntl", "mukbang", "news", "documentary", 
+                    "educational", "fitness", "motivational", "music",
+                    "beauty", "gaming", "vlog", "animal", "others"];
+
+    var end = Date.now();
+    var contentCreatedToday = end - 86400000;
+
+    contentCtg.forEach(function(ctg, i, array) {
+        Content.countDocuments({
+            category: ctg,
+            createdAt: {$gt: contentCreatedToday}
+        }, function(err, count){
+            if(err){
+                err.httpStatusCode = 500
+                return next(err);
+            } else {
+                ctgCountArray.splice(i, 1, count);
+            }
+        });
+    });
+}
+
+var ctgCountArray = [];
+// =============================================================
+
 //find every content
 router.get('/', middleware.authCheck, (req, res, next) => {
+
     var noMatch = null;
     var perPage = 12;
     var page = req.query.page || 1;
+
+    ctgCount(ctgCountArray);
 
     if(req.query.search){
         const nameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -71,7 +101,8 @@ router.get('/', middleware.authCheck, (req, res, next) => {
                                     pages: Math.ceil(count / perPage),
 
                                     url: req.url,
-                                    sideContents: foundSideContents
+                                    sideContents: foundSideContents,
+                                    ctgCount: ctgCountArray
                                 });
                             }
                         });
@@ -114,7 +145,8 @@ router.get('/', middleware.authCheck, (req, res, next) => {
                                     pages: Math.ceil(count / perPage),
 
                                     url: req.url,
-                                    sideContents: foundSideContents
+                                    sideContents: foundSideContents,
+                                    ctgCount: ctgCountArray
                                 });
                             }
                         });
@@ -127,8 +159,11 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 router.get("/new", middleware.authCheck, (req, res) => {
 
-    res.render(req.user.lang + "/contents/new");
+    ctgCount(ctgCountArray);
 
+    res.render(req.user.lang + "/contents/new", {
+        ctgCount: ctgCountArray
+    });
 });
 
 //Find all contents within the selected category
@@ -138,8 +173,9 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
     var page = req.query.page || 1;
     var count;
 
+    ctgCount(ctgCountArray);
+
     // Search with category
-    
     const ctg = req.params.category;
     
     if(req.query.search){
@@ -179,7 +215,8 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
                                     current: page,    
                                     pages: Math.ceil(count / perPage),
                                     url: req.url,
-                                    sideContents: foundSideContents
+                                    sideContents: foundSideContents,
+                                    ctgCount: ctgCountArray
                                 });   
                             }
                         });
@@ -217,7 +254,8 @@ router.get('/category/:category', middleware.authCheck, (req, res) => {
                                     current: page,    
                                     pages: Math.ceil(count / perPage),
                                     url: req.url,
-                                    sideContents: foundSideContents
+                                    sideContents: foundSideContents,
+                                    ctgCount: ctgCountArray
                                 });   
                             }
                         });
@@ -285,6 +323,8 @@ router.get('/popular', middleware.authCheck, (req, res) => {
     var perPage = 12;
     var page = req.query.page || 1;
 
+    ctgCount(ctgCountArray);
+
     Content.find({})
     .sort({"hotness": -1})
     .skip((perPage * page) - perPage)
@@ -315,7 +355,8 @@ router.get('/popular', middleware.authCheck, (req, res) => {
                                 current: page,    
                                 pages: Math.ceil(count / perPage),
                                 url: req.url,
-                                sideContents: foundSideContents
+                                sideContents: foundSideContents,
+                                ctgCount: ctgCountArray
                             });   
                         }
                     });
@@ -327,8 +368,8 @@ router.get('/popular', middleware.authCheck, (req, res) => {
 
 router.post('/', function(req,res){
 
-	var name = req.body.name;
-	var image = req.body.image;
+    var name = req.body.name;
+    var image = req.body.image;
 
     var videoParse = urlParser.parse(req.body.video);
 
@@ -348,12 +389,12 @@ router.post('/', function(req,res){
     }
 
     var category = req.body.category;
-	var desc = req.body.description;
-	var author = {
-		id: req.user._id,
-		username: req.user.username,
+    var desc = req.body.description;
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
         thumbnail: req.user.thumbnail
-	};
+    };
     var likes = 0;
     var views = 0;
     
@@ -364,7 +405,7 @@ router.post('/', function(req,res){
 
     var hottness = 0;
 
-	var newContent = {
+    var newContent = {
         name: name, 
         image: image, 
         video: video, 
@@ -477,6 +518,9 @@ router.post("/:id", function (req, res, next) {
 });
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
+
+    ctgCount(ctgCountArray);
+
     Content.findById(req.params.id, function(err, foundContent){
         if (err){
             err.httpStatusCode = 500
@@ -550,7 +594,8 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                      content: foundContent,
                                      olouser: foundUser,
                                      url: req.url,
-                                     contentAuthor: contentAuthor
+                                     contentAuthor: contentAuthor,
+                                     ctgCount: ctgCountArray
                                     });
                                 }
                             });
@@ -563,6 +608,9 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
 });
 
 router.get("/:id/edit", middleware.checkUserContent, function(req, res){
+
+    ctgCount(ctgCountArray);
+
     //find the content with the ID
     Content.findById(req.params.id, function(err, foundContent){
         if(err){
@@ -570,7 +618,8 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
             return next(err);
         } else {
             res.render(req.user.lang + "/contents/edit", {
-                content: foundContent
+                content: foundContent,
+                ctgCount: ctgCountArray
             });
         }
     });
@@ -666,7 +715,7 @@ router.use((err, req, res, next) => {
         });
     } else {
         res.status(err.httpStatusCode).render('./error', {
-            err: "",
+            err: "Unknown",
             message: "Oops. Something went wrong"
         });
     }
