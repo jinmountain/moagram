@@ -4,18 +4,55 @@ const router = express.Router();
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const User = require("../models/user");
+const Content = require('../models/content');
+
+// =========Count Newly Upadated Content in Each CTG==========
+function ctgCount(ctgCountArray) {
+    var contentCtg = ["tntl", "mukbang", "news", "documentary", 
+                    "educational", "fitness", "motivational", "music",
+                    "beauty", "gaming", "vlog", "animal", "others"];
+
+    var end = Date.now();
+    var contentCreatedToday = end - 86400000;
+
+    contentCtg.forEach(function(ctg, i, array) {
+        Content.countDocuments({
+            category: ctg,
+            createdAt: {$gt: contentCreatedToday}
+        }, function(err, count){
+            if(err){
+                err.httpStatusCode = 500
+                return next(err);
+            } else {
+                ctgCountArray.splice(i, 1, count);
+            }
+        });
+    });
+}
+
+var ctgCountArray = [];
 
 router.get('/login', (req, res) => {
+    ctgCount(ctgCountArray);
+
     if(req.query.language){
         if(req.query.language == "en"){
-            res.render('en/login');
+            res.render('en/login', {
+                ctgCount: ctgCountArray
+            });
         } else if(req.query.language == "ko"){
-            res.render('ko/login');
+            res.render('ko/login', {
+                ctgCount: ctgCountArray
+            });
         } else {
-            res.render('en/login');
+            res.render('en/login', {
+                ctgCount: ctgCountArray
+            });
         }
     } else {
-        res.render('en/login');
+        res.render('en/login', {
+            ctgCount: ctgCountArray
+        });
     }
 });
 
