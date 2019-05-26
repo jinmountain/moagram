@@ -43,6 +43,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "popper.js": "^1.14.3",
+    "socket.io": "^2.2.0",
     "winston": "^3.0.0"
   }
 }
