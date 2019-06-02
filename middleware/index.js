@@ -25,12 +25,12 @@ module.exports = {
         } else {
           req.flash("error", "You don't have permission");
           console.log("error");
-          res.redirect("/contents/" + req.params.id);
+          res.redirect('/' + req.user.lang + "/contents/" + req.params.id);
         }
       });
     } else {
         req.flash("error", "You need to be signed in to do that!");
-        res.redirect("/login");
+        res.redirect("/auth/login");
     }
   }
 }
