@@ -1,7 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <% contents.forEach(function(content){ %>
   <div class="contents row">
-    <div class="content-res col-md-6">
+    <div class="content-res col-md-5">
       <div class="row secondRow">
         <!-- ==============thumnail=============== -->
         <div class="content-thumbnail col-sm-12">
@@ -24,8 +24,8 @@
     </div>
   
   <!-- ==============Title=============== -->
-    <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-      <div class="content-title .col-xs-4 .col-sm-4 breakWord">
+    <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
+      <div class="content-title breakWord">
         <a href="/contents/<%= content._id %>">
           <p id="line"><strong><%= content.name %></strong></p>
         </a>
@@ -76,7 +76,7 @@
         </h6>
       </div>
     <!-- ==============Infoline=============== -->
-      <div class="content-infoline .col-xs-8 .col-sm-8 breakWord">
+      <div class="content-infoline breakWord">
         <div>
           Posted by&nbsp;   
           <strong>

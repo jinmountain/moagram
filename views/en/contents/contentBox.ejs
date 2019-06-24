@@ -2,7 +2,7 @@
 
 <% contents.forEach(function(content){ %>
   <div class="contents row">
-    <div class="content-res col-md-6">
+    <div class="content-res col-md-5">
       <div class="row secondRow">
         <!-- ==============thumnail=============== -->
         <div class="content-thumbnail col-sm-12">
@@ -25,8 +25,8 @@
     </div>
   
   <!-- ==============Title=============== -->
-    <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-      <div class="content-title .col-xs-4 .col-sm-4 breakWord" style='padding-top: 5px;'>
+    <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
+      <div class="content-title breakWord" style='padding-top: 5px;'>
         <a href="/contents/<%= content._id %>">
           <div id="line"><%= content.name %></div>
         </a>
@@ -63,7 +63,7 @@
         </h6>
       </div>
     <!-- ==============Infoline=============== -->
-      <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+      <div class="content-infoline breakWord"> 
         <div>
           Posted by &nbsp;   
           <a class="noSelect" href="/profile/<%= content.author.id %>">
