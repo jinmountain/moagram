@@ -84,14 +84,13 @@
             <span class="badge badge-secondary">New</span>
           <% } %>
           
-          
-          <span class="badge badge-pill badge-info">
+          <span class="badge badge-pill badge-info capFirst">
             <% if(topContent[0].category == 'tntl'){ %>
               TNTL | 웃긴영상
             <% } else if(topContent[0].category == 'mukbang'){ %>
               Mukbang | 먹방
             <% } else { %>
-              <% capitalizeFirstLetter(topContent[0].category) %>
+              <%= topContent[0].category %>
             <% } %>
           </span>
         </div>
@@ -217,7 +216,7 @@
             <span class="badge badge-secondary"> New</span>
           <% } %>
   
-          <span class="badge badge-pill badge-info">
+          <span class="badge badge-pill badge-info capFirst">
             <% if(content.category == 'tntl'){ %>
               TNTL | 웃긴영상
             <% } else if(content.category == 'mukbang'){ %>
