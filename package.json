@@ -27,6 +27,7 @@
     "ejs-lint": "^0.3.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "express-sslify": "^1.2.0",
     "flash": "^1.1.0",
     "joi": "^13.4.0",
     "jquery": "^3.4.1",
