@@ -28,12 +28,18 @@
     <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
       <div class="content-title breakWord" style='padding-top: 5px;'>
         <a href="/contents/<%= content._id %>">
-          <div id="line"><%= content.name %></div>
+          <div id="line">
+            <% if(content.name.length > 35){ %>
+              <%- content.name.slice(0, 35) %> ... 
+            <% } else { %>
+              <%- content.name %>
+            <% } %>
+          </div>
         </a>
 
         <% for(var i=0; i<topContent.length; i++){ %>
           <% if(content._id == topContent[i].id){ %>
-            <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
+            <span class="badge badge-pill badge-danger">HOT</span>
           <% } %>
         <% } %>
         
@@ -47,20 +53,18 @@
         <% var diff_hours = elapsed / (60*60*1000);%>
 
         <% if (diff_hours < 24) { %>
-          <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+          <span class="badge badge-secondary"> New</span>
         <% } %>
-        
-        <h6 style="padding-left: 5px;" id="line">
-          <span class="badge badge-pill badge-info">
-            <% if(content.category == 'tntl'){ %>
-              TNTL | 웃긴영상
-            <% } else if(content.category == 'mukbang'){ %>
-              Mukbang | 먹방
-            <% } else { %>
-              <%= content.category %>
-            <% } %>
-          </span>
-        </h6>
+
+        <span class="badge badge-pill badge-info capFirst">
+          <% if(content.category == 'tntl'){ %>
+            TNTL | 웃긴영상
+          <% } else if(content.category == 'mukbang'){ %>
+            Mukbang | 먹방
+          <% } else { %>
+            <%= content.category %>
+          <% } %>
+        </span>
       </div>
     <!-- ==============Infoline=============== -->
       <div class="content-infoline breakWord"> 
@@ -109,11 +113,11 @@
             <span>&nbsp;<%= content.comments.length %> Comment</span>
           <% } %>
         </div>
-        <div style='color: #000000'> 
-          <% if(content.description.length > 40){ %>
-            <p><%- content.description.slice(0, 40) %> ... </p>
+        <div style='color: #000000; padding-top: 0px;'> 
+          <% if(content.description.length > 25){ %>
+            <%- content.description.slice(0, 25) %> ...
           <% } else { %>
-            <p><%- content.description.slice(0, 40) %></p>
+            <%- content.description %>
           <% } %>
         </div>
       </div>
