@@ -215,3 +215,7 @@ display:none;
 .marginAuto {
 	margin: 0 auto;
 } 
+
+.capFirst {
+	text-transform: capitalize;
+}
