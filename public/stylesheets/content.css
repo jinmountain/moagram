@@ -313,7 +313,7 @@ a { color: inherit; }
 
 
 /*========Responsive Show Page=================*/
-/*========When screen < 900px==================*/
+/*========When show page screen < 900px==================*/
 @media only screen and (max-width: 900px) {
     .content-show-main-thumbnail #show-main-thumbnail {
     	width: 400px;
@@ -321,7 +321,7 @@ a { color: inherit; }
     }
 }
 
-/*========When screen < 600px==================*/
+/*========When show page screen < 600px==================*/
 @media only screen and (max-width: 600px) {
     .content-show-sidebar {
 		grid-column: 11/11;
@@ -335,10 +335,27 @@ a { color: inherit; }
 	.content-mobile-rec-thumbnail .content-mobile-rec-thumbnail-iframe{
 		width: 180px;
 		height: 100px;
+	}
+
+	.content-show-main-info .content-show-main-header {
+		max-width: 350px;
+	}
+
+	#content-show-name {
+		font-size: 23px;
 	}	
+
+	.content-show-main-thumbnail #show-main-thumbnail {
+    	width: 335px;
+    	height: 210px;
+    }
+
+	.content-show-main {
+		padding-left: 0px;
+	}
 }
 
-/*========When screen < 565px==================*/
+/*========When show page screen < 565px==================*/
 @media only screen and (max-width: 565px) {
 	.content-show-main {
 		grid-column: 1/11;
@@ -346,32 +363,8 @@ a { color: inherit; }
 	}
 }
 
-/*========When screen < 500px==================*/
-@media only screen and (max-width: 600px) {
-    .content-show-main-thumbnail #show-main-thumbnail {
-    	width: 335px;
-    	height: 210px;
-    }
-    .content-show-main-thumbnail {
-		padding-left: 0px;
-	}
 
-	.content-show-main {
-		padding-left: 0px;
-	}
-}
-
-@media only screen and (max-width: 500px) {
-	.content-show-main-info .content-show-main-header {
-		max-width: 350px;
-	}
-
-	#content-show-name {
-		font-size: 23px;
-	}
-}
-
-/*========when screen < 500px rec moves under main===========*/
+/*========when show page screen < 600px rec moves under main===========*/
 @media only screen and (max-width: 600px) {
 
     .content-show-mobile-rec {
@@ -384,7 +377,6 @@ a { color: inherit; }
 	.content-show-main-thumbnail {
 		grid-column: 1/1;
 		grid-row: 2/5;
-		padding-left: 10px;
 	}
 
 	.content-mobile-rec-info {
@@ -423,7 +415,6 @@ a { color: inherit; }
 		padding-left: 0px;
 		text-align: center;
 	}
-
 }
 
 /* Large desktops and laptops */
