@@ -78,7 +78,7 @@
     padding-right: 0px; 
 }
 .content-thumbnail iframe{
-	margin: 0 auto 0 0;
+	margin: 0 auto;
 	display:block;
 }
 
@@ -103,6 +103,18 @@
     .contents{
     	grid-column: 2/10;
     }
+}
+
+@media only screen and (max-width: 950px) {
+    .content-thumbnail-iframe{
+		width: 280px;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+    .content-thumbnail-iframe{
+		width: 260px;
+	}
 }
 
 @media only screen and (max-width: 767px) {
