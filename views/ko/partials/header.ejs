@@ -2,9 +2,11 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8">
-        <meta name="keywords" content="moagram, youtube, twitch, videos, creators, bj, 인방, 유튜브, 트위치, 동영상, 모아그램">
+        <meta name="keywords" content="youtube, twitch, videos, creators, bj, 인방, 유튜브, 트위치, 동영상">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>moagram</title>
+
         <link rel="icon" type="image/png" href="/icons/moa-picture-favicon.png" sizes="16x16">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -13,6 +15,10 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/content.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/profile.css">
+
+        <!-- SOCKET IO SCRIPT -->
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/clientjs/showClient.js"></script>
         
     </head>
     <body>
@@ -27,35 +33,27 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> 
-                        <li class="nav-item dropdown d-lg-none">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h5><strong>MOA</strong></h5></a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/ko/contents"><h6><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New </h6></a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/ko/contents/popular"><h6><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> 인기순 </h6>
-                                </a>
-                                <!-- <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/ko/contents/new"><h6> 새로운 포스트 <img id="nav-icons" width="35" height="33" src="/icons/youtube.png"><img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png"></h6>
-                                </a> -->
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown d-none d-lg-block" id="main-nav-item">
-                            <a class="nav-link dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown" id="btn-default" role="button" aria-haspopup="true" aria-expanded="false">
-                                <h5 style="margin-bottom: 0px;">MOA</h5>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item d-lg-none" id="main-nav-item">
+                            <a style="height: 43px;" class="btn btn-default btn-sm" id="btn-default" href="/about">
+                                <strong><h5 style="margin-bottom: 0px; padding-top: 5px;">
+                                    M<img class="roundImage" style="padding-bottom: 3px;" src="/icons/moa-picture.png" width="18px" height="21px"/>A
+                                </h5></strong>
                             </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/ko/contents"><h5><img id="nav-icons" width="42" height="40" src="/icons/new-b.png"> New</h5></a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/ko/contents/popular"><h5 style="margin-bottom: 0px;"><img id="nav-icons" width="42" height="40" src="/icons/rising-bar-graph-with-arrow-up.png"> 인기순 </h5>
-                                </a>
-                            </div>
+                        </li> 
+                        
+                        <li class="nav-item d-none d-lg-block" id="main-nav-item">
+                            <a style="height: 43px;" class="btn btn-default btn-sm" id="btn-default" href="/about">
+                                <strong><h5 style="margin-bottom: 0px; padding-top: 5px;">
+                                    M<img class="roundImage" style="padding-bottom: 3px;" src="/icons/moa-picture.png" width="18px" height="21px"/>A
+                                </h5></strong>
+                            </a>
                         </li>
 
                         <li class="nav-item" id="main-nav-item">
-                            <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents/new">
-                                <h5 style="margin-bottom: 0px;">새로운 포스트 
+                            <a class="btn btn-default btn-sm" id="btn-default" href="/contents/new">
+                                <h5 style="margin-bottom: 0px;">
+                                    새로운 포스트 
                                     <img id="nav-icons" width="35" height="33" src="/icons/youtube.png">
                                     <img id="nav-icons" width="35" height="33" src="/icons/icons8-twitch-48.png">
                                 </h5>
@@ -65,20 +63,50 @@
                     
                     <!-- ======== Search bar ======== -->
                     <% if(user){ %>
-                        <form style="padding-right: 30px;" class="form-inline nav-item" >
-                        
-                            <!-- ======== Old Search bar ======== -->
-                            <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
+                        <!-- ======== Old Search bar ======== -->
+                        <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
 
-                            <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
-
-                        </form>
-                    <% } %>
-
+                        <% if(pageType == 'index'){ %>
+                            <% if(ctg != 0){ %>
+                                <% if(sort != 0){ %>
+                                    <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                        <input type='hidden' name="category" value="<%= ctg %>">
+                                        <input type='hidden' name="sort" value="<%= sort %>">
+                                        <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                                    </form>
+                                <% } else { %>
+                                    <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                        <input type='hidden' name="category" value="<%= ctg %>">
+                                        <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                                    </form>
+                                <% } %>
+                            <% } else { %>
+                                <% if(sort != 0){ %>
+                                    <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                        <input type='hidden' name="sort" value="<%= sort %>">
+                                        <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                                    </form>
+                                <% } else { %>
+                                    <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                        <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                                    </form>
+                                <% } %>
+                            <% } %>
+                        <% } else if (pageType == 'profile'){ %> 
+                            <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                <input type='hidden' id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                            </form>
+                        <% } else { %>
+                            <form action="/contents" method="GET" style="padding-right: 30px;" class="form-inline nav-item" >
+                                <input id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+                            </form>
+                        <% } %>
+                    <% } %> 
+                    
                     <% if (!user) { %>
                         <div class="nav-item">
-                            <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="40px" height="33px" />로그인</a>
-                            <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default"><img src="/icons/google_logo.png" width="33px" height="33px" /> 구글계정으로 로그인 </a>
+                            <a href="/auth/google" class="btn btn-default btn-sm d-lg-none" id="btn-default"><img id="nav-icons" src="/icons/google_logo.png" width="28px" height="25px" />로그인</a>
+                            <a href="/auth/google" class="btn btn-default btn-sm d-none d-lg-block" id="btn-default">로그인하기&nbsp; <img src="/icons/google_logo.png" width="25px" height="25px" /></a>
                         </div>
                     <% } else { %>
                         <div class="nav-item dropdown">
@@ -87,11 +115,12 @@
                                 <strong><%= user.username %></strong>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="nav-link" href="/ko/profile"> 
+                                <a class="nav-link" href="/profile"> 
                                     <strong><%= user.username %></strong>
                                 </a>
-                                <a class="nav-link" href="/ko/profile/setting"> 
-                                    <strong>설정</strong>
+                                 
+                                <a class="nav-link" href="/profile/setting"> 
+                                    <strong>프로필 설정</strong>
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="nav-link" href="/auth/logout"><h6>로그아웃</h6></a>
@@ -103,63 +132,63 @@
         </div>
 
         <div id="ctg-nav">
-          <form action="/ko/contents/category" method="GET" class="form-group">
+          <form action="/contents" method="GET" class="form-group">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents"><img id="cat-icons" src="/icons/icons8-check-all-60.png"/> All</a>
+                    <a class="nav-link active" href="/contents"><img height="35" width="35" id="cat-icons" src="/icons/icons8-check-all-60.png"/> All</a>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/tntl" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-lol-64.png"> 웃긴영상 | TNT
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[0]%></span></a>
+                    <button class="nav-link active" name="category" value='tntl'><img height="35" width="35" id="cat-icons" src="/icons/icons8-lol-64.png"> 웃긴영상 | TNT
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[0]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/mukbang" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-noodles-48.png"> 먹방
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[1]%></span></a>
+                    <button class="nav-link active" name="category" value='mukbang'><img height="35" width="35" id="cat-icons" src="/icons/icons8-noodles-48.png"> 먹방
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[1]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/news" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-about-64.png"> News
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[2]%></span></a>
+                    <button class="nav-link active" name="category" value='news'><img height="35" width="35" id="cat-icons" src="/icons/icons8-about-64.png"> News
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[2]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/documentary" name="category"><img height="35" width="35" id="cat-icons" src="/icons/icons8-documentary-64.png"> 다큐
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[3]%></span></a>
+                    <button class="nav-link active" name="category" value='documentary'><img height="35" width="35" id="cat-icons" src="/icons/icons8-documentary-64.png"> 다큐
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[3]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/educational" name="category"><img id="cat-icons" src="/icons/icons8-learning-50.png"> 교육
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[4]%></span></a>
+                    <button class="nav-link active" name="category" value='educational'><img id="cat-icons" src="/icons/icons8-learning-50.png"> 교육
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[4]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/fitness" name="category"><img id="cat-icons" src="/icons/icons8-squats-60.png"> 운동
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[5]%></span></a>
+                    <button class="nav-link active" name="category" value='fitness'><img id="cat-icons" src="/icons/icons8-squats-60.png"> 운동
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[5]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/motivational" name="category"><img id="cat-icons" src="/icons/icons8-syringe-60.png"> 동기부여
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[6]%></span></a>
+                    <button class="nav-link active" name="category" value='motivational'><img id="cat-icons" src="/icons/icons8-syringe-60.png"> 동기부여
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[6]%></span></button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents/category/music" name="category"><img id="cat-icons" src="/icons/icons8-music-library-60.png"/> 뮤직
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[7]%></span></a>
+                    <button class="nav-link active" name="category" value='music'><img id="cat-icons" src="/icons/icons8-music-library-60.png"/> 뮤직
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[7]%></span></button>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link active" href="/ko/contents/category/beauty" name="category"><img id="cat-icons" src="/icons/icons8-lipstick-60.png"> 뷰티
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[8]%></span></a>
+                    <button class="nav-link active" name="category" value='beauty'><img id="cat-icons" src="/icons/icons8-lipstick-60.png"> 뷰티
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[8]%></span></button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents/category/gaming" name="category"><img id="cat-icons" src="/icons/icons8-accuracy-60.png"/> 게임
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[9]%></span></a>
+                    <button class="nav-link active" name="category" value='gaming'><img id="cat-icons" src="/icons/icons8-accuracy-60.png"/> 게임
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[9]%></span></button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents/category/vlog" name="category"><img id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG | 브이로그
-                        <span class="badge badge-pill badge-secondary"><%=ctgCount[10]%></span></a>
+                    <button class="nav-link active" name="category" value='vlog'><img id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG | 브이로그
+                        <span class="badge badge-pill badge-secondary"><%=ctgCount[10]%></span></button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents/category/animal" name="category"><img height="35" width="35" id="cat-icons" 
+                    <button class="nav-link active" name="category" value='animal'><img height="35" width="35" id="cat-icons" 
                         src='/icons/icons8-pig-100.png' onmouseover="this.src='/icons/icons8-pinkpig-100.png';" onmouseout="this.src='/icons/icons8-pig-100.png';"/> 동물
-                        <span class="badge badge-pill badge-secondary"><%=ctgCount[11]%></span></a>
+                        <span class="badge badge-pill badge-secondary"><%=ctgCount[11]%></span></button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ko/contents/category/others" name="category"><img id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
-                    <span class="badge badge-pill badge-secondary"><%=ctgCount[12]%></span></a>
+                    <button class="nav-link active" name="category" value='others'><img id="cat-icons" src="/icons/icons8-xd-50.png"/> Others
+                    <span class="badge badge-pill badge-secondary"><%=ctgCount[12]%></span></button>
                 </li>
             </ul>
           </form>
@@ -176,18 +205,13 @@
             <% } %>
         </div>
 
-        
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- MOMENTJS SCRIPT -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+        <!-- BOOTSTRAP AND SLIM JQUERY SCRIPT -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         <!-- =====ckeditor====== -->
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-        
-
-
-
-        
-    
-
-    

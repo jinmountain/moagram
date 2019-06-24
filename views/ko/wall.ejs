@@ -6,7 +6,7 @@
       <div id="line" style="font-size: 25px; padding-left: 10px;"><%=olouser.username%></div>
       <!-- ========Follow Button======== -->
       <% if(olouser._id != user.id) { %>
-        <form style="padding-left: 10px; font-size: 15px;" id="verticalLine" action="/ko/profile/<%=olouser._id%>" method="POST">                    
+        <form style="padding-left: 10px; font-size: 15px;" id="verticalLine" action="/profile/<%=olouser._id%>" method="POST">                    
           <%if (user.following.indexOf(olouser._id) != -1) { %>
             <button class="btn btn-default btn-sm">Unfollow</button> 
           <% } else { %>
@@ -38,22 +38,22 @@
     <form class="form-group">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="/ko/profile/<%=olouser._id%>" style="font-size: 20px;">
+          <a class="nav-link active" href="/profile/<%=olouser._id%>" style="font-size: 20px;">
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-check-all-60.png"/>Overview
           </a>
         </li>
         <li class="nav-item"> 
-          <a class="nav-link active" href="/ko/profile/<%=olouser._id%>/likes" style="font-size: 20px;">
+          <a class="nav-link active" href="/profile/<%=olouser._id%>/likes" style="font-size: 20px;">
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-good-quality-60.png">좋아요
           </a>
         </li>
         <li class="nav-item"> 
-          <a class="nav-link active" href="/ko/profile/<%=olouser._id%>/contents" style="font-size: 20px;">
+          <a class="nav-link active" href="/profile/<%=olouser._id%>/contents" style="font-size: 20px;">
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">포스트
           </a>
         </li>
         <li class="nav-item"> 
-          <a class="nav-link active" href="/ko/profile/<%=olouser._id%>/following" style="font-size: 20px;">
+          <a class="nav-link active" href="/profile/<%=olouser._id%>/following" style="font-size: 20px;">
             <img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-checked-user-male-48.png">Following
           </a>
         </li>
@@ -95,10 +95,10 @@
         <% } %>
         </div>
         <div class="caption breakWord">
-          <a style="font-size: 20px;" href="/ko/contents/<%=content._id %>"><%=content.name %></a>
+          <a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
         </div>
         <div style="padding-top: 5px;">
-          <a class="breakWord" href="/ko/profile/<%= content.author.id %>">
+          <a class="breakWord" href="/profile/<%= content.author.id %>">
             <div style="font-size: 15px; color: #7C7F81;">
               <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
             <%= content.author.username%> 
@@ -113,7 +113,7 @@
 
   <% if (moreLikes == 1) {%>
   <div style="text-align: center; font-size: 15px;">
-    <a class="btn btn-default" id="btn-default" href="/ko/profile/likes" role="button">More</a>
+    <a class="btn btn-default" id="btn-default" href="/profile/likes" role="button">More</a>
   </div>
   <% } %>
 
@@ -136,15 +136,15 @@
                   </div>
                 <% } %>
             <% } else if(content.image){ %>
-              <a href="/ko/contents/<%=content._id %>">
+              <a href="/contents/<%=content._id %>">
                 <img width="180" height="100" src="<%= content.image%>"> 
               </a>
             <% } %>
                 <div class="caption breakWord">
-                  <a style="font-size: 20px;" href="/ko/contents/<%=content._id %>"><%=content.name %></a>
+                  <a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
                 </div>
                 <div style="padding-top: 8px;">
-                  <a class="breakWord" href="/ko/profile/<%= content.author.id %>">
+                  <a class="breakWord" href="/profile/<%= content.author.id %>">
                     <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
                     <%= content.author.username%> 
                   </a>
@@ -158,7 +158,7 @@
   
   <% if (moreContents == 1) {%>
   <div style="text-align: center; font-size: 15px">
-    <a class="btn btn-default" id="btn-default" href="/ko/profile/contents" role="button">More</a>
+    <a class="btn btn-default" id="btn-default" href="/profile/contents" role="button">More</a>
   </div>
   <% } %>
   <hr>
@@ -184,16 +184,16 @@
             </div>
           <% } %>
         <% } else if(content.image) {%>
-          <a href="/ko/contents/<%=content._id %>">
+          <a href="/contents/<%=content._id %>">
             <img width="180" height="100" src="<%= content.image%>"> 
           </a>
         <% } %>
         </div>
         <div class="caption breakWord">
-          <a style="font-size: 20px;" href="/ko/contents/<%=content._id %>"><%=content.name %></a>
+          <a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
         </div>
         <div style="padding-top: 5px;">
-          <a class="breakWord" href="/ko/profile/<%= content.author.id %>">
+          <a class="breakWord" href="/profile/<%= content.author.id %>">
             <div style="font-size: 15px; color: #7C7F81;">
               <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
             <%= content.author.username%> 
@@ -210,7 +210,7 @@
   <!-- ========Pagination======== -->
 
   <% if (pages > 0) { %>
-    <form action="/ko/profile<%=url%>" method="GET" class="form-group">
+    <form action="/profile<%=url%>" method="GET" class="form-group">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         <% if (current == 1) { %>
@@ -268,15 +268,15 @@
               </div>
             <% } %>
         <% } else if(content.image){ %>
-          <a href="/ko/contents/<%=content._id %>">
+          <a href="/contents/<%=content._id %>">
             <img width="180" height="100" src="<%= content.image%>"> 
           </a>
         <% } %>
           <div class="caption breakWord">
-            <a style="font-size: 20px;" href="/ko/contents/<%=content._id %>"><%=content.name %></a>
+            <a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
           </div>
           <div style="padding-top: 8px;">
-            <a class="breakWord" href="/ko/profile/<%= content.author.id %>">
+            <a class="breakWord" href="/profile/<%= content.author.id %>">
               <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
               <%= content.author.username%> 
             </a>
@@ -291,7 +291,7 @@
   <!-- ========Pagination======== -->
 
   <% if (pages > 0) { %>
-    <form action="/ko/profile<%=url%>" method="GET" class="form-group">
+    <form action="/profile<%=url%>" method="GET" class="form-group">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         <% if (current == 1) { %>
@@ -339,7 +339,7 @@
           <div class="col-md-6 col-sm-6">
             <div class="followerIndex">
               <div class="followerUsername">
-                <a href="/ko/profile/<%= following.id %>">
+                <a href="/profile/<%= following.id %>">
                   <img id="line" style="display: inline-block;  border-radius: 50%;" src= "<%= following.thumbnail %>" width= "30px" height= "30px" />
                   <div id="line" style="font-size: 20px;">
                     <%= following.username %>
@@ -347,7 +347,7 @@
                 </a>
               </div>  
               <div class="followerInfo">
-                <a href="/ko/profile/<%= following.id %>">
+                <a href="/profile/<%= following.id %>">
                   <div style="font-size: 18px; color: #7C7F81;">
                     Number of followers: <%= following.follower%>
                   </div>
@@ -369,7 +369,7 @@
     <!-- ========Pagination======== -->
 
   <% if (pages > 0) { %>
-    <form action="/ko/profile<%=url%>" method="GET" class="form-group">
+    <form action="/profile<%=url%>" method="GET" class="form-group">
       <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <% if (current == 1) { %>

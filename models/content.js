@@ -25,14 +25,14 @@ const contentSchema = new mongoose.Schema({
       thumbnail: String
    },
    likes: Number,
+   views: Number,
+   hotness: Number,
    comments: [
       {
          type: mongoose.Schema.Types.ObjectId,
          ref: "Comment"
       }
-   ],
-   views: Number,
-   hotness: Number
+   ]
 });
 
 module.exports = mongoose.model('Content', contentSchema);

@@ -27,9 +27,17 @@
 }
 
 .content-res {
-	padding-right: 12px;
+	padding: 0px;
 }
 
+#topContent {
+	min-height: 235px;
+}
+
+.badge-top {
+	background-color: #8E25AA;
+	color: #FFFFFF;
+}
 /*========= content ad section partition ========*/
 
 .content-ad {
@@ -65,37 +73,24 @@
 
 }*/
 
-.content-hotness {
-	padding-top: 5px;
-	text-align: center;
-	font-size: 15;
-/*	grid-column: 1/2;
-	grid-row: 1/3;*/
-}
-
 .content-thumbnail {
-    max-height: 135px;
-    max-width: 230px;
-    padding-left: 0px;
+    max-height: 153px;
     padding-right: 0px; 
- 
-/*  grid-column: 2/4;
-	grid-row: 1/3;*/
+}
+.content-thumbnail iframe{
+	margin: 0 auto 0 0;
+	display:block;
 }
 
 .content-title {
 	padding-top: 5px;
 	font-size: 20px;
 	padding-top: 15px; 
-/*	grid-column: 4/7;
-	grid-row: 1/2;*/
 }
 
 .content-infoline {
 	color: #7C7F81;
 	padding-bottom: 3px;
-/*	grid-column: 4/7;
-	grid-row: 2/3;*/
 	line-height: 20px;
 }
 
@@ -111,14 +106,17 @@
 }
 
 @media only screen and (max-width: 767px) {
-	.content-hotness {
-		display: none;
+	.content-thumbnail{
+		padding-left: 0px;
 	}
 
-	.content-thumbnail{
-		display: block;
-	    margin-left: auto;
-	    margin-right: auto;
+	.secondRow{
+		margin: 0 auto;
+		width: 313px;
+	}
+
+	.content-thumbnail-iframe{
+		width: 313px;
 	}
 
 	.content-infoline {
@@ -136,18 +134,26 @@
 	}
 }
 
-/* =============galaxy phone has 360px size======*/
-@media only screen and (max-width: 361px) {
-	.content-thumbnail{
-		display: block;
-	    margin-left: auto;
-	    margin-right: 87px;
+@media only screen and (max-width: 373px) {
+	.content-res{
+		width: 302px;
+	}
+
+	.secondRow{
+		width: 302px;
+		margin: 0 auto;
 	}
 
 	.content-thumbnail-iframe{
 		width: 302px;
 	}
+	.content-thumbnail{
+		width: 302px;
+		margin: 0px;
+	}
 }
+
+
 
 /*============Content Show=======================*/
 #content-show{
@@ -280,6 +286,17 @@ a { color: inherit; }
 /*===only putting together in a line===*/
 #line {
 	display: inline;
+}
+
+.line {
+	display: inline;
+}
+
+.verticalLine {
+	padding-left: 3px;
+	padding-right: 3px;
+  	border-right: 1px solid #DADADA;
+  	display:inline;
 }
 /*================================================*/
 
@@ -421,4 +438,25 @@ a { color: inherit; }
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
 
+}
+
+/*COMMENT AND REPLY TEXTAREA STYLE*/
+
+textarea.commentReplyTextarea {
+	height: 70px;
+	width: 100%;
+
+	border: 0px;
+
+	padding: 5px;
+	resize: none;
+
+	outline: none;
+	-webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: -3px 3px 2px -2px #888888;
+}
+
+button.noOutline {
+	outline:none;
 }

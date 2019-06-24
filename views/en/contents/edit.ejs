@@ -2,7 +2,7 @@
     <div class="container">
         <h2 style="text-align: center">Update <%= content.name %></h2>
         <div class="inputForm">
-            <form action="/en/contents/<%=content._id%>?_method=PUT" method="POST">
+            <form action="/contents/<%=content._id%>?_method=PUT" method="POST">
                 <label for="contentName"><strong>Title</strong></label>
                 <div id="contentName" class="form-group">
                     <input class="form-control" type="text" name="name" value="<%= content.name %>">
@@ -844,7 +844,7 @@
                 </div>
             </form>
             <div class="text-right">
-                <a href="/en/contents" class="btn btn-default btn-sm" id="btn-default">Go Back</a>
+                <a href="/contents" class="btn btn-default btn-sm" id="btn-default">Go Back</a>
             </div>
         </div>
     </div>

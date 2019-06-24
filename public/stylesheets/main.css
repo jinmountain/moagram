@@ -28,7 +28,12 @@
 	max-height: 45px;
 }
 
-#btn-default{
+.btn-default{
+	border:1px solid #DADADA;
+	background-color: white;
+}
+
+#defaultBtn{
 	border:1px solid #DADADA;
 	background-color: white;
 }
@@ -144,3 +149,69 @@ body { -webkit-text-size-adjust: none; }
     margin: 15px auto;
     max-width: 500px;
 }
+
+#form1 {
+
+display:none;
+
+}
+
+.infoTextColor {
+	color: #7C7F81;
+}
+
+/*BUTTON ANIMATION!!!*/
+
+/*HOVER AND SHADE*/
+
+.btn:hover{
+   box-shadow:0px 10px 10px rgba(0,0,0,0.2);
+   transform : translateY(-3px);
+}
+
+.btn:active{
+  box-shadow:0px 5px 10px rgba(0,0,0,0.2)
+  transform:translateY(-1px);
+}
+
+.btn-bottom-animation-1{
+  animation:comeFromBottom 1s ease-out .8s;
+}
+
+@keyframes comeFromBottom{
+  0%{
+    opacity:0;
+    transform:translateY(40px);
+  } 
+  100%{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.likeButton {
+	font-family: "Lato",sans-serif;
+	background: none;
+	border: none;
+	border-radius: 5px;
+}
+
+.likeButton:hover {
+	color: #FFFFFF;
+	background-color: #512DA8;
+	transition: all 0.3s ease-in-out;
+}
+
+.likeButton:active {
+	background-color: #512DA8;
+	border-color: 1px solid #FFFFFF;
+	color: #FFFFFF;
+	transform: translateY(4px);
+	outline: none;
+	box-shadow:0px 10px 10px rgba(0,0,0,0.2);
+   	transform : translateY(-3px);
+}
+
+.marginAuto {
+	margin: 0 auto;
+} 

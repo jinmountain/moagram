@@ -1,0 +1,122 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+<% contents.forEach(function(content){ %>
+  <div class="contents row">
+    <div class="content-res col-md-6">
+      <div class="row secondRow">
+        <!-- ==============thumnail=============== -->
+        <div class="content-thumbnail col-sm-12">
+          <% if(content.video.provider){ %>
+            <% if(content.video.provider == 'youtube'){ %>
+              <iframe align='middle' class="content-thumbnail-iframe" width="313" height="150" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+            <% } else if(content.video.provider == 'twitch'){ %>
+              <iframe class="content-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="313" height="150"></iframe>
+            <% } %>
+          <% } else if(content.image) { %>
+            <img class="content-thumbnail-iframe" width="313" height="150" src="<%= content.image%>">
+          <% } else { %>
+            <img style='display: block; margin: auto; padding-top: 30px;' src="/icons/icons8-ostrich-head-in-sand-80.png">
+            <div align='center'>
+              No Image URL
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  
+  <!-- ==============Title=============== -->
+    <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
+      <div class="content-title .col-xs-4 .col-sm-4 breakWord" style='padding-top: 5px;'>
+        <a href="/contents/<%= content._id %>">
+          <div id="line"><%= content.name %></div>
+        </a>
+
+        <% for(var i=0; i<topContent.length; i++){ %>
+          <% if(content._id == topContent[i].id){ %>
+            <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
+          <% } %>
+        <% } %>
+        
+          <!-- ================================================================= -->
+          <!-- Show "New" sign when the content is created in less than 24 hours -->
+          <!-- ================================================================= -->
+        <% var end = Date.now(); %>
+        <% var start = content.createdAt; %>
+        <% var elapsed = end - start; %>
+        <% var difference = new Date(elapsed); %>
+        <% var diff_hours = elapsed / (60*60*1000);%>
+
+        <% if (diff_hours < 24) { %>
+          <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+        <% } %>
+        
+        <h6 style="padding-left: 5px;" id="line">
+          <span class="badge badge-pill badge-info">
+            <% if(content.category == 'tntl'){ %>
+              TNTL | 웃긴영상
+            <% } else if(content.category == 'mukbang'){ %>
+              Mukbang | 먹방
+            <% } else { %>
+              <%= content.category %>
+            <% } %>
+          </span>
+        </h6>
+      </div>
+    <!-- ==============Infoline=============== -->
+      <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+        <div>
+          Posted by &nbsp;   
+          <a class="noSelect" href="/profile/<%= content.author.id %>">
+            <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+            <%= content.author.username%> 
+          </a>
+        </div>
+        <div class="verticalLine" style="font-size: 15px;">
+          <% if(user) { %>
+            <%if (user.contentLiked.indexOf(topContent[0]._id) != -1) { %>
+              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
+            <% } else { %>
+              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
+            <% } %>
+          <% } else { %>
+            <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
+          <% } %>
+
+          <% if(content.likes > 1000) { %>
+            <%= Math.floor(content.likes/1000) %> K
+          <% } else if (content.likes > 1) { %>
+            <%= content.likes %>
+          <% } else { %>
+            <%= content.likes %> 
+          <% } %>
+        </div>
+        <div class="verticalLine">
+          <% if(content.views > 1000) { %>
+          Views <%= Math.floor(content.views/1000) %>K 
+          <% } else { %>
+          Views <%= content.views %> 
+          <% } %>
+        </div>
+        <!-- Momentjs Ago -->
+        <div class="verticalLine">
+          <%= moment(content.date).fromNow()%>
+        </div>
+        <!-- COMMENT COUNT AND DISPLAY -->
+        <div class="line">
+          <% if(content.comments.length > 1){ %>
+            <span>&nbsp;<%= content.comments.length %> Comments</span>
+          <% } else { %>
+            <span>&nbsp;<%= content.comments.length %> Comment</span>
+          <% } %>
+        </div>
+        <div style='color: #000000'> 
+          <% if(content.description.length > 40){ %>
+            <p><%- content.description.slice(0, 40) %> ... </p>
+          <% } else { %>
+            <p><%- content.description.slice(0, 40) %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }); %>

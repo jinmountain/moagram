@@ -88,15 +88,8 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
     // backURL = req.header('Referer') || '/';
     // res.redirec(backURL);
-    if (req.user.lang){
-    	res.redirect('/' + req.user.lang + '/contents');
-    } else if (moment.locale() == 'en'){
-        res.redirect('/en/contents');
-    } else if (moment.locale() == 'ko'){
-    	res.redirect('/ko/contents');
-    } else {
-        res.redirect('/en/contents');
-    }
+
+    res.redirect('/contents');
 });
 
 module.exports = router;

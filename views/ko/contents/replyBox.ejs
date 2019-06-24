@@ -1,0 +1,62 @@
+<% if (count > 0) { %>
+
+  <% if (typeof replies != 'undefined' && replies != null) { %>
+    <% replies.forEach( function ( replyData ){ %>
+      <div id="<%=replyData.id%>ExReplies">
+        <div id="<%=replyData._id%>ExRepliesChild">
+          <div class="line">
+            <img src="<%= replyData.author.thumbnail %>" style="border-radius: 50%; width: 25px; height: 25px;">&nbsp;
+          </div>
+          <div class="line">
+            <%= replyData.author.username %>&nbsp;
+          </div>
+          <div class="line" style="color: #7C7F81;">
+            <%= moment(replyData.date).fromNow()%>
+          </div>
+          <div class='line' style="color: #7C7F81; font-size: 10px;">
+            <% if(replyData.edited == true){ %>
+              edited
+            <% } %>
+          </div>
+
+          <% if(user&& replyData.author.id.equals(user._id)){ %>
+            <div class="nav-item dropdown line pull-right">
+              <a class="nav-link dropdown-toggle" style="padding-left: 0px;" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src= "/icons/icons8-menu-vertical-24.png" width= "25px" height= "25px" />&nbsp;
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" 
+              style="width: 120px !important; min-width: 120px; max-width: 120px;
+                    height: 105px !important; min-height: 105px; max-height: 105px;">
+                <div align='center'>
+                  <button class='nav-link' style="border: none;" onClick="editReply('<%=replyData.id%>', '<%=replyData.commentId%>', '<%=replyData.reply%>', '<%= moment(replyData.date).fromNow()%>'); return false;">
+                    <img width="20px" height="20px" src="/icons/icons8-compose-16.png"/>
+                    수정하기
+                  </button>
+                </div>
+                <div align='center'>
+                  <button class="nav-link" style='border: none;' onClick="deleteReply('<%=replyData.id%>', '<%=replyData.commentId%>'); return false;">
+                    <img width="20px" height="20px" src="/icons/icons8-close-window-50.png"/>
+                    삭제하기
+                  </button>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <!-- \\\\\\\\REPLY COMES HERE///////// -->
+          <div class="breakWord" style="padding-left: 2.5em;"><%= replyData.reply %></div>
+        </div>
+      </div>
+    <% }); %>
+
+    <% if(current < pages){ %>
+      <div>
+        <% if(comment.replies.length > 0){ %>
+          <button class="btn btn-default btn-sm" style="padding-left: 3em;" 
+            onclick="loadMoreReply('<%=comment.id%>', '<%=nextPage%>'); this.parentNode.style.display = 'none'; return false;">답글 더 보기
+          </button>
+        <% } %>
+      </div>
+    <% } %>
+  <% } %>
+<% } %>

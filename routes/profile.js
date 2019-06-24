@@ -1,7 +1,7 @@
 // ====== npm =========
 const express = require('express');
 const router = express.Router();
-
+const app = express();
 const querystring = require('querystring');
 
 // ====== Routes ====== 
@@ -36,7 +36,7 @@ function ctgCount(ctgCountArray) {
 var ctgCountArray = [];
 // =============================================================
 
-router.get('/', middleware.authCheck, (req, res) => {
+router.get('/', middleware.authCheck, (req, res, next) => {
 
 	var request = "overview";
 	var ids = req.user.contentLiked;
@@ -56,7 +56,7 @@ router.get('/', middleware.authCheck, (req, res) => {
             console.log(err);
         } else {
         	if(likedContents < 1) {
-        		noLikes = "Haven't Liked anything yet"
+        		noLikes = "You haven't Liked anything yet"
         	} else {
         		if(likedContents > 8){
         			moreLikes = 1;
@@ -79,7 +79,7 @@ router.get('/', middleware.authCheck, (req, res) => {
 	        		console.log(err);
 	        	} else{
 	        		if(myContents < 1) {
-	        			noContents = "Haven't shared anything yet";
+	        			noContents = "You haven't shared any content yet";
 	        		}
 	        		else if(myContents > 8) {
 	        			moreContents = 1;
@@ -95,7 +95,9 @@ router.get('/', middleware.authCheck, (req, res) => {
 
 	        			 moreLikes: moreLikes,
 	        			 moreContents: moreContents,
-	        			 ctgCount: ctgCountArray
+	        			 ctgCount: ctgCountArray,
+
+	        			 pageType: 'profile'
 	        			}
 	        		);
 	        	}
@@ -109,7 +111,8 @@ router.get('/setting', middleware.authCheck, (req, res) => {
 	ctgCount(ctgCountArray);
 
 	res.render(req.user.lang + '/setting', {
-		ctgCount: []
+		ctgCount: [],
+		pageType: 'profile'
 	});
 });
 
@@ -135,7 +138,7 @@ router.put('/', middleware.authCheck, (req, res) => {
 		    }
         }
     });
-    res.redirect('/' + req.body.languageSetting + '/profile');
+    res.redirect('/profile');
 });
 
 
@@ -172,7 +175,7 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	        			console.log(err);
 	        		} else {
 	        			if (likedContents < 1) {
-			        		noLikes = "Haven't liked any content";
+			        		noLikes = "You haven't liked any content";
 			        	}
 			        	res.render(req.user.lang + '/profile', {
 			        		request: request,
@@ -184,7 +187,8 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			                pages: Math.ceil(count / perPage),
 
 			                url: req.url,
-			                ctgCount: ctgCountArray
+			                ctgCount: ctgCountArray,
+			                pageType: 'profile'
 			    		});
 	        		}
 	        	})
@@ -204,7 +208,7 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	        			console.log(err);
 	        		} else {
 	        			if (likedContents < 1) {
-			        		noLikes = "Haven't liked any content";
+			        		noLikes = "You haven't liked any content";
 			        	}
 			        	res.render(req.user.lang + '/profile', {
 			        		request: request,
@@ -216,7 +220,8 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			                pages: Math.ceil(count / perPage),
 
 			                url: req.url,
-			                ctgCount: ctgCountArray
+			                ctgCount: ctgCountArray,
+			                pageType: 'profile'
 			    		});
 	        		}
 	        	})
@@ -262,20 +267,22 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 		        				console.log(err);
 		        			} else {
 				        		if(myContents < 1) {
-				        			noContents = "Haven't shared anything yet"
+				        			noContents = "You haven't shared any content yet"
 				        		}
 				        		res.render(req.user.lang + '/profile', 
 				        			{
-				        			 request: request,
-				        			 user: userFound,
-				        			 myContents: myContents,
-				        			 noContents: noContents,
+					        			 request: request,
+					        			 user: userFound,
+					        			 myContents: myContents,
+					        			 noContents: noContents,
 
-			 		    			current: page,    
-					                pages: Math.ceil(count / perPage),
+				 		    			current: page,    
+						                pages: Math.ceil(count / perPage),
 
-					                url: req.url,
-					                ctgCount: ctgCountArray
+						                url: req.url,
+						                ctgCount: ctgCountArray,
+
+						                pageType: 'profile'
 				        			}
 				        		);
 		        			}
@@ -296,20 +303,21 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 		        				console.log(err);
 		        			} else {
 				        		if(myContents < 1) {
-				        			noContents = "Haven't shared anything yet"
+				        			noContents = "You haven't shared any content yet"
 				        		}
 				        		res.render(req.user.lang + '/profile', 
 				        			{
-				        			 request: request,
-				        			 user: userFound,
-				        			 myContents: myContents,
-				        			 noContents: noContents,
+				        			 	request: request,
+				        			 	user: userFound,
+				        			 	myContents: myContents,
+				        			 	noContents: noContents,
 
-			 		    			current: page,    
-					                pages: Math.ceil(count / perPage),
+				 		    			current: page,    
+						                pages: Math.ceil(count / perPage),
 
-					                url: req.url,
-					                ctgCount: ctgCountArray
+						                url: req.url,
+						                ctgCount: ctgCountArray,
+						                pageType: 'profile'
 				        			}
 				        		);
 		        			}
@@ -357,7 +365,7 @@ router.get("/following", middleware.authCheck, function(req, res){
 								console.log(myFollowings);
 							} else {
 								if(ids < 1) {
-									noFollowers = "You are not following anyone :x"
+									noFollowers = "Currently, you are not following anyone :x"
 								}
 									res.render(req.user.lang + '/profile', {
 									request: request,
@@ -370,7 +378,8 @@ router.get("/following", middleware.authCheck, function(req, res){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+					                pageType: 'profile'
 								});	
 							}
 						});
@@ -397,7 +406,7 @@ router.get("/following", middleware.authCheck, function(req, res){
 								console.log(myFollowings);
 							} else {
 								if(ids < 1) {
-									noFollowings = "You are not following anyone :X"
+									noFollowings = "Currently, you are not following anyone :X"
 								}
 									res.render(req.user.lang + '/profile', {
 									request: request,
@@ -410,7 +419,8 @@ router.get("/following", middleware.authCheck, function(req, res){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+					                pageType: 'profile'
 								});	
 							}
 						});
@@ -453,7 +463,7 @@ router.get("/following", middleware.authCheck, function(req, res){
 //                     console.log(err);
 //                 } else {
 //         			if (likedContents < 1) {
-// 		        		noLikes = "Haven't liked any content";
+// 		        		noLikes = "You haven't liked any content";
 // 		        	}
 // 		        	res.render(req.user.lang + '/profile', {
 // 		        		request: request,
@@ -504,7 +514,7 @@ router.get("/following", middleware.authCheck, function(req, res){
 // 	        				console.log("gagag");
 // 	        			} else {
 // 			        		if(myContents < 1) {
-// 			        			noContents = "Haven't shared anything yet"
+// 			        			noContents = "You haven't shared any content yet"
 // 			        		}
 // 			        		res.render(req.user.lang + '/profile', 
 // 			        			{
@@ -623,24 +633,27 @@ router.get("/:id", middleware.authCheck, function(req, res, next) {
             				return next(err);
 			        	} else{
 			        		if(myContents < 1) {
-			        			noContents = "Haven't shared anything yet"
+			        			noContents = "You haven't shared any content yet"
 			        		}
 			        		else if(myContents > 8) {
 			        			moreContents = 1;
 			        		}
 			        		res.render(req.user.lang + '/wall', 
-			        			{request: request,
+			        			{
+			        				request: request,
 
-			        			 contents: likedContents,
-			        			 olouser: userFound,
-			        			 myContents: myContents,
+									contents: likedContents,
+									olouser: userFound,
+									myContents: myContents,
 
-			        			 noContents: noContents,
-			        			 noLikes: noLikes,
+									noContents: noContents,
+									noLikes: noLikes,
 
-			        			 moreLikes: moreLikes,
-			        			 moreContents: moreContents,
-			        			 ctgCount: ctgCountArray
+									moreLikes: moreLikes,
+									moreContents: moreContents,
+									ctgCount: ctgCountArray,
+
+									pageType: 'profile'
 			        			}
 			        		);
 			        	} 	
@@ -694,7 +707,7 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 			        			console.log(err);
 			        		} else {
 			        			if (likedContents < 1) {
-					        		noLikes = "Haven't liked any content";
+					        		noLikes = "You haven't liked any content";
 					        	}
 					        	res.render(req.user.lang + '/wall', {
 					        		request: request,
@@ -707,7 +720,9 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					                pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 					    		});
 			        		}
 			        	})
@@ -727,7 +742,7 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 			        			console.log(err);
 			        		} else {
 			        			if (likedContents < 1) {
-					        		noLikes = "Haven't liked any content";
+					        		noLikes = "You haven't liked any content";
 					        	}
 					        	res.render(req.user.lang + '/wall', {
 					        		request: request,
@@ -740,7 +755,9 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					                pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 					    		});
 			        		}
 			        	})
@@ -791,7 +808,7 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 		        				console.log(err);
 		        			} else {
 				        		if(myContents < 1) {
-				        			noContents = "Haven't shared anything yet"
+				        			noContents = "You haven't shared any content yet"
 				        		}
 				        		res.render(req.user.lang + '/wall', {
 									request: request,
@@ -803,7 +820,9 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 				        		});
 		        			}
 		        		});
@@ -828,7 +847,7 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 		        				console.log(err);
 		        			} else {
 				        		if(myContents < 1) {
-				        			noContents = "Haven't shared anything yet"
+				        			noContents = "You haven't shared any content yet"
 				        		}
 				        		res.render(req.user.lang + '/wall', {
 									request: request,
@@ -840,7 +859,9 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 				        		});
 		        			}
 		        		});
@@ -901,7 +922,9 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 								});
 							}
 						});
@@ -932,7 +955,9 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray
+					                ctgCount: ctgCountArray,
+
+					                pageType: 'profile'
 								});
 							}
 						});
@@ -981,7 +1006,7 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 // 		        			console.log(err);
 // 		        		} else {
 // 		        			if (likedContents < 1) {
-// 				        		noLikes = "Haven't liked any content";
+// 				        		noLikes = "You haven't liked any content";
 // 				        	}
 // 				        	res.render(req.user.lang + '/wall', {
 // 				        		request: request,
@@ -1038,7 +1063,7 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 // 	        				console.log(err);
 // 	        			} else {
 // 			        		if(myContents < 1) {
-// 			        			noContents = "Haven't shared anything yet"
+// 			        			noContents = "You haven't shared any content yet"
 // 			        		}
 // 			        		res.render(req.user.lang + '/wall', {
 // 								request: request,
@@ -1173,39 +1198,38 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-router.use((err, req, res, next) => {
-    if(err.httpStatusCode == "500"){
-        res.status(err.httpStatusCode).render('./error', {
-            err: "500",
-            message: "Oops. Internal Server Error"
-        });
-    } else if(err.httpStatusCode == "403"){
-        res.status(err.httpStatusCode).render('./error', {
-            err: "403",
-            message: "Oops. Access not allowed"
-        });
-    } else if(err.httpStatusCode == "400"){
-        res.status(err.httpStatusCode).render('./error', {
-            err: "400",
-            message: "Oops. Something went wrong"
-        });
-    } else if(err.httpStatusCode == "401"){
-        res.status(err.httpStatusCode).render('./error', {
-            err: "401",
-            message: "Access Unauthorized"
-        });
-    } else if(err.httpStatusCode == "404"){
-        res.status(err.httpStatusCode).render('./error', {
-            err: "404",
-            message: "Oops. Page not found"
-        });
-    } else {
-        res.status(err.httpStatusCode).render('./error', {
-            err: "Unknown",
-            message: "Oops. Something went wrong"
-        });
-    }
-});
+// router.use((err, req, res, next) => {
+//     if(err.httpStatusCode == "500"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "500",
+//             message: "Oops. Internal Server Error"
+//         });
+//     } else if(err.httpStatusCode == "403"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "403",
+//             message: "Oops. Access not allowed"
+//         });
+//     } else if(err.httpStatusCode == "400"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "400",
+//             message: "Oops. Something went wrong"
+//         });
+//     } else if(err.httpStatusCode == "401"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "401",
+//             message: "Access Unauthorized"
+//         });
+//     } else if(err.httpStatusCode == "404"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "404",
+//             message: "Oops. Page not found"
+//         });
+//     } else {
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "Unknown",
+//             message: "Oops. Something went wrong"
+//         });
+//     }
+// });
 
 module.exports = router;
-
