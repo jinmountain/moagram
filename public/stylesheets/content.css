@@ -146,27 +146,6 @@
 	}
 }
 
-@media only screen and (max-width: 373px) {
-	.content-res{
-		width: 302px;
-	}
-
-	.secondRow{
-		width: 302px;
-		margin: 0 auto;
-	}
-
-	.content-thumbnail-iframe{
-		width: 302px;
-	}
-	.content-thumbnail{
-		width: 302px;
-		margin: 0px;
-	}
-}
-
-
-
 /*============Content Show=======================*/
 #content-show{
 	display: grid;
