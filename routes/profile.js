@@ -127,7 +127,7 @@ router.put('/', middleware.authCheck, (req, res) => {
 	User.findByIdAndUpdate(req.user.id, {$set: newData}, function(err, foundUser){
         if(err){
             req.flash("error", err.message);
-            res.redirect('/' + foundUser.lang + '/profile');
+            res.redirect('/profile');
         } else {
         	if (foundUser.lang == 'en'){
 		        req.flash("success", "Updated Your Profile");

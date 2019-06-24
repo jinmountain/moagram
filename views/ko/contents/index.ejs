@@ -59,12 +59,18 @@
       </div>
 
       <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord">
+        <div class="content-title breakWord">
           <a href="/contents/<%= topContent[0]._id %>">
-            <div id="line"><strong><%= topContent[0].name %></strong></div>
+            <div id="line"><strong>
+              <% if(topContent[0].name.length > 35){ %>
+                <%- topContent[0].name.slice(0, 35) %> ... 
+              <% } else { %>
+                <%- topContent[0].name %>
+              <% } %>
+            </strong></div>
           </a>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-top">TOP</span></h6>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
+          <span class="badge badge-pill badge-top">TOP</span>
+          <span class="badge badge-pill badge-danger">HOT</span>
             <!-- ================================================================= -->
             <!-- Show "New" sign when the content is created in less than 24 hours -->
             <!-- ================================================================= -->
@@ -75,43 +81,41 @@
           <% var diff_hours = elapsed / (60*60*1000);%>
 
           <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+            <span class="badge badge-secondary">New</span>
           <% } %>
           
-          <h6 style="padding-left: 5px;" id="line">
-            <span class="badge badge-pill badge-info">
-              <% if(topContent[0].category == 'tntl'){ %>
-                웃긴영상 | TNTL
-              <% } else if(topContent[0].category == 'mukbang'){ %>
-                먹방
-              <% } else if(topContent[0].category == 'news'){ %>
-                News
-              <% } else if(topContent[0].category == 'documentary'){ %>
-                다큐
-              <% } else if(topContent[0].category == 'educational'){ %>
-                교육
-              <% } else if(topContent[0].category == 'fitness'){ %>
-                운동
-              <% } else if(topContent[0].category == 'motivational'){%>
-                동기부여
-              <% } else if(topContent[0].category == 'music'){ %>
-                음악
-              <% } else if(topContent[0].category == 'beauty'){ %>
-                뷰티
-              <% } else if(topContent[0].category == 'gaming'){ %>
-                게임
-              <% } else if(topContent[0].category == 'vlog'){ %>
-                브이로그 | VLOG
-              <% } else if(topContent[0].category == 'animal'){ %>
-                동물
-              <% } else if(topContent[0].category == 'others'){ %> 
-                Others
-              <% } %>
-            </span>
-          </h6>
+          <span class="badge badge-pill badge-info">
+            <% if(topContent[0].category == 'tntl'){ %>
+              웃긴영상 | TNTL
+            <% } else if(topContent[0].category == 'mukbang'){ %>
+              먹방
+            <% } else if(topContent[0].category == 'news'){ %>
+              News
+            <% } else if(topContent[0].category == 'documentary'){ %>
+              다큐
+            <% } else if(topContent[0].category == 'educational'){ %>
+              교육
+            <% } else if(topContent[0].category == 'fitness'){ %>
+              운동
+            <% } else if(topContent[0].category == 'motivational'){%>
+              동기부여
+            <% } else if(topContent[0].category == 'music'){ %>
+              음악
+            <% } else if(topContent[0].category == 'beauty'){ %>
+              뷰티
+            <% } else if(topContent[0].category == 'gaming'){ %>
+              게임
+            <% } else if(topContent[0].category == 'vlog'){ %>
+              브이로그 | VLOG
+            <% } else if(topContent[0].category == 'animal'){ %>
+              동물
+            <% } else if(topContent[0].category == 'others'){ %> 
+              Others
+            <% } %>
+          </span>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+        <div class="content-infoline breakWord"> 
           <div>
             Posted by &nbsp;   
             <a class="noSelect" href="/profile/<%= topContent[0].author.id %>">
@@ -153,10 +157,10 @@
             <span>&nbsp;댓글 <%= topContent[0].comments.length %></span>
           </div>
           <div> 
-            <% if(topContent[0].description.length > 40){ %>
-              <p><%- topContent[0].description.slice(0, 40) %> ... </p>
+            <% if(topContent[0].description.length > 25){ %>
+              <%- topContent[0].description.slice(0, 25) %> ... </p>
             <% } else { %>
-              <p><%- topContent[0].description.slice(0, 40) %></p>
+              <%- topContent[0].description %>
             <% } %>
           </div>
         </div>
@@ -198,10 +202,22 @@
     
     <!-- ==============Title=============== -->
       <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord">
+        <div class="content-title breakWord">
           <a href="/contents/<%= content._id %>">
-            <p id="line"><strong><%= content.name %></strong></p>
+            <div id="line">
+              <% if(content.name.length > 35){ %>
+                <%- content.name.slice(0, 35) %> ... 
+              <% } else { %>
+                <%- content.name %>
+              <% } %>
+            </div>
           </a>
+
+          <% for(var i=0; i<topContent.length; i++){ %>
+            <% if(content._id == topContent[i].id){ %>
+              <span class="badge badge-pill badge-danger">HOT</span>
+            <% } %>
+          <% } %>
             <!-- ================================================================= -->
             <!-- Show "New" sign when the content is created in less than 24 hours -->
             <!-- ================================================================= -->
@@ -212,44 +228,41 @@
           <% var diff_hours = elapsed / (60*60*1000);%>
 
           <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span>
-            </h6>
+            <span class="badge badge-secondary"> New</span>
           <% } %>
 
-          <h6 style="padding-left: 5px;" id="line">
-            <span class="badge badge-pill badge-info">
-              <% if(content.category == 'tntl'){ %>
-                웃긴영상 | TNTL
-              <% } else if(content.category == 'mukbang'){ %>
-                먹방
-              <% } else if(content.category == 'news'){ %>
-                News
-              <% } else if(content.category == 'documentary'){ %>
-                다큐
-              <% } else if(content.category == 'educational'){ %>
-                교육
-              <% } else if(content.category == 'fitness'){ %>
-                운동
-              <% } else if(content.category == 'motivational'){%>
-                동기부여
-              <% } else if(content.category == 'music'){ %>
-                음악
-              <% } else if(content.category == 'beauty'){ %>
-                뷰티
-              <% } else if(content.category == 'gaming'){ %>
-                게임
-              <% } else if(content.category == 'vlog'){ %>
-                브이로그 | VLOG
-              <% } else if(content.category == 'animal'){ %>
-                동물
-              <% } else if(content.category == 'others'){ %> 
-                Others
-              <% } %>
-            </span>
-          </h6>
+          <span class="badge badge-pill badge-info">
+            <% if(content.category == 'tntl'){ %>
+              웃긴영상 | TNTL
+            <% } else if(content.category == 'mukbang'){ %>
+              먹방
+            <% } else if(content.category == 'news'){ %>
+              News
+            <% } else if(content.category == 'documentary'){ %>
+              다큐
+            <% } else if(content.category == 'educational'){ %>
+              교육
+            <% } else if(content.category == 'fitness'){ %>
+              운동
+            <% } else if(content.category == 'motivational'){%>
+              동기부여
+            <% } else if(content.category == 'music'){ %>
+              음악
+            <% } else if(content.category == 'beauty'){ %>
+              뷰티
+            <% } else if(content.category == 'gaming'){ %>
+              게임
+            <% } else if(content.category == 'vlog'){ %>
+              브이로그 | VLOG
+            <% } else if(content.category == 'animal'){ %>
+              동물
+            <% } else if(content.category == 'others'){ %> 
+              Others
+            <% } %>
+          </span>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord">
+        <div class="content-infoline breakWord">
           <div>
             Posted by&nbsp;   
             <strong>
@@ -290,6 +303,13 @@
           </div>
           <div class="line">
             <span>&nbsp;댓글 <%= content.comments.length %></span>
+          </div>
+          <div style='color: #000000; padding-top: 0px;'> 
+            <% if(content.description.length > 25){ %>
+              <%- content.description.slice(0, 25) %> ...
+            <% } else { %>
+              <%- content.description %>
+            <% } %>
           </div>
         </div>
       </div>

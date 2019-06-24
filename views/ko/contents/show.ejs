@@ -667,6 +667,18 @@ socket.on('reply', function(data){
   }
 });
 
+//LIKE CONTENT 
+socket.on('contentLikeUpdate', function(data){
+  var likeButtonCount = document.getElementById("likeButtonCount")
+  console.log("data likeupdate: " + data);
+  if(data > 1000) {
+    likeButtonCount.innerHTML = Math.floor(data/1000) + 'K Likes'
+  } else if(data > 1) {  
+    likeButtonCount.innerHTML = data + ' Likes';
+  } else {
+    likeButtonCount.innerHTML = data + ' Like';
+  }
+});
 
 // PAGINATION FITURES
 // initialization before all functions

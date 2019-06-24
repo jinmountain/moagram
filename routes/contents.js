@@ -898,7 +898,7 @@ router.put("/:id", function(req, res){
                     req.flash("success", "Updated " + content.name);
                 }
                 
-                res.redirect("/" + req.user.lang + "/contents/" + content._id);
+                res.redirect("/contents/" + content._id);
             } else {
                 res.redirect("/auth/login");
             }
@@ -913,7 +913,7 @@ router.delete("/:id", middleware.checkUserContent, function(req, res, next){
             return next(err);
         } else {
             if(req.user){
-                res.redirect("/" + req.user.lang + "/contents"); 
+                res.redirect("/contents"); 
             } else {
                 res.redirect("/auth/login");
             }

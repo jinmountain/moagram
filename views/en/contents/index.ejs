@@ -36,7 +36,7 @@
 
   <% if(topContent.length > 0){ %>
     <div class="contents row"> 
-      <div class="content-res col-md-6">
+      <div class="content-res col-md-5">
         <div class="row secondRow">
           <!-- ==============thumnail=============== -->
           <div class="content-thumbnail col-sm-12">
@@ -58,13 +58,19 @@
         </div>
       </div>
 
-      <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord">
+      <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
+        <div class="content-title breakWord">
           <a href="/contents/<%= topContent[0]._id %>">
-            <div id="line"><strong><%= topContent[0].name %></strong></div>
+            <div id="line"><strong>
+              <% if(topContent[0].name.length > 35){ %>
+                <%- topContent[0].name.slice(0, 35) %> ... 
+              <% } else { %>
+                <%- topContent[0].name %>
+              <% } %>
+            </strong></div>
           </a>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-top">TOP</span></h6>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
+          <span class="badge badge-pill badge-top">TOP</span>
+          <span class="badge badge-pill badge-danger">HOT</span>
             <!-- ================================================================= -->
             <!-- Show "New" sign when the content is created in less than 24 hours -->
             <!-- ================================================================= -->
@@ -75,23 +81,22 @@
           <% var diff_hours = elapsed / (60*60*1000);%>
 
           <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+            <span class="badge badge-secondary">New</span>
           <% } %>
           
-          <h6 style="padding-left: 5px;" id="line">
-            <span class="badge badge-pill badge-info">
-              <% if(topContent[0].category == 'tntl'){ %>
-                TNTL | 웃긴영상
-              <% } else if(topContent[0].category == 'mukbang'){ %>
-                Mukbang | 먹방
-              <% } else { %>
-                <% capitalizeFirstLetter(topContent[0].category) %>
-              <% } %>
-            </span>
-          </h6>
+          
+          <span class="badge badge-pill badge-info">
+            <% if(topContent[0].category == 'tntl'){ %>
+              TNTL | 웃긴영상
+            <% } else if(topContent[0].category == 'mukbang'){ %>
+              Mukbang | 먹방
+            <% } else { %>
+              <% capitalizeFirstLetter(topContent[0].category) %>
+            <% } %>
+          </span>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+        <div class="content-infoline breakWord"> 
           <div>
             Posted by &nbsp;   
             <a class="noSelect" href="/profile/<%= topContent[0].author.id %>">
@@ -137,10 +142,10 @@
             <% } %>
           </div>
           <div> 
-            <% if(topContent[0].description.length > 40){ %>
-              <p><%- topContent[0].description.slice(0, 40) %> ... </p>
+            <% if(topContent[0].description.length > 25){ %>
+              <%- topContent[0].description.slice(0, 25) %> ... 
             <% } else { %>
-              <p><%- topContent[0].description.slice(0, 40) %></p>
+              <%- topContent[0].description %>
             <% } %>
           </div>
         </div>
@@ -158,7 +163,7 @@
 
   <% contents.forEach(function(content){ %>
     <div class="contents row">
-      <div class="content-res col-md-6">
+      <div class="content-res col-md-5">
         <div class="row secondRow">
           <!-- ==============thumnail=============== -->
           <div class="content-thumbnail col-sm-12">
@@ -181,15 +186,21 @@
       </div>
     
     <!-- ==============Title=============== -->
-      <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord" style='padding-top: 5px;'>
+      <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
+        <div class="content-title breakWord" style='padding-top: 5px;'>
           <a href="/contents/<%= content._id %>">
-            <div id="line"><%= content.name %></div>
+            <div id="line">
+              <% if(content.name.length > 35){ %>
+                <%- content.name.slice(0, 35) %> ... 
+              <% } else { %>
+                <%- content.name %>
+              <% } %>
+            </div>
           </a>
 
           <% for(var i=0; i<topContent.length; i++){ %>
             <% if(content._id == topContent[i].id){ %>
-              <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
+              <span class="badge badge-pill badge-danger">HOT</span>
             <% } %>
           <% } %>
           
@@ -203,23 +214,21 @@
           <% var diff_hours = elapsed / (60*60*1000);%>
 
           <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+            <span class="badge badge-secondary"> New</span>
           <% } %>
-          
-          <h6 style="padding-left: 5px;" id="line">
-            <span class="badge badge-pill badge-info">
-              <% if(content.category == 'tntl'){ %>
-                TNTL | 웃긴영상
-              <% } else if(content.category == 'mukbang'){ %>
-                Mukbang | 먹방
-              <% } else { %>
-                <%= content.category %>
-              <% } %>
-            </span>
-          </h6>
+  
+          <span class="badge badge-pill badge-info">
+            <% if(content.category == 'tntl'){ %>
+              TNTL | 웃긴영상
+            <% } else if(content.category == 'mukbang'){ %>
+              Mukbang | 먹방
+            <% } else { %>
+              <%= content.category %>
+            <% } %>
+          </span>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+        <div class="content-infoline breakWord"> 
           <div>
             Posted by &nbsp;   
             <a class="noSelect" href="/profile/<%= content.author.id %>">
@@ -265,11 +274,11 @@
               <span>&nbsp;<%= content.comments.length %> Comment</span>
             <% } %>
           </div>
-          <div style='color: #000000'> 
-            <% if(content.description.length > 40){ %>
-              <p><%- content.description.slice(0, 40) %> ... </p>
+          <div style='color: #000000; padding-top: 0px;'> 
+            <% if(content.description.length > 25){ %>
+              <%- content.description.slice(0, 25) %> ...
             <% } else { %>
-              <p><%- content.description.slice(0, 40) %></p>
+              <%- content.description %>
             <% } %>
           </div>
         </div>
