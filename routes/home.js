@@ -4,35 +4,22 @@ const app = express();
 const Content = require('../models/content');
 const User    = require("../models/user");
 const middleware = require("../middleware");
-const moment = require('moment');
+
+
 
 router.get("/", function (req, res) {
-	var lang;
-    if(req.user){
-        lang = req.user.lang;
-    } else {
-        lang = moment.locale();
-    }
 
-    res.render(lang + "/home", {
-		pageType: 'home',
-		ctgCount: []
-	});
-});
-
-router.get("/about", function(req, res, next){
-
-	var lang;
-    if(req.user){
-        lang = req.user.lang;
-    } else {
-        lang = moment.locale();
-    }
-
-    res.render(lang + "/about", {
-		pageType: 'about',
-		ctgCount: []
-	});
+	if(req.query.search){
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		var search = regex
+		res.render("home", {
+			ctgCount: []
+		})
+	} else {
+		res.render("home", {
+			ctgCount: []
+		});
+	}
 });
 
 router.get("/:url", function(req, res, next){
@@ -42,7 +29,7 @@ router.get("/:url", function(req, res, next){
     });
 });
 
-router.get("/:url", function(req, res, next){
+router.get("/en/:url", function(req, res, next){
 	if(req.params.url == "contents" || req.params.url == "profile"){
 		next();
 	} else {
@@ -53,8 +40,18 @@ router.get("/:url", function(req, res, next){
 	}
 });
 
+router.get("/ko/:url", function(req, res, next){
+	if(req.params.url == "contents" || req.params.url == "profile"){
+		next();
+	} else {
+		res.status(404).render('./error', {
+	        err: "404",
+	        message: "Oops. Page not found"
+	    });
+	}
+});
 
-router.get("/profile/:url", function(req, res, next){
+router.get("/en/profile/:url", function(req, res, next){
 	User.findById(req.params.url, function(err, userFound){
  		if(req.params.url == "setting" 
 			|| req.params.url == "likes"
@@ -71,14 +68,36 @@ router.get("/profile/:url", function(req, res, next){
 	});
 });
 
+router.get("/ko/profile/:url", function(req, res, next){
+	User.findById(req.params.url, function(err, userFound){
+		if(req.params.url == "setting" 
+			|| req.params.url == "likes"
+			|| req.params.url == "contents"
+			|| req.params.url == "following"
+			|| userFound){
+			next();
+		} else {
+			res.status(500).render('./error', {
+	            err: "500",
+	            message: "Oops. Internal Server Error"
+	        });
+		}
+	});
+});
 
-router.get("/profile/contents/:url", function(req, res, next){
+router.get("/en/profile/contents/:url", function(req, res, next){
 	res.status(404).render('./error', {
         err: "404",
         message: "Oops. Page not found"
     });
 });
 
+router.get("/ko/profile/contents/:url", function(req, res, next){
+	res.status(404).render('./error', {
+        err: "404",
+        message: "Oops. Page not found"
+    });
+});
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

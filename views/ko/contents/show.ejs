@@ -1,7 +1,7 @@
 <% include ../partials/header %>
   <div id="content-show">
     <div class="content-show-sidebar">
-      <form action="/contents" method="GET" class="form-group">
+      <form action="/ko/contents" method="GET" class="form-group">
         <div class="list-group" style="max-width: 260px;">
           <h5 style="text-align: center; border-bottom: 1px solid #DADADA; padding-bottom: 3px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-r-52.png"/>ECENT <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
           <li class="list-group-item" id="content-show-rec-list">
@@ -28,43 +28,29 @@
 
                 <div class="content-sidebar-title breakWord">
                   <div>
-                    <a style="font-size: 18px;" href="/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
+                    <a style="font-size: 18px;" href="/ko/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
                   </div>
                   <div>
                     <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" />
-                    <a style="font-size: 15px;" href="/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                    <a style="font-size: 15px;" href="/ko/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                   </div>
                 </div>
                 <div class="content-sidebar-infoline" style="font-size: 13px;">
                   <div id="show-sidebar-vertical-group">
-                    <div class="verticalLine">
-                      <%if (user.contentLiked.indexOf(slicedContent._id) != -1) { %>
-                        <img style="width: 15px; height: 18px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
-                        <% } else { %>
-                        <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-                      <% } %>
-
-                      <% if(slicedContent.likes > 1000) { %>
-                        <%= Math.floor(slicedContent.likes/1000) %> K
-                      <% } else if (slicedContent.likes > 1) { %>
-                        <%= slicedContent.likes %>
-                      <% } else { %>
-                        <%= slicedContent.likes %> 
-                      <% } %>
-                    </div>
-                    <div class="verticalLine"> 
+                    <div id="verticalLine"> 
                       <% if(slicedContent.views > 1000) { %>
                       조회 수 <%= Math.floor(slicedContent.views/1000) %>K 
                       <% } else { %>
                       조회 수 <%= slicedContent.views %> 
                       <% } %>
                     </div>
-                    <div class="line">
-                      <% if(slicedContent.comments.length > 1){ %>
-                        <span>&nbsp;댓글 수<%= slicedContent.comments.length %></span>
-                      <% } else { %>
-                        <span>&nbsp;댓글 수<%= slicedContent.comments.length %></span>
-                      <% } %>
+                    <div id="verticalLine">
+                      <!-- Momentjs Ago --> 
+                      &nbsp; <%= moment(slicedContent.date).fromNow()%>
+                    </div>
+                    <div id="line">
+                      &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>
+                      댓글
                     </div>
                   </div>
                 </div>     
@@ -84,12 +70,12 @@
             <li>
               <!-- Author of the content -->
               <div id="verticalLine">
-                Posted By <a href="/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
+                Posted By <a href="/ko/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
               </div>
 
               <!-- Follow button -->
               <% if(content.author.id != user.id) { %>
-              <form id="verticalLine" action="/profile/<%=content.author.id%>" method="POST">
+              <form id="verticalLine" action="/ko/profile/<%=content.author.id%>" method="POST">
                                       
               <%if (user.following.indexOf(content.author.id) != -1) { %>
                 <button class="btn btn-default btn-sm" id="btn-default"><h6>Unfollow</h6></button>
@@ -111,7 +97,7 @@
               </div>
             </li>
             <li>
-              <form id="verticalLine" action="/contents/category/<%=content.category%>" method="GET">
+              <form id="verticalLine" action="/ko/contents/category/<%=content.category%>" method="GET">
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <% if(content.category == 'tntl'){ %>
                     <h6>웃긴영상 | TNTL</h6>
@@ -192,75 +178,42 @@
             <iframe id="show-main-thumbnail" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="580" height="350"></iframe>
           </div>
         <% } %>
-          <div style='padding-top: 15px;'>
-            <%- content.description %>
+          <div>
+          <%- content.description %>
           </div>
           
-          <!-- LIKE EDIT DELETE PARTS -->
-          <div style='padding-top: 15px;'>
-            <div class='line'> 
+          <div>
+            <form action="/ko/contents/<%=content._id%>" method="POST">
               <%if (user.contentLiked.indexOf(content._id) != -1) { %>
-                <button class='likeButton noOutline' onclick='likeContent("<%=content._id%>", "<%=user._id%>")'>
-                  <img style="padding-bottom: 8px;" class='line' id='likeButtonImage' width="30px" height="35px" src="/icons/icons8-facebook-like-48.png"/>
-                  <div class='line' id='likeButtonCount'>
-                    <% if(content.likes > 1000) { %>
-                      <%= Math.floor(content.likes/1000) %>K
-                    <% } else if(content.likes > 1) { %> 
-                      <%= content.likes %> Likes
-                    <% } else { %>
-                      <%= content.likes %> Like
-                    <% } %>
-                  </div>
+                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-48.png"/>
+                  <% if(content.likes == 1) { %> 
+                    One Like
+                  <% } else { %>
+                    <%= content.likes %> Likes
+                  <% } %>
                 </button>
               <% } else { %>
-                <button class='likeButton noOutline' onclick='likeContent("<%=content._id%>", "<%=user._id%>")'>
-                  <img style="padding-bottom: 8px;" class='line' class='line' id='likeButtonImage' width="30px" height="35px" src="/icons/icons8-facebook-like-64.png" />
-                  <div class='line' id='likeButtonCount'>
-                    <% if(content.likes > 1000) { %>
-                      <%= Math.floor(content.likes/1000) %>K
-                    <% } else if(content.likes > 1) { %>  
-                      <%= content.likes %> Likes
-                    <% } else { %>
-                      <%= content.likes %> Like
-                    <% } %>
-                  </div>
+                <button style="border: none; background-color: transparent;"><img src="/icons/icons8-facebook-like-64.png"/>
+                  <% if(content.likes == 1) { %> 
+                    One Like
+                  <% } else { %>
+                    <%= content.likes %> Likes
+                  <% } %>
                 </button>
               <% } %>
-            </div>
-
-            <div class='line pull-right'>
-              <% if(user && content.author.id.equals(user._id)){ %>
-                <a class="btn btn-default btn-sm noOutline" href="/contents/<%= content._id %>/edit">수정하기</a>
-                <a href="#deleteContent" class="btn btn-default btn-sm noOutline" data-toggle="modal">삭제하기</a>
-              <% } %>
-              <!-- ===DELETE MODAL=== -->
-              <div id="deleteContent" class="modal fade" style='display: none;'>
-                <div class="modal-dialog modal-confirm">
-                  <div class="modal-content">
-                    <div class="modal-header">       
-                      <h4 class="modal-title">MOA</h4>  
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                      <p>해당 포스트를 지우시겠습니까? "<%= content.name %>" ?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-info" data-dismiss="modal">취소</button>
-                      <form action="/contents/<%=content._id%>?_method=DELETE" method="POST">
-                        <button type="submit" class="btn btn-danger">삭제</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-              <!-- ====== -->               
-            </div>
+            </form>
+            <% if(user && content.author.id.equals(user._id)){ %>
+                <form style="display: inline" class="pull-right" action="/ko/contents/<%=content._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-default btn-sm" id="btn-default" onclick="return confirm('<%= content.name %>를 삭제할까요?');">삭제</button>
+                    <a class="btn btn-default btn-sm" id="btn-default" href="/ko/contents/<%= content._id %>/edit">수정하기</a>              
+                </form>
+            <% } %>
           </div>
         </div>
 
         <!-- mobile size page rec contents -->
         <div class="content-show-mobile-rec">
-          <form action="/contents" method="GET" class="form-group">
+          <form action="/ko/contents" method="GET" class="form-group">
             <div class="list-group">
               <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin: 0px;">RECENT POSTS</h5>
               <li class="list-group-item" id="content-show-rec-list">
@@ -287,40 +240,29 @@
 
                     <div class="content-mobile-rec-title breakWord">
                       <div>
-                        <a style="font-size: 18px;" href="/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
+                        <a style="font-size: 18px;" href="/ko/contents/<%= slicedContent._id %>"><%= slicedContent.name %></a>
                       </div>
                       <div>
                         <img style="display: inline-block;  border-radius: 50%;" src= "<%= slicedContent.author.thumbnail %>" width= "25px" height= "25px" /> 
-                        <a style="font-size: 15px;" href="/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
+                        <a style="font-size: 15px;" href="/ko/profile/<%= slicedContent.author.id %>"><%= slicedContent.author.username %></a> 
                       </div>
                     </div>
                     <div class="content-mobile-rec-infoline">
                       <!-- Momentjs Ago --> 
                       <div id="show-mobile-rec-vertical-group">
-                        <div class="verticalLine">
-                          <%if (user.contentLiked.indexOf(slicedContent._id) != -1) { %>
-                            <img style="width: 15px; height: 18px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
-                            <% } else { %>
-                            <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-                          <% } %>
-
-                          <% if(slicedContent.likes > 1000) { %>
-                            <%= Math.floor(slicedContent.likes/1000) %> K
-                          <% } else if (slicedContent.likes > 1) { %>
-                            <%= slicedContent.likes %>
-                          <% } else { %>
-                            <%= slicedContent.likes %> 
-                          <% } %>
-                        </div>
-                        <div class="verticalLine"> 
+                        <div id="verticalLine"> 
                           <% if(slicedContent.views > 1000) { %>
                           조회 수 <%= Math.floor(slicedContent.views/1000) %>K 
                           <% } else { %>
                           조회 수 <%= slicedContent.views %> 
                           <% } %>
                         </div>
-                        <div class="line">
-                          <span>&nbsp;댓글 수 <%= slicedContent.comments.length %> Comments</span>
+                        <div id="verticalLine">   
+                          &nbsp; <%= moment(slicedContent.date).fromNow()%>
+                        </div>
+                        <div id="line">
+                          &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= slicedContent._id %>"></span>
+                          댓글
                         </div>
                       </div>
                     </div>     
@@ -332,437 +274,29 @@
           </form>
         </div>
       </div>
+      <div id="disqus_thread"></div>
 
-      <!-- COMMENT COUNT -->
-      <div style="padding-top: 10px; font-size: 20px;">
-        <p>댓글 수 <%= commentCount %></p>
-      </div>
+      <script>
+      /**
+      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+      
+      var disqus_config = function () {
+      // this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          var pageId = "<%= content._id %>";
+          this.page.identifier = pageId;
+          DISQUSWIDGETS.getCount({reset: true});
+       // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://<%=shortname%>.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
 
-      <!-- COMMENT TEXTAREA --> 
-      <div style='padding-top: 5px;'>
-        <img class='line' src="<%= user.thumbnail %>" style="border-radius: 50%; width: 35px; height: 35px;">&nbsp;
-        <div class='line'><%= user.username %></div>
-        <div class='line'>
-          <textarea class="commentReplyTextarea" id="commentTextarea" placeholder='Add a public comment...'></textarea></br>
-        </div>
-        <div align='right'>
-          <input type="hidden" id="contentId" value="<%= content.id %>">
-          <button class='noOutline btn btn-outline-dark' type="submit" value="Submit" onClick='submitComment(); return false;'>댓글 등록</button>
-        </div>
-      </div>
-
-      <div id="comments">
-        <div id="newComments">
-        </div>
-        <% if (typeof comments != 'undefined' && comments != null) { %>
-          <% comments.forEach( function ( commentData ){ %>
-            <div id="<%=commentData._id%>ExComments">
-              <div id="<%=commentData._id%>ExCommentChild">
-                <div class="line">
-                  <a href="/profile/<%=commentData.author.id%>">
-                    <div class="line">
-                      <img src="<%= commentData.author.thumbnail %>" style="border-radius: 50%; width: 35px; height: 35px;">&nbsp;
-                    </div>
-                    <div class="line">
-                      <%= commentData.author.username %>&nbsp;
-                    </div>
-                  </a>
-                </div>
-                <div class="line" style="color: #7C7F81;">
-                  <%= moment(commentData.date).fromNow()%>
-                </div>
-                <div class='line' style="color: #7C7F81; font-size: 10px;">
-                  <% if(commentData.edited == true){ %>
-                    edited
-                  <% } %>
-                </div>
-                
-                <% if(user&& commentData.author.id.equals(user._id)){ %>
-                  <div class="nav-item dropdown line pull-right">
-                    <a class="nav-link dropdown-toggle" style="padding-left: 0px;" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src= "/icons/icons8-menu-vertical-24.png" width= "25px" height= "25px" />&nbsp;
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" 
-                    style="
-                    width: 120px !important; min-width: 120px; max-width: 120px;
-                    height: 105px !important; min-height: 105px; max-height: 105px;
-                    ">
-                      <div align='center'>
-                        <button class='nav-link' style="border: none;" onClick="editComment('<%=commentData.id%>', '<%=commentData.comment%>', '<%= moment(commentData.date).fromNow()%>'); return false;">
-                          <img width="20px" height="20px" src="/icons/icons8-compose-16.png"/>
-                          수정하기
-                        </button>
-                      </div>
-
-                      <div align='center'>
-                        <button class="nav-link" style='border: none;' onClick="deleteComment('<%=commentData.id%>'); return;">
-                          <img width="20px" height="20px" src="/icons/icons8-close-window-50.png"/>
-                          삭제하기
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                <% } %>
-
-                <!-- \\\\\\\\REPLY COMES HERE///////// -->
-                <div class="breakWord" style="padding-left: 2.5em;"><%= commentData.comment %>
-                </div>
-
-                <!-- REPLY FORM BUTTON --> 
-                <div class='replyBox' style="padding-left: 2.5em; padding-top: 5px;">
-                  <button type="button" class='replyBtn noOutline btn btn-outline-secondary btn-sm' onclick="showReplyForm('<%=commentData.id%>Reply'); return false;">답글 달기</button>
-                </div>
-                <!-- BUTTONS TO HIDE AND VIEW REPLY WHEN THEY ARE LOADED -->
-                
-                <div id="<%=commentData.id%>RepliesViewReplyButton" style='display: none; padding-left: 3em; font-size: 15px; padding-top: 8px; padding-bottom: 8px;'>
-                  <a onclick="viewReply('<%=commentData.id%>');">
-                    <%= commentData.replies.length %> 답글 보기
-                  </a>
-                </div>
-                <div id="<%=commentData.id%>RepliesHideReplyButton" style='display: none; padding-left: 3em; font-size: 15px; padding-top: 8px; padding-bottom: 8px;'>
-                  <a onclick="hideReply('<%=commentData.id%>');">답글 숨기기</a>
-                </div>
-
-                <!-- WHERE REPLY WILL BE ADDED WHEN FETCHED -->
-                <div id="<%=commentData.id%>Replies" style="padding-left: 3em;">
-                  <div id="<%=commentData.id%>NewReplies">
-                  </div>
-                </div>
-                
-                <div style="padding-top: 8px;">
-                  <% if(commentData.replies.length > 0){ %>
-                    <a style="padding-left: 3em; font-size: 15px;"
-                      onclick="loadMoreReply('<%=commentData.id%>', 1); this.parentNode.style.display = 'none'; return false;">
-                      <%= commentData.replies.length %> 답글 보기
-                    </a>
-                  <% } %>
-                </div>
-
-                <!-- REPLY FORM COMES HERE -->
-                <div class='replyForm' style="padding-left: 3em; padding-top: 8px;">
-                  <span style='display: none;' id="<%=commentData.id%>Reply">
-                    <input type="hidden" id="commentId" value="<%= commentData.id %>">
-                    <div class='line'>
-                      <img src="<%= user.thumbnail %>" style="border-radius: 50%; width: 25px; height: 25px;">&nbsp;
-                    </div>
-
-                    <textarea class="commentReplyTextarea" id='<%=commentData.id%>ReplyTextarea' placeholder='Add a public reply...'></textarea>
-
-                    <div align='right'>
-                      <button type='button' onclick="hideReplyForm('<%=commentData.id%>Reply'); return false;" class='replyCancel noOutline btn btn-outline-secondary'>취소하기</button>
-                      <button type='button' onclick="replySubmit('<%=commentData.id%>'); return false;" class='btn btn-outline-dark' id="<%= commentData.id%>">답글 등록</button>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-          <% }); %>
-        <% } %>
-      </div>
+      </script>
     </div>
   </div>
-
-<script>
-var xhr = new XMLHttpRequest();
-
-function showReplyForm(id) {
-  document.getElementById(id).style.display = '';
-}
-
-function hideReplyForm(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
-function hideReply(id) {
-  document.getElementById(id + 'Replies').style.display = 'none';
-  document.getElementById(id + 'RepliesViewReplyButton').style.display = '';
-  document.getElementById(id + 'RepliesHideReplyButton').style.display = 'none';
-}
-
-function viewReply(id) {
-  document.getElementById(id + 'Replies').style.display = '';
-  document.getElementById(id + 'RepliesHideReplyButton').style.display = '';
-  document.getElementById(id + 'RepliesViewReplyButton').style.display = 'none';
-}
-
-var socket = io();
-
-//======================COMMENT SECTION==============================
-function submitComment(){
-  //javascript built in date to sort
-  var timeNow = Date.now();
-  //moment js to show date
-  var dateNow = moment();
-  var comment = document.getElementById("commentTextarea").value
-  var contentId = document.getElementById("contentId").value
-  var commentAuthor = {
-    id: "<%= user.id %>",
-    username: "<%= user.username %>",
-    thumbnail: "<%= user.thumbnail %>"
-  };
-
-  if(comment != ''){
-
-    var data = {
-      'comment': comment,
-      'contentId': contentId,
-      'author': commentAuthor,
-      'createdAt': timeNow,
-      'date': dateNow,
-      'edited': false
-    };
-    var newComments = document.getElementById('newComments');
-    newComments.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/"+ commentAuthor.id + "'><div class='line'><img src='" + commentAuthor.thumbnail + "' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;</div><div class='line'>" + escapeHtml(commentAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>" + escapeHtml(comment) + "</div>");
-    document.getElementById("commentTextarea").value = '';
-
-    socket.emit('comment', data);
-  }
-};
- 
-socket.on('comment', function(data){
-  var contentId = "<%= content.id %>";
-
-  if(contentId == data.contentId){
-    var newComments = document.getElementById('newComments');
-    newComments.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/"+ commentAuthor.id + "'><div class='line'><img src='" + commentAuthor.thumbnail + "' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;</div><div class='line'>" + escapeHtml(commentAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>" + escapeHtml(comment) + "</div>");
-  }
-});
-
-function deleteComment(id){
-  
-  document.getElementById(id + 'ExComments').remove();
-  var data = {
-    'currentUser': '<%= user.id %>',
-    'commentId': id
-  }
-
-  socket.emit('deleteComment', data);
-
-};
-
-function editComment(id, comment, originalDate){
-  var commentToEditChild = document.getElementById(id + 'ExCommentChild');
-  commentToEditChild.style.display = 'none';
-
-  var commentToEdit = document.getElementById(id + 'ExComments');
-
-  commentToEdit.insertAdjacentHTML('beforeEnd', "<div id='" + id + "EditCommentForm' style='padding-top: 5px;'><img class='line' src='<%=user.thumbnail%>' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;<div class='line'><%=user.username%></div><div><textarea class='commentReplyTextarea' id='" + id + "EditCommentTextarea'>" + escapeHtml(comment) + "</textarea></br></div><div align='right'><div class='line' style='padding-right: 5px;'><button class='noOutline btn btn-outline-dark' onClick='cancelEditComment(\"" + id + "\"); return false;'>CANCEL</button></div><div class='line'><button class='noOutline btn btn-outline-dark' onClick='submitEditComment(\"" + id + "\", \"" + originalDate + "\"); return false;'>SAVE</button></div></div></div>" 
-  )
-};
-
-function cancelEditComment(id){
-  document.getElementById(id + 'EditCommentForm').remove();
-  var commentToEditChild = document.getElementById(id + 'ExCommentChild');
-  commentToEditChild.style.display = '';
-}
-
-function submitEditComment(id, originalDate){
-
-  var newComment = document.getElementById(id + 'EditCommentTextarea').value;
-
-  if(newComment != ''){
-    var data = {
-      'currentUser': '<%= user.id %>',
-      'commentId': id,
-      'comment': newComment
-    }
-
-    socket.emit('editComment', data);
-
-    document.getElementById(id + 'ExComments').insertAdjacentHTML('beforeEnd', "<div class='line'><div class='line'><img src='<%=user.thumbnail%>' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;</div><div class='line'><%=user.username%>&nbsp;</div></a></div><div class='line infoTextColor'>" + originalDate + "</div><div class='breakWord' style='padding-left: 2.5em;'>" + escapeHtml(newComment) + "</div>");
-
-    document.getElementById(id + 'EditCommentForm').remove();
-  }
-}
-
-//=====================REPLY SECTION============================
-
-function deleteReply(replyId, commentId){
-  document.getElementById(replyId + 'ExReplies').remove();
-  var data = {
-    'currentUser': '<%= user.id %>',
-    'replyId': replyId,
-    'commentId': commentId
-  };
-  socket.emit('deleteReply', data);
-};
-
-//====================EDIT REPLY PART=====================
-function editReply(replyId, commentId, reply, originalDate){
-  var replyToEditChild = document.getElementById(replyId + 'ExRepliesChild');
-  replyToEditChild.style.display = 'none';
-
-  var replyToEdit = document.getElementById(replyId + 'ExReplies');
-
-  replyToEdit.insertAdjacentHTML('beforeEnd', "<div id='" + replyId + "EditReplyForm' style='padding-top: 5px;'><img class='line' src='<%=user.thumbnail%>' style='border-radius: 50%; width: 25px; height: 25px;'><div><textarea class='commentReplyTextarea' id='" + replyId + "EditReplyTextarea'>" + escapeHtml(reply) + "</textarea></br></div><div align='right'><div class='line' style='padding-right: 5px;'><button class='noOutline btn btn-outline-dark' onClick='cancelEditReply(\"" + replyId + "\"); return false;'>CANCEL</button></div><div class='line'><button class='noOutline btn btn-outline-dark' onClick='submitEditReply(\"" + replyId + "\", \"" + commentId + "\", \"" + originalDate + "\"); return false;'>SAVE</button></div></div></div>" 
-  )
-};
-
-function cancelEditReply(id){
-  document.getElementById(id + 'EditReplyForm').remove();
-  var replyToEditChild = document.getElementById(id + 'ExRepliesChild');
-  replyToEditChild.style.display = '';
-}
-
-function submitEditReply(replyId, commentId, originalDate){
-
-  var newReply = document.getElementById(replyId + 'EditReplyTextarea').value;
-
-  if(newReply != ''){
-    var data = {
-      'currentUser': '<%= user.id %>',
-      'replyId': replyId,
-      'commentId': commentId,
-      'reply': newReply
-    }
-
-    socket.emit('editReply', data);
-
-    document.getElementById(replyId + 'ExReplies').insertAdjacentHTML('beforeEnd', "<div class='line'><div class='line'><img src='<%=user.thumbnail%>' style='border-radius: 50%; width: 25px; height: 25px;'>&nbsp;</div><div class='line'><%=user.username%>&nbsp;</div></a></div><div class='line infoTextColor'>" + originalDate + "</div><div class='breakWord' style='padding-left: 2.5em;'>" + escapeHtml(newReply) + "</div>");
-
-    document.getElementById(replyId + 'EditReplyForm').remove();
-  }
-}
-
-function replySubmit(id) {
-
-  var reply = document.getElementById(id+"ReplyTextarea").value
-  var commentId = id;
-  //javascript built in date to sort
-  var timeNow = Date.now();
-  //moment js to show date
-  var dateNow = moment();
-  
-  var replyAuthor = {
-    id: "<%= user.id %>",
-    username: "<%= user.username %>",
-    thumbnail: "<%= user.thumbnail %>"
-  };
-
-  if(reply != ''){
-
-    var data = {
-      'commentId': commentId,
-      'reply': reply,
-      'author': replyAuthor,
-      'createdAt': timeNow,
-      'date': dateNow,
-      'edited': false
-    };
-
-    var newReplies = document.getElementById(id+"NewReplies");
-    newReplies.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/" + replyAuthor.id + "'><div class='line'><img src='" + replyAuthor.thumbnail + "' style='border-radius: 50%; width: 25px; height: 25px;'>&nbsp;</div><div class='line'>" + escapeHtml(replyAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>"  + escapeHtml(reply) + "</div>");
-
-    document.getElementById(id+"ReplyTextarea").value = '';
-
-    socket.emit('reply', data);
-  }
-}
-
-socket.on('reply', function(data){
-  if(commentId = data.commentId){
-    var newReplies = document.getElementById(id+"NewReplies");
-    newReplies.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/" + replyAuthor.id + "'><div class='line'><img src='" + replyAuthor.thumbnail + "' style='border-radius: 50%; width: 25px; height: 25px;'>&nbsp;</div><div class='line'>" + escapeHtml(replyAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>"  + escapeHtml(reply) + "</div>");
-  }
-});
-
-
-// PAGINATION FITURES
-// initialization before all functions
-var page = 1; 
-var perPage = 12;
-var current = page;
-
-// How many contents we found 
-var count = "<%= commentCount %>";
-
-// How many pages we have 
-var pages = Math.ceil(count*1.0 / perPage)
-var pageCut = pages + 1;
-
-window.onscroll = function(ev) {
-if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    page++;
-    current = page;
-
-    if(current <= pages){
-      loadMoreComment(page);
-    }
-
-    // When current equals pageCut it appends an alert
-    else if(current == pageCut) {
-      var comments = document.getElementById('comments');
-      comments.insertAdjacentHTML('beforeEnd', "<div style='text-align: center;' class='contents alert alert-dark' role='alert'><p style='text-align: center;'>End of Comments</p></div>");
-    }
-  }
-};
-
-function loadMoreComment(currentPage){
-  xhr.open('GET', "/contents/<%=content.id%>/?page=" + currentPage);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      var comments = document.getElementById('comments');
-      comments.insertAdjacentHTML('beforeEnd', xhr.responseText);
-    }
-    else {
-      console.log('Request failed.' + xhr.status);
-    }
-  };
-  xhr.send();
-}
-
-function loadMoreReply(id, currentPage){
-  xhr.open('GET', "/contents/<%=content.id%>/" + id + "/?page=" + currentPage);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      var replies = document.getElementById(id+'Replies');
-      replies.insertAdjacentHTML('beforeEnd', xhr.responseText);
-    }
-    else {
-      console.log('Request failed.' + xhr.status);
-    }
-  };
-  xhr.send();
-
-  document.getElementById(id + 'RepliesHideReplyButton').style.display = '';
-}
-
-// REPLACE HTML TAGS
-function escapeHtml(text) {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-//TEXTAREA AUTORESIZE WO JQUERY
-
-document.addEventListener('input', function (event) {
-  if (event.target.tagName.toLowerCase() !== 'textarea') return;
-  autoExpand(event.target);
-}, false);
-
-var autoExpand = function (field) {
-
-  // Reset field height
-  field.style.height = 'inherit';
-
-  // Get the computed styles for the element
-  var computed = window.getComputedStyle(field);
-
-  // Calculate the height
-  var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
-               + parseInt(computed.getPropertyValue('padding-top'), 10)
-               + field.scrollHeight
-               + parseInt(computed.getPropertyValue('padding-bottom'), 10)
-               + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
-
-  field.style.height = height + 'px';
-
-};
-
-</script>
 <% include ../partials/footer %>

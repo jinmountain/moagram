@@ -20,29 +20,44 @@
 		<form class="form-group">
 	        <ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="/profile" style="font-size: 20px;">
+					<a class="nav-link active" href="/en/profile" style="font-size: 20px;">
 						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-check-all-60.png"/>Overview
 					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/likes" style="font-size: 20px;">
+					<a class="nav-link active" href="/en/profile/likes" style="font-size: 20px;">
 						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-good-quality-60.png">Likes
 					</a>
 				</li>
 				<li class="nav-item"> 
-					<a class="nav-link active" href="/profile/contents" style="font-size: 20px;">
+					<a class="nav-link active" href="/en/profile/contents" style="font-size: 20px;">
 						<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-gallery-60.png">Posts
 					</a>
 				</li>
 				<li class="nav-item"> 
-		          	<a class="nav-link active" href="/profile/following" style="font-size: 20px;">
+		          	<a class="nav-link active" href="/en/profile/following" style="font-size: 20px;">
 		            	<img style="padding-right: 10px;" width="40" height="30" src="/icons/icons8-checked-user-male-48.png">Following
 		          	</a>
 		        </li>
 	        </ul>
 	  	</form>
 
-	  	<% if(request == "contentsLiked" || request == "contentsCreated" || request == "following"){ %>
+	  	<% if(request == "contentsLiked"){ %>
+			<form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+		    </form>
+		<% } %>
+
+		<% if(request == "contentsCreated"){ %>
+			<!-- <form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="profileContentSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/en/profile/contents/search/'+ document.getElementsByName('profileContentSearch')[0].value; document.getElementsByName('profileContentSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2">
+		    </form> -->
+		    <form style="padding-right: 30px;" class="form-inline" >      
+		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
+		    </form>
+		<% } %>
+
+		<% if(request == "followers"){ %>
 			<form style="padding-right: 30px;" class="form-inline" >      
 		        <input style="background-color: #FFFFFF;" id="search-bar" type="text" name="search" placeholder="Search" class="form-control mr-sm-2">
 		    </form>
@@ -74,16 +89,16 @@
                     <% } %>
 		            </div>
           		<% } else if (content.image){ %>
-          			<a href="/contents/<%=content._id %>">
+          			<a href="/en/contents/<%=content._id %>">
       					<img width="180" height="100" src="<%= content.image%>"> 
       				</a>
           		<% } %>
           		</div>
                	<div class="caption breakWord">
-               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+               		<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
                	</div>
                	<div class="breakWord" style="padding-top: 5px;">
-	              	<a class="noSelect" href="/profile/<%= content.author.id %>">
+	              	<a class="noSelect" href="/en/profile/<%= content.author.id %>">
 	                	<div style="font-size: 15px; color: #7C7F81;">
 	                		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
 	                		<%= content.author.username%> 
@@ -98,7 +113,7 @@
 
 	<% if (moreLikes == 1) {%>
 	<div style="text-align: center; font-size: 15px;">
-		<a class="btn btn-default" id="btn-default" href="/profile/likes" role="button">More</a>
+		<a class="btn btn-default" id="btn-default" href="/en/profile/likes" role="button">More</a>
 	</div>
 	<% } %>
 
@@ -121,16 +136,16 @@
 	                  	</div>
 	                <% } %>  
 	      		<% } else if(content.image){ %>
-      				<a href="/contents/<%=content._id %>">
+      				<a href="/en/contents/<%=content._id %>">
       					<img width="180" height="100" src="<%= content.image %>"> 
       				</a> 
 	      		<% } %>
 		      	</div>
                	<div class="caption breakWord">
-               		<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+               		<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
                	</div>
                	<div class="breakWord" style="padding-top: 5px;">
-              		<a class="noSelect" href="/profile/<%= content.author.id %>">
+              		<a class="noSelect" href="/en/profile/<%= content.author.id %>">
               			<div style="font-size: 15px; color: #7C7F81;">
 	                		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
 	                	<%= content.author.username%> 
@@ -145,7 +160,7 @@
 	
 	<% if (moreContents == 1) {%>
 	<div style="text-align: center; font-size: 15px;">
-		<a class="btn btn-default" id="btn-default" href="/profile/contents" role="button">More</a>
+		<a class="btn btn-default" id="btn-default" href="/en/profile/contents" role="button">More</a>
 	</div>
 	<% } %>
 	<hr>
@@ -171,16 +186,16 @@
 		            </div>
 		          <% } %>
 		        <% } else if(content.image) {%>
-		          	<a href="/contents/<%=content._id %>">
+		          	<a href="/en/contents/<%=content._id %>">
 		            	<img width="180" height="100" src="<%= content.image%>"> 
 		          	</a>
 		        <% } %>
 		        </div>
 		        <div class="caption breakWord">
-		          	<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+		          	<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
 		        </div>
 		        <div class="breakWord" style="padding-top: 5px;">
-					<a class="noSelect" href="/profile/<%= content.author.id %>">
+					<a class="noSelect" href="/en/profile/<%= content.author.id %>">
 						<div style="font-size: 15px; color: #7C7F81;">
 					  		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
 							<%= content.author.username%> 
@@ -196,7 +211,7 @@
   	<!-- ========Pagination======== -->
 
 	<% if (pages > 0) { %>
-		<form action="/profile<%=url%>" method="GET" class="form-group">
+		<form action="/en/profile<%=url%>" method="GET" class="form-group">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 				<% if (current == 1) { %>
@@ -254,16 +269,16 @@
 		            	</div>
 		          	<% } %>
 		        <% } else if(content.image) {%>
-		          	<a href="/contents/<%=content._id %>">
+		          	<a href="/en/contents/<%=content._id %>">
 		            	<img width="180" height="100" src="<%= content.image %>"> 
 		          	</a>
 		        <% } %>
 		        </div>
 		        <div class="caption breakWord">
-		          	<a style="font-size: 20px;" href="/contents/<%=content._id %>"><%=content.name %></a>
+		          	<a style="font-size: 20px;" href="/en/contents/<%=content._id %>"><%=content.name %></a>
 		        </div>
 		        <div class="breakWord" style="padding-top: 5px;">
-					<a class="noSelect" href="/profile/<%= content.author.id %>">
+					<a class="noSelect" href="/en/profile/<%= content.author.id %>">
 						<div style="font-size: 15px; color: #7C7F81;">
 					  		<img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
 							<%= content.author.username%> 
@@ -279,7 +294,7 @@
   	<!-- ========Pagination======== -->
 
 	<% if (pages > 0) { %>
-		<form action="/profile<%=url%>" method="GET" class="form-group">
+		<form action="/en/profile<%=url%>" method="GET" class="form-group">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 				<% if (current == 1) { %>
@@ -328,7 +343,7 @@
 					<div class="col-md-6 col-sm-6">
 					  	<div class="followerIndex">
 				          	<div class="followerUsername">
-				          		<a href="/profile/<%= following.id %>">
+				          		<a href="/en/profile/<%= following.id %>">
 				          			<img id="line" style="display: inline-block;  border-radius: 50%;" src= "<%= following.thumbnail %>" width= "30px" height= "30px" />
 				            		<div id="line" style="font-size: 20px;">
 				            			<%= following.username %>
@@ -337,7 +352,7 @@
 				            	</a>
 				            </div>	
 				            <div class="followerInfo breakWord">
-				            	<a href="/profile/<%= following.id %>">
+				            	<a href="/en/profile/<%= following.id %>">
 					            	<div style="font-size: 18px; color: #7C7F81;">
 				           				Number of followers: <%= following.follower%>
 						          	</div>
@@ -360,7 +375,7 @@
   	<!-- ========Pagination======== -->
 
 	<% if (pages > 0) { %>
-		<form action="/profile<%=url%>" method="GET" class="form-group">
+		<form action="/en/profile<%=url%>" method="GET" class="form-group">
 			<nav aria-label="Page navigation example">
 			  	<ul class="pagination justify-content-center">
 				  	<% if (current == 1) { %>
@@ -398,4 +413,5 @@
 	<hr>
 <% } %>
 	
+
 <% include partials/footer %>

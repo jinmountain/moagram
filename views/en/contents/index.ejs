@@ -1,155 +1,8 @@
-<% include ../partials/header %> 
+ <% include ../partials/header %> 
 <div class="content-box" >
-  <div id="content-index">
-    <div class="contents row" style="background-color: #DAE0E6">
-      <div>
-        <div class='line'>
-          <form action="/contents" method="GET" class='line'>
-            <% if(ctg != ""){ %>
-              <input type='hidden' name='category' value='<%=ctg%>'>
-              <button class="btn btn-default btn-sm" id="btn-default" name="sort" value="new">
-                <img class='line' id="nav-icons" width="32" height="30" src="/icons/new-b.png"> <p class='line'>New</p>
-              </button>
-            <% } else { %>
-              <button class="btn btn-default btn-sm" id="btn-default" name="sort" value="new">
-                <img class='line' id="nav-icons" width="32" height="30" src="/icons/new-b.png"> <p class='line'>New</p>
-              </button>
-            <% } %>
-          </form>
-        </div>
-        <div class='line'>
-          <form action="/contents" method="GET" class='line'>
-            <% if(ctg != ""){ %>
-              <input type='hidden' name='category' value='<%=ctg%>'>
-              <button class="btn btn-default btn-sm" id="btn-default" name="sort" value="popular">
-                <img  id="nav-icons" width="32" height="30" src="/icons/rising-bar-graph-with-arrow-up.png"> <p class='line'>Popular</p>
-              </button>
-            <% } else { %>
-              <button class="btn btn-default btn-sm" id="btn-default" name="sort" value="popular">
-                <img  id="nav-icons" width="32" height="30" src="/icons/rising-bar-graph-with-arrow-up.png"> <p class='line'>Popular</p>
-              </button>
-            <% } %>
-          </form>
-        </div>
-      </div>
-    </div>
-
-  <% if(topContent.length > 0){ %>
-    <div class="contents row"> 
-      <div class="content-res col-md-6">
-        <div class="row secondRow">
-          <!-- ==============thumnail=============== -->
-          <div class="content-thumbnail col-sm-12">
-            <% if(topContent[0].video.provider){ %>
-              <% if(topContent[0].video.provider == 'youtube'){ %>
-                <iframe align='middle' class="content-thumbnail-iframe" width="313" height="150" src="//www.youtube.com/embed/<%= topContent[0].video.id %>" frameborder="0" allowfullscreen></iframe>
-              <% } else if(content.video.provider == 'twitch'){ %>
-                <iframe class="content-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= topContent[0].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="313" height="150"></iframe>
-              <% } %>
-            <% } else if(topContent[0].image) { %>
-              <img class="content-thumbnail-iframe" width="313" height="150" src="<%= topContent[0].image%>">
-            <% } else { %>
-              <img style='display: block; margin: auto; padding-top: 30px;' src="/icons/icons8-ostrich-head-in-sand-80.png">
-              <div align='center'>
-                No Image URL
-              </div>
-            <% } %>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord">
-          <a href="/contents/<%= topContent[0]._id %>">
-            <div id="line"><strong><%= topContent[0].name %></strong></div>
-          </a>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-top">TOP</span></h6>
-          <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
-            <!-- ================================================================= -->
-            <!-- Show "New" sign when the content is created in less than 24 hours -->
-            <!-- ================================================================= -->
-          <% var end = Date.now(); %>
-          <% var start = topContent[0].createdAt; %>
-          <% var elapsed = end - start; %>
-          <% var difference = new Date(elapsed); %>
-          <% var diff_hours = elapsed / (60*60*1000);%>
-
-          <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
-          <% } %>
-          
-          <h6 style="padding-left: 5px;" id="line">
-            <span class="badge badge-pill badge-info">
-              <% if(topContent[0].category == 'tntl'){ %>
-                TNTL | 웃긴영상
-              <% } else if(topContent[0].category == 'mukbang'){ %>
-                Mukbang | 먹방
-              <% } else { %>
-                <% capitalizeFirstLetter(topContent[0].category) %>
-              <% } %>
-            </span>
-          </h6>
-        </div>
-      <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
-          <div>
-            Posted by &nbsp;   
-            <a class="noSelect" href="/profile/<%= topContent[0].author.id %>">
-              <img style="display: inline-block;  border-radius: 50%;" src= "<%= topContent[0].author.thumbnail %>" width= "28px" height= "28px" />
-              <%= topContent[0].author.username%> 
-            </a>
-          </div>
-          <div id="verticalLine" style="font-size: 15px;">
-            <% if(user) { %>
-              <%if (user.contentLiked.indexOf(topContent[0]._id) != -1) { %>
-                <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
-              <% } else { %>
-                <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-              <% } %>
-            <% } else { %>
-              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-            <% } %>
-
-            <% if(topContent[0].likes > 1000) { %>
-            <bold> <%= Math.floor(topContent[0].likes/1000) %>K</bold> 
-            <% } else { %>
-            <bold> <%= topContent[0].likes %></bold>
-            <% } %>
-          </div>
-          <div id="verticalLine">
-            <% if(topContent[0].views > 1000) { %>
-            Views <%= Math.floor(topContent[0].views/1000) %>K 
-            <% } else { %>
-            Views <%= topContent[0].views %> 
-            <% } %>
-          </div>
-          <!-- Momentjs Ago -->
-          <div id="verticalLine">
-            <%= moment(topContent[0].date).fromNow()%>
-          </div>
-          
-          <!-- COMMENT COUNT AND DISPLAY -->
-          <div id="line">
-            <% if(topContent[0].comments.length > 1){ %>
-              <span>&nbsp;<%= topContent[0].comments.length %> Comments</span>
-            <% } else { %>
-              <span>&nbsp;<%= topContent[0].comments.length %> Comment</span>
-            <% } %>
-          </div>
-          <div> 
-            <% if(topContent[0].description.length > 40){ %>
-              <p><%- topContent[0].description.slice(0, 40) %> ... </p>
-            <% } else { %>
-              <p><%- topContent[0].description.slice(0, 40) %></p>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% } %>
-
-  <%if(noMatch !== null) {%>
-    <div class="contents row">
+  <div id="content-index"> 
+  <%if(noMatch!== null) {%>
+    <div class="contents">
       <div>
         <img width="235" height="135" src="/icons/220px-Moa_Heinrich_Harder.jpg"/><h5 style="padding-left: 30px; padding-right: 30px;" id="line" style="margin-bottom: 0px;"><%= noMatch %></h5>
       </div>  
@@ -157,42 +10,45 @@
   <% } %>
 
   <% contents.forEach(function(content){ %>
+    
     <div class="contents row">
-      <div class="content-res col-md-6">
-        <div class="row secondRow">
-          <!-- ==============thumnail=============== -->
-          <div class="content-thumbnail col-sm-12">
-            <% if(content.video.provider){ %>
-              <% if(content.video.provider == 'youtube'){ %>
-                <iframe align='middle' class="content-thumbnail-iframe" width="313" height="150" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
-              <% } else if(content.video.provider == 'twitch'){ %>
-                <iframe class="content-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="313" height="150"></iframe>
+      <div class="content-res col-md-6" style="padding-left: 0px; padding-right: 0px">
+        <!-- ==============Index-like-button=============== -->
+        <div class="row">
+          <div class="content-hotness col-sm-3" style="padding-right: 0px;">
+            <form action="/en/contents/<%=content._id%>" method="POST">  
+              <%if (user.contentLiked.indexOf(content._id) != -1) { %>
+              <button style="border: none; background-color: transparent; padding-top: 28px;"><img src="/icons/icons8-facebook-like-48.png"/>
+              </button>
+              <% } else { %>
+              <button style="border: none; background-color: transparent; padding-top: 25px;"><img src="/icons/icons8-facebook-like-64.png"/>
+              </button>
               <% } %>
-            <% } else if(content.image) { %>
-              <img class="content-thumbnail-iframe" width="313" height="150" src="<%= content.image%>">
-            <% } else { %>
-              <img style='display: block; margin: auto; padding-top: 30px;' src="/icons/icons8-ostrich-head-in-sand-80.png">
-              <div align='center'>
-                No Image URL
-              </div>
-            <% } %>
+            </form>
           </div>
+
+          <!-- ==============thumnail=============== -->
+          <div class="content-thumbnail col-sm-9">
+          <% if(content.video.provider){ %>
+            <% if(content.video.provider == 'youtube'){ %>
+              <iframe class="content-thumbnail-iframe" width="243" height="135" src="//www.youtube.com/embed/<%= content.video.id %>" frameborder="0" allowfullscreen></iframe>
+            <% } else if(content.video.provider == 'twitch'){ %>
+              <iframe class="content-thumbnail-iframe" src="https://player.twitch.tv/?autoplay=false&video=<%= content.video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="243" height="135"></iframe>
+            <% } %>
+          <% } else if(content.image) { %>
+            <img class="content-thumbnail-iframe" width="243" height="135" src="<%= content.image%>">
+          <% } %>
+          </div>
+
         </div>
       </div>
     
     <!-- ==============Title=============== -->
       <div class="col-md-6" style="padding-left: 3px; padding-right: 3px;">
-        <div class="content-title .col-xs-4 .col-sm-4 breakWord" style='padding-top: 5px;'>
-          <a href="/contents/<%= content._id %>">
+        <div class="content-title .col-xs-4 .col-sm-4 breakWord">
+          <a href="/en/contents/<%= content._id %>">
             <div id="line"><%= content.name %></div>
           </a>
-
-          <% for(var i=0; i<topContent.length; i++){ %>
-            <% if(content._id == topContent[i].id){ %>
-              <h6 style="padding-left: 3px;" class='line'><span class="badge badge-pill badge-danger">HOT</span></h6>
-            <% } %>
-          <% } %>
-          
             <!-- ================================================================= -->
             <!-- Show "New" sign when the content is created in less than 24 hours -->
             <!-- ================================================================= -->
@@ -203,7 +59,7 @@
           <% var diff_hours = elapsed / (60*60*1000);%>
 
           <% if (diff_hours < 24) { %>
-            <h6 style="padding-left: 3px;" id="line"><span class="badge badge-secondary"> New</span></h6>
+            <h6 style="padding-left: 5px;" id="line"><span class="badge badge-secondary"> New</span></h6>
           <% } %>
           
           <h6 style="padding-left: 5px;" id="line">
@@ -219,105 +75,83 @@
           </h6>
         </div>
       <!-- ==============Infoline=============== -->
-        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord"> 
+        <div class="content-infoline .col-xs-8 .col-sm-8 breakWord">
+          <!-- Momentjs Ago --> 
           <div>
             Posted by &nbsp;   
-            <a class="noSelect" href="/profile/<%= content.author.id %>">
-              <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width= "28px" height= "28px" />
+            <a class="noSelect" href="/en/profile/<%= content.author.id %>">
+              <img style="display: inline-block;  border-radius: 50%;" src= "<%= content.author.thumbnail %>" width="28px" height= "28px" />
               <%= content.author.username%> 
             </a>
           </div>
-          <div class="verticalLine" style="font-size: 15px;">
-            <% if(user) { %>
-              <%if (user.contentLiked.indexOf(topContent[0]._id) != -1) { %>
-                <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
-              <% } else { %>
-                <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-              <% } %>
-            <% } else { %>
-              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-            <% } %>
-
+          <div id="verticalLine" style="font-size: 15px;"><img style="width: 33px; height: 33px;" src="/icons/icons8-facebook-like-64.png"/>
             <% if(content.likes > 1000) { %>
-              <%= Math.floor(content.likes/1000) %> K
-            <% } else if (content.likes > 1) { %>
-              <%= content.likes %>
+            <bold> <%= Math.floor(content.likes/1000) %>K</bold> 
             <% } else { %>
-              <%= content.likes %> 
+            <bold> <%= content.likes %></bold>
             <% } %>
           </div>
-          <div class="verticalLine">
+          <div id="verticalLine">
             <% if(content.views > 1000) { %>
-            Views <%= Math.floor(content.views/1000) %>K 
+            views <%= Math.floor(content.views/1000) %>K 
             <% } else { %>
-            Views <%= content.views %> 
+            views <%= content.views %> 
             <% } %>
           </div>
-          <!-- Momentjs Ago -->
-          <div class="verticalLine">
+          <div id="verticalLine">
             <%= moment(content.date).fromNow()%>
           </div>
-          <!-- COMMENT COUNT AND DISPLAY -->
-          <div class="line">
-            <% if(content.comments.length > 1){ %>
-              <span>&nbsp;<%= content.comments.length %> Comments</span>
-            <% } else { %>
-              <span>&nbsp;<%= content.comments.length %> Comment</span>
-            <% } %>
-          </div>
-          <div style='color: #000000'> 
-            <% if(content.description.length > 40){ %>
-              <p><%- content.description.slice(0, 40) %> ... </p>
-            <% } else { %>
-              <p><%- content.description.slice(0, 40) %></p>
-            <% } %>
+          <!-- DISQUS Comments Count -->
+          <div id="line">
+            &nbsp;<span class="disqus-comment-count" data-disqus-identifier="<%= content._id %>"></span>Comments
           </div>
         </div>
       </div>
     </div>
   <% }); %>
+
     <div class="content-ad"> 
       <div class="content-ad-partition">
         <div class="content-hot-sidebar">
           <!-- ======== side contents form ========= -->
-          <form action="/contents" method="GET" class="form-group">
+          <form action="/en/contents" method="GET" class="form-group">
             <div class="list-group" style="max-width: 260px;">
               <h5 style="text-align: center; border-bottom: 1px solid #DADADA; margin-bottom: 3px; padding-top: 20px; padding-bottom: 10px;"><img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OPULAR <img style="width: 20px; height: 20px;" src="/icons/icons8-p-52.png"/>OSTS</h5>
               <li class="list-group-item" id="content-show-rec-list">
+                <% var rank = 1; %>
           <!-- =========== Side Contents for loop =========== -->
                 <% for (var i = 0, len = sideContents.length; i < len; i++) { %>
                 <div class="contents-rec">
                   <div class="content-sidebar-info" style="margin-bottom: 0px;">
                     <div class="content-sidebar-thumbnail">
-                      <% if(sideContents[i].video.provider){ %>
-                        <% if(sideContents[i].video.provider == 'youtube'){ %>
-                          <div>
-                            <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
-                          </div>
-                        <% } else if(sideContents[i].video.provider == 'twitch'){ %>
-                          <div>
-                            <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
-                          </div>
-                        <% } %>
-                      <% } else if(sideContents[i].image) { %>
-                        <img width="260" height="125" src="<%= sideContents[i].image%>"> 
-                      <% } else { %>
-                        <img style='display: block; margin: auto; padding-top: 30px;' width="60" height="80" src="/icons/icons8-ostrich-head-in-sand-80.png">
-                        <div align='center'>
-                          No Image URL
+                    <% if(sideContents[i].video.provider){ %>
+                      <% if(sideContents[i].video.provider == 'youtube'){ %>
+                        <div>
+                          <iframe width="260" height="125" src="//www.youtube.com/embed/<%= sideContents[i].video.id %>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                      <% } else if(sideContents[i].video.provider == 'twitch'){ %>
+                        <div>
+                          <iframe src="https://player.twitch.tv/?autoplay=false&video=<%= sideContents[i].video.id%>" frameborder="0" allowfullscreen="true" scrolling="no" width="260" height="125"></iframe>
                         </div>
                       <% } %>
+                    <% } else if(sideContents[i].image) { %>
+                      <img width="260" height="125" src="<%= sideContents[i].image%>"> 
+                    <% } else { %>
+                      <div>
+                        No thumbnail
+                      </div>
+                    <% } %>
                     </div>
                     
                     <div class="content-sidebar-title breakWord">
-                      <a href="/contents/<%= sideContents[i]._id %>">
+                      <a href="/en/contents/<%= sideContents[i]._id %>">
                         <div>
                           <%=sideContents[i].name %>
                         </div>
                       </a>
-                      <a href="/profile/<%= sideContents[i].author.id %>">
+                      <a href="/en/profile/<%= sideContents[i].author.id %>">
                         <div>
-                          <img style="display: inline-block;  border-radius: 50%;" src= "<%= sideContents[i].author.thumbnail %>" width= "25px" height= "25px" />
+                          <img style="display: inline-block;  border-radius: 50%;" src= "<%= sideContents[i].author.thumbnail %>" width= "30px" height= "30px" />
                           <%= sideContents[i].author.username %>
                         </div>
                       </a>
@@ -325,37 +159,19 @@
                     <div class="content-sidebar-infoline" style="font-size: 13px;">
                       <!-- Momentjs Ago --> 
                       <div id="show-sidebar-vertical-group">
-                        <div class='verticalLine'>
-                          <% if(user) { %>
-                            <%if (user.contentLiked.indexOf(sideContents[i]._id) != -1) { %>
-                              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
-                            <% } else { %>
-                              <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-                            <% } %>
-                          <% } else { %>
-                            <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
-                          <% } %>
-                          <% if(sideContents[i].likes > 1000) { %>
-                            <%= Math.floor(sideContents[i].likes/1000) %> K
-                          <% } else if (sideContents[i].likes > 1) { %>
-                            <%= sideContents[i].likes %>
-                          <% } else { %>
-                            <%= sideContents[i].likes %> 
-                          <% } %>
-                        </div>
-                        <div class='verticalLine'>
+                        <div id="verticalLine">
                           <% if([i].views > 1000) { %>
-                          Views <%= Math.floor(sideContents[i].views/1000) %>K 
+                          views <%= Math.floor(sideContents[i].views/1000) %>K 
                           <% } else { %>
-                          Views <%= sideContents[i].views %> 
+                          views <%= sideContents[i].views %> 
                           <% } %>
                         </div>
-                        <div class="line">
-                          <% if(sideContents[i].comments.length > 1){ %>
-                            <span>&nbsp;<%= sideContents[i].comments.length %> Comments</span>
-                          <% } else { %>
-                            <span>&nbsp;<%= sideContents[i].comments.length %> Comment</span>
-                          <% } %>
+                        <div id="verticalLine">
+                        <%= moment(sideContents[i].date).fromNow()%>
+                        </div>
+                        <div id="line">
+                          <!-- DISQUS Comments Count -->
+                          &nbsp; <span class="disqus-comment-count" data-disqus-identifier="<%= sideContents[i]._id %>"></span>Comments
                         </div>
                       </div>
                     </div>     
@@ -366,165 +182,48 @@
             </div>
           </form>
         </div>
+
       </div>
     </div>
   </div>
 
   <!-- ========Pagination======== -->
-<script>
-  var xhr = new XMLHttpRequest();
 
-  // initialization before all functions
-  var page = 1; 
-  var perPage = 12;
-  var current = page;
+  <% if (pages > 0) { %>
+  <form style="padding-bottom: 20px;" action="/en/contents<%=url%>" method="GET" class="form-group">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
 
-  // How many contents we found 
-  var count = "<%= count %>";
+      <% if (current == 1) { %>
+        <li class="page-item disabled"><a class="page-link"> << </a></li>
+      <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="1"> << </button></li>
+      <% } %>
+      <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+      <% if (i !== 1) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+      <% } %>
 
-  // How many pages we have 
-  var pages = Math.ceil(count*1.0 / perPage)
-  var pageCut = pages + 1;
+      <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+        <% if (i == current) { %>
+          <li class="page-item active"><a class="page-link"><%= i %></a></li>
+        <% } else { %>
+          <li class="page-item"><button class="page-link" name="page" value="<%= i %>"><%= i %></button></li>
+        <% } %>
+        <% if (i == Number(current) + 4 && i < pages) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+      <% } %>
 
-  // Category from Server
-  var ctg = "<%= ctg %>";
-
-
-  // search query from server
-  var search = "<%= search %>";
-  var sort = "<%= sort %>";
-
-  window.onscroll = function(ev) {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      page++;
-      current = page;
-
-      if(current <= pages){
-        loadMore(page, ctg, sort);
-      }
-
-      // When current equals pageCut it appends an alert
-      else if(current == pageCut) {
-        var comments = document.getElementById('content-index');
-        comments.insertAdjacentHTML('beforeEnd', "<div style='text-align: center;' class='contents alert alert-dark' role='alert'><p style='text-align: center;'>End of List</p></div>");
-      }
-    }
-  };
-
-  function loadMore(currentPage, ctg, sort){
-    if(ctg != 0){
-      if(sort != 0 && sort == 'popular'){
-        if(search != 0){
-          $.ajax({
-            method: "GET",
-            url: "/contents/?category=" + ctg + "/&sort=" + sort + "&search=" + search + "&page=" + currentPage,
-            cache: false, //avoid browser cache ajax requests
-          })
-          .done(function(data) {
-            console.log("success");
-            $('#content-index').append(data);
-          })
-          .fail(function(jqXHR, ajaxOptions, thrownError) {
-              console.log(thrownError);
-              console.log("page: " + page);
-              console.log("Something went wrong!");
-            }
-          );
-        } else {
-          $.ajax({
-            method: "GET",
-            url: "/contents/?category=" + ctg + "/&sort=" + sort + "&page=" + currentPage,
-            cache: false, //avoid browser cache ajax requests
-          })
-          .done(function(data) {
-            console.log("success");
-            $('#content-index').append(data);
-          })
-          .fail(function(jqXHR, ajaxOptions, thrownError) {
-              console.log(thrownError);
-              console.log("page: " + page);
-              console.log("Something went wrong!");
-            }
-          );
-        }
-      } else {
-        if(search != 0){
-          xhr.open('GET', "/contents/?category=" + ctg + "&search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        } else {
-          xhr.open('GET', "/contents/?category=" + ctg + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        }
-      }
-    } else {
-      if(sort != 0 && sort == 'popular'){
-        if(search != 0){
-          xhr.open('GET', "/contents/?sort=" + sort + "&search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        } else {
-          xhr.open('GET', "/contents/?sort=" + sort + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        }
-      } else {
-        if(search != 0){
-          xhr.open('GET', "/contents/?search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        } else {
-          xhr.open('GET', '/contents/?page=' + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        }
-      }
-    }
-  }
-</script>
+      <% if (current == pages) { %>
+        <li class="page-item disabled"><a class="page-link"> >> </a></li>
+      <% } else { %>
+        <li class="page-item"><button class="page-link" name="page" value="<%= pages %>"> >> </button></li>
+      <% } %>
+      </ul>
+    </nav>
+  </form>
+  <% } %>
 </div>
 
 <% include ../partials/footer %>
