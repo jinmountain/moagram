@@ -9,7 +9,5 @@ module.exports = {
 
 	session: {
 		cookieKey: 'moagram'
-	},
-
-	'shortname': 'moagram'
+	}
 };

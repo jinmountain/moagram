@@ -2,10 +2,6 @@
   "name": "moagram",
   "version": "1.0.0",
   "description": "",
-  "engines": {
-    "node": ">=10.15.3",
-    "npm": ">=6.9.0"
-  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,7 +23,6 @@
     "ejs-lint": "^0.3.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "express-sslify": "^1.2.0",
     "flash": "^1.1.0",
     "joi": "^13.4.0",
     "jquery": "^3.4.1",
