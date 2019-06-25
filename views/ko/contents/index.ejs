@@ -63,9 +63,9 @@
           <a href="/contents/<%= topContent[0]._id %>">
             <div id="line"><strong>
               <% if(topContent[0].name.length > 35){ %>
-                <%- topContent[0].name.slice(0, 35) %> ... 
+                <%= topContent[0].name.slice(0, 35) %> ... 
               <% } else { %>
-                <%- topContent[0].name %>
+                <%= topContent[0].name %>
               <% } %>
             </strong></div>
           </a>
@@ -206,9 +206,9 @@
           <a href="/contents/<%= content._id %>">
             <div id="line">
               <% if(content.name.length > 35){ %>
-                <%- content.name.slice(0, 35) %> ... 
+                <%= content.name.slice(0, 35) %> ... 
               <% } else { %>
-                <%- content.name %>
+                <%= content.name %>
               <% } %>
             </div>
           </a>
