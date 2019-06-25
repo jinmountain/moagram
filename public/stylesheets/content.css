@@ -120,6 +120,12 @@
 	}
 }
 
+@media only screen and (max-width: 800px) {
+    .content-thumbnail-iframe{
+		width: 235px;
+	}
+}
+
 @media only screen and (max-width: 767px) {
 	.content-thumbnail{
 		padding-left: 0px;
