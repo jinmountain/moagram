@@ -93,6 +93,10 @@
 	line-height: 20px;
 }
 
+.headerNavIconSize {
+	width: 35px;
+	height: 35px;
+}
 /*====when screen is smaller than 1320px====*/
 @media only screen and (max-width: 1220px) {
     .content-ad{
@@ -145,23 +149,11 @@
 	}
 }
 
-@media only screen and (max-width: 373px) {
-	/*.content-res{
-		width: 302px;
+@media only screen and (max-width: 600px) {
+	.headerNavIconSize {
+		width: 20px;
+		height: 20px;
 	}
-
-	.secondRow{
-		width: 302px;
-		margin: 0 auto;
-	}
-
-	.content-thumbnail-iframe{
-		width: 302px;
-	}
-	.content-thumbnail{
-		width: 302px;
-		margin: 0 auto;
-	}*/
 }
 
 
