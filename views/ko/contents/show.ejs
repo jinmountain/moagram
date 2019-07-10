@@ -111,7 +111,8 @@
               </div>
             </li>
             <li>
-              <form id="verticalLine" action="/contents/category/<%=content.category%>" method="GET">
+              <form id="verticalLine" action="/contents" method="GET">
+                <input type='hidden' name='category' value='<%= content.category %>' />
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <% if(content.category == 'tntl'){ %>
                     <h6>웃긴영상 | TNTL</h6>
