@@ -101,6 +101,14 @@
 	width: 35px;
 	height: 35px;
 }
+
+/*====when screen is smaller than 1380px====*/
+@media only screen and (max-width: 1380px) {
+    .content-thumbnail-iframe{
+		width: 300px;
+	}
+}
+
 /*====when screen is smaller than 1320px====*/
 @media only screen and (max-width: 1220px) {
     .content-ad{
