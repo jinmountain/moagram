@@ -274,7 +274,7 @@
           </div>
           <div class="verticalLine" style="font-size: 15px;">
             <% if(user) { %>
-              <%if (user.contentLiked.indexOf(topContent[0]._id) != -1) { %>
+              <%if (user.contentLiked.indexOf(content._id) != -1) { %>
                 <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
               <% } else { %>
                 <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
@@ -368,7 +368,7 @@
                       <div id="show-sidebar-vertical-group">
                         <div class='verticalLine'>
                           <% if(user) { %>
-                            <%if (user.contentLiked.indexOf(topContent[0]._id) != -1) { %>
+                            <%if (user.contentLiked.indexOf(sideContents[i]._id) != -1) { %>
                               <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-48.png"/>
                             <% } else { %>
                               <img style="width: 22px; height: 25px; padding-bottom: 5px;" src="/icons/icons8-facebook-like-64.png"/>
