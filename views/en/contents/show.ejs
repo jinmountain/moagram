@@ -403,7 +403,7 @@
                 </div>
 
                 <!-- REPLY FORM BUTTON --> 
-                <div class='replyBox' style="padding-left: 2.5em; padding-top: 5px;">
+                <div class='replyBox' style="padding-left: 2.5em; padding-top: 5px; padding-bottom: 5px;">
                   <button type="button" class='replyBtn noOutline btn btn-outline-secondary btn-sm' onclick="showReplyForm('<%=commentData.id%>Reply'); return false;">REPLY</button>
                 </div>
                 <!-- BUTTONS TO HIDE AND VIEW REPLY WHEN THEY ARE LOADED -->
@@ -515,7 +515,7 @@ function submitComment(){
       'edited': false
     };
     var newComments = document.getElementById('newComments');
-    newComments.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/"+ commentAuthor.id + "'><div class='line'><img src='" + commentAuthor.thumbnail + "' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;</div><div class='line'>" + escapeHtml(commentAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>" + escapeHtml(comment) + "</div>");
+    newComments.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/"+ commentAuthor.id + "'><div class='line'><img src='" + commentAuthor.thumbnail + "' style='border-radius: 50%; width: 35px; height: 35px;'>&nbsp;</div><div class='line'>" + escapeHtml(commentAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em; padding-bottom: 15px;'>" + escapeHtml(comment) + "</div>");
     document.getElementById("commentTextarea").value = '';
 
     socket.emit('comment', data);
@@ -654,7 +654,7 @@ function replySubmit(id) {
     };
 
     var newReplies = document.getElementById(id+"NewReplies");
-    newReplies.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/" + replyAuthor.id + "'><div class='line'><img src='" + replyAuthor.thumbnail + "' style='border-radius: 50%; width: 25px; height: 25px;'>&nbsp;</div><div class='line'>" + escapeHtml(replyAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em;'>"  + escapeHtml(reply) + "</div>");
+    newReplies.insertAdjacentHTML('beforeEnd', "<div class='line'><a href='/profile/" + replyAuthor.id + "'><div class='line'><img src='" + replyAuthor.thumbnail + "' style='border-radius: 50%; width: 25px; height: 25px;'>&nbsp;</div><div class='line'>" + escapeHtml(replyAuthor.username) + "&nbsp;</div></a></div><div class='line infoTextColor'>" + moment(dateNow).fromNow() + "</div><div class='breakWord' style='padding-left: 2.5em; padding-bottom: 15px;'>"  + escapeHtml(reply) + "</div>");
 
     document.getElementById(id+"ReplyTextarea").value = '';
 
