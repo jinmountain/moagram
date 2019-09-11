@@ -56,9 +56,11 @@ router.get('/', (req, res, next) => {
     var sortQuery = req.query.sort;
     var pageQuery = req.query.page;
 
-    console.log(" |" + ctgQuery + " |" + searchQuery + " |" + sortQuery);
+    console.log(" |" + ctgQuery + " |" + sortQuery + " |" + searchQuery);
     
     var theFiveHots = [];
+
+    var errorMessage = "Sorry, We can't process your following request.";
 
     // =========FIND THE TOP 5 CONTENTS========
     function findTopContents(category) {
@@ -67,8 +69,11 @@ router.get('/', (req, res, next) => {
             .sort({"hotness": -1}).limit(5)
             .exec(function(err, theHottestFound){
                 if(err){
-                    err.httpStatusCode = 500
-                    return next(err);
+                    res.render('./error', {
+                        err: err,
+                        message: errorMessage,
+                        section: "C1"
+                    });
                 } else {
                     if(theHottestFound.length < 1){
                         theFiveHots = [];
@@ -114,6 +119,19 @@ router.get('/', (req, res, next) => {
     ctgCount(ctgCountArray);
     findTopContents(ctgQuery);
 
+    // Possible Queries for Get Content
+    // ctg | search | NP
+    // ==================
+    //   o |    o   | o
+    //   o |    o   | x
+    //   o |    x   | o
+    //   o |    x   | x
+    //   
+    //   x |    o   | o
+    //   x |    o   | x
+    //   x |    x   | o
+    //   x |    x   | x
+     
     if(ctgQuery != undefined){
         if(sortQuery != undefined && sortQuery == 'popular'){
             if(searchQuery != undefined){
@@ -133,8 +151,11 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C1"
+                        });
                     } else {
                         Content.find({
                             category: ctgQuery,
@@ -145,8 +166,11 @@ router.get('/', (req, res, next) => {
                             }]
                         }).count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C2"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -181,16 +205,22 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C3"
+                        });
                     } else {
                         Content.find({
                             "category": ctgQuery
                         })
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C4"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -218,7 +248,7 @@ router.get('/', (req, res, next) => {
                 });
             }    
         } else {
-            if(searchQuery){
+            if(searchQuery != undefined){
                 const nameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
                 const usernameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
 
@@ -235,8 +265,11 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C5"
+                        });
                     } else {
                         Content.find({
                             "category": ctgQuery,
@@ -248,8 +281,11 @@ router.get('/', (req, res, next) => {
                         })
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C6"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -282,14 +318,20 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C7"
+                        });
                     } else {
                         Content.find({"category": ctgQuery})
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C8"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -319,7 +361,7 @@ router.get('/', (req, res, next) => {
         }
     } else {
         if(sortQuery != undefined && sortQuery == 'popular'){
-            if(searchQuery){
+            if(searchQuery != undefined){
                 const nameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
                 const usernameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
 
@@ -336,8 +378,11 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C9"
+                        });
                     } else {
                         Content.find({
                             "$or": [{
@@ -348,8 +393,11 @@ router.get('/', (req, res, next) => {
                         })
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C10"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -383,14 +431,20 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C11"
+                        });
                     } else {
                         Content.find({})
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C12"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -418,7 +472,7 @@ router.get('/', (req, res, next) => {
                 });
             }    
         } else {
-            if(searchQuery){
+            if(searchQuery != undefined){
                 const nameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
                 const usernameRegex = new RegExp(escapeRegex(req.query.search), 'gi');
 
@@ -434,8 +488,11 @@ router.get('/', (req, res, next) => {
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C13"
+                        });
                     } else {
                         Content.find({
                             "$or": [{
@@ -446,8 +503,11 @@ router.get('/', (req, res, next) => {
                         })
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C14"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -474,21 +534,26 @@ router.get('/', (req, res, next) => {
                     }
                 });
             } else {
-                
                 Content.find({})
                 .sort({"createdAt": -1})
                 .skip((perPage * page) - perPage)
                 .limit(perPage)
                 .exec(function(err, allContents){
                     if(err){
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "C15"
+                        });
                     } else {
                         Content.find({})
                         .count().exec(function(err, count){
                             if(err) {
-                                err.httpStatusCode = 500
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "C16"
+                                });
                             } else {
                                 if(allContents.length <1 ) {
                                     noMatch = "Don't let what you saw disappear. Share with us!";
@@ -612,11 +677,19 @@ router.post('/', middleware.authCheck, function(req, res){
 });
 
 router.get("/:id", middleware.authCheck, function(req, res, next){
+    
+    //======LANGUAGE AND PAGEQUERY=====
+    var lang;
+    if(req.user){
+        lang = req.user.lang;
+    } else {
+        lang = moment.locale();
+    }
 
     var perPage = 12;
     var page = req.query.page || 1;
 
-    var errorMessage = "Sorry, We can't process your following request at this moment.";
+    var errorMessage = "Sorry, We can't process your following request.";
 
     ctgCount(ctgCountArray);
 
@@ -883,6 +956,14 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
 
     ctgCount(ctgCountArray);
 
+    //======LANGUAGE AND PAGEQUERY=====
+    var lang;
+    if(req.user){
+        lang = req.user.lang;
+    } else {
+        lang = moment.locale();
+    }
+
     //find the content with the ID
     Content.findById(req.params.id, function(err, foundContent){
         if(err){
@@ -973,6 +1054,14 @@ router.get("/:contentId/:commentId", middleware.authCheck, function(req, res, ne
     var pages;
     var buttonSwitch = true; 
     var nextPage = parseInt(page) + 1;
+
+    //======LANGUAGE AND PAGEQUERY=====
+    var lang;
+    if(req.user){
+        lang = req.user.lang;
+    } else {
+        lang = moment.locale();
+    }
 
     commentReplies = [];
 
