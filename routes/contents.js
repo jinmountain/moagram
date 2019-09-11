@@ -24,7 +24,7 @@ function ctgCount(ctgCountArray) {
                     "beauty", "gaming", "vlog", "animal", "others"];
 
     var end = Date.now();
-    var contentCreatedToday = end - 86400000;
+    var contentCreatedToday = end - 86400000 // 24hours;
 
     contentCtg.forEach(function(ctg, i, array) {
         Content.countDocuments({
@@ -102,6 +102,7 @@ router.get('/', (req, res, next) => {
         lang = moment.locale();
     }
 
+    //======Determine Whether First Page or Not======
     var pageQueryRoute;
     if(pageQuery != undefined){
         pageQueryRoute = '/contents/contentBox'
@@ -615,18 +616,26 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
     var perPage = 12;
     var page = req.query.page || 1;
 
+    var errorMessage = "Sorry, We can't process your following request at this moment.";
+
     ctgCount(ctgCountArray);
 
     if(req.query.page){
         Content.findById(req.params.id, function(err, foundContent){
             if (err){
-                err.httpStatusCode = 500
-                return next(err);
+                res.render('./error', {
+                    err: err,
+                    message: errorMessage,
+                    section: "D1"
+                });
             } else {
                 User.findById(req.user._id, function(err, foundUser) {
                     if (err) {
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "D2"
+                        });
                     } else {
                         //if the id of content is in the user's contentViewed list
                         //increase the view by 1
@@ -672,8 +681,11 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                         //find the author of the content to view one's followers
                         User.findById(foundContent.author.id, function(err, contentAuthor){
                             if(err) {
-                                err.httpStatusCode = 500;
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "D3"
+                                });
                             } else if(contentAuthor == null){
                                 req.flash("error", "The author is not found");
                                 res.redirect("back");
@@ -682,7 +694,11 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                 var ctg = foundContent.category;
                                 Content.find({category: ctg}).sort({"createdAt": -1}).limit(5).exec(function(err, foundSideContents){
                                     if(err){
-                                        console.log(err);
+                                        res.render('./error', {
+                                            err: err,
+                                            message: errorMessage,
+                                            section: "D4"
+                                        });
                                     } else{
                                         Comment.find({contentId: req.params.id})
                                         .sort({"createdAt": -1})
@@ -690,12 +706,19 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                         .limit(perPage)
                                         .exec(function(err, comments){
                                             if(err){
-                                                console.log(err);
+                                                res.render('./error', {
+                                                    err: err,
+                                                    message: errorMessage,
+                                                    section: "D5"
+                                                });
                                             } else {
                                                 Comment.find({contentId: req.params.id}).count().exec(function(err, commentCount){
                                                     if(err){
-                                                        err.httpStatusCode = 500;
-                                                        return next(err);
+                                                        res.render('./error', {
+                                                            err: err,
+                                                            message: errorMessage,
+                                                            section: "D6"
+                                                        });
                                                     } else {
                                                         res.render(req.user.lang + "/contents/commentBox", 
                                                         {
@@ -728,13 +751,19 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
     } else {
         Content.findById(req.params.id, function(err, foundContent){
             if (err){
-                err.httpStatusCode = 500
-                return next(err);
+                res.render('./error', {
+                    err: err,
+                    message: errorMessage,
+                    section: "D7"
+                });
             } else {
                 User.findById(req.user._id, function(err, foundUser) {
                     if (err) {
-                        err.httpStatusCode = 500
-                        return next(err);
+                        res.render('./error', {
+                            err: err,
+                            message: errorMessage,
+                            section: "D8"
+                        });
                     } else {
                         //if the id of content is in the user's contentViewed list
                         //increase the view by 1
@@ -780,8 +809,11 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                         //find the author of the content to view one's followers
                         User.findById(foundContent.author.id, function(err, contentAuthor){
                             if(err) {
-                                err.httpStatusCode = 500;
-                                return next(err);
+                                res.render('./error', {
+                                    err: err,
+                                    message: errorMessage,
+                                    section: "D9"
+                                });
                             } else if(contentAuthor == null){
                                 req.flash("error", "The author is not found");
                                 res.redirect("back");
@@ -790,7 +822,11 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                 var ctg = foundContent.category;
                                 Content.find({category: ctg}).sort({"createdAt": -1}).limit(5).exec(function(err, foundSideContents){
                                     if(err){
-                                        console.log(err);
+                                        res.render('./error', {
+                                            err: err,
+                                            message: errorMessage,
+                                            section: "D10"
+                                        });
                                     } else{
                                         Comment.find({contentId: req.params.id})
                                         .sort({"createdAt": -1})
@@ -798,12 +834,19 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                         .limit(perPage)
                                         .exec(function(err, comments){
                                             if(err){
-                                                console.log(err);
+                                                res.render('./error', {
+                                                    err: err,
+                                                    message: errorMessage,
+                                                    section: "D11"
+                                                });
                                             } else {
                                                 Comment.find({contentId: req.params.id}).count().exec(function(err, commentCount){
                                                     if(err){
-                                                        err.httpStatusCode = 500;
-                                                        return next(err);
+                                                        res.render('./error', {
+                                                            err: err,
+                                                            message: errorMessage,
+                                                            section: "D12"
+                                                        });
                                                     } else {
                                                         res.render(req.user.lang + "/contents/show", 
                                                         {
@@ -843,8 +886,11 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
     //find the content with the ID
     Content.findById(req.params.id, function(err, foundContent){
         if(err){
-            err.httpStatusCode = 500;
-            return next(err);
+            res.render('./error', {
+                err: err,
+                message: errorMessage,
+                section: "D13"
+            });
         } else {
             res.render(req.user.lang + "/contents/edit", {
                 pageType: 'edit',
@@ -909,8 +955,8 @@ router.put("/:id", function(req, res){
 router.delete("/:id", middleware.checkUserContent, function(req, res, next){
     Content.findByIdAndRemove(req.params.id, function(err){
         if (err) {
-            err.httpStatusCode = 500
-            return next(err);
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
             if(req.user){
                 res.redirect("/contents"); 
@@ -932,8 +978,11 @@ router.get("/:contentId/:commentId", middleware.authCheck, function(req, res, ne
 
     Comment.findById(req.params.commentId, function(err, foundComment){
         if(err){
-            err.httpStatusCode = 500;
-            return next(err);
+            res.render('./error', {
+                err: err,
+                message: errorMessage,
+                section: "D14"
+            });
         } else {
             var replyCount = foundComment.replies.length;
             commentReplies = foundComment.replies
@@ -966,39 +1015,5 @@ router.get("/:contentId/:commentId", middleware.authCheck, function(req, res, ne
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
-
-// router.use((err, req, res, next) => {
-//     if(err.httpStatusCode == "500"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "500",
-//             message: "Oops. Internal Server Error"
-//         });
-//     } else if(err.httpStatusCode == "403"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "403",
-//             message: "Oops. Access not allowed"
-//         });
-//     } else if(err.httpStatusCode == "400"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "400",
-//             message: "Oops. Something went wrong"
-//         });
-//     } else if(err.httpStatusCode == "401"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "401",
-//             message: "Access Unauthorized"
-//         });
-//     } else if(err.httpStatusCode == "404"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "404",
-//             message: "Oops. Page not found"
-//         });
-//     } else {
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "Unknown",
-//             message: "Oops. Something went wrong"
-//         });
-//     }
-// });
 
 module.exports = router;
