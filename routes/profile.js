@@ -1198,38 +1198,4 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-// router.use((err, req, res, next) => {
-//     if(err.httpStatusCode == "500"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "500",
-//             message: "Oops. Internal Server Error"
-//         });
-//     } else if(err.httpStatusCode == "403"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "403",
-//             message: "Oops. Access not allowed"
-//         });
-//     } else if(err.httpStatusCode == "400"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "400",
-//             message: "Oops. Something went wrong"
-//         });
-//     } else if(err.httpStatusCode == "401"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "401",
-//             message: "Access Unauthorized"
-//         });
-//     } else if(err.httpStatusCode == "404"){
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "404",
-//             message: "Oops. Page not found"
-//         });
-//     } else {
-//         res.status(err.httpStatusCode).render('./error', {
-//             err: "Unknown",
-//             message: "Oops. Something went wrong"
-//         });
-//     }
-// });
-
 module.exports = router;
