@@ -119,7 +119,7 @@ const User = require('../models/user');
 //Google oauth strategy
 passport.use(
 	new GoogleStrategy({
-		callbackURL: '/auth/google/redirect',
+		callbackURL: 'https://www.moagram.com/auth/google/redirect',
 		clientID: keys.google.clientID,
 		clientSecret: keys.google.clientSecret
 	}, (accessToken, refreshToken, profile, done) => {
