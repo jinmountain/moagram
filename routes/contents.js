@@ -964,6 +964,8 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
         lang = moment.locale();
     }
 
+    var errorMessage = "Sorry, We can't process your following request.";
+
     //find the content with the ID
     Content.findById(req.params.id, function(err, foundContent){
         if(err){
@@ -1064,6 +1066,8 @@ router.get("/:contentId/:commentId", middleware.authCheck, function(req, res, ne
     }
 
     commentReplies = [];
+
+    var errorMessage = "Sorry, We can't process your following request.";
 
     Comment.findById(req.params.commentId, function(err, foundComment){
         if(err){
