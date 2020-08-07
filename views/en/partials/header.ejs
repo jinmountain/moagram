@@ -75,9 +75,6 @@
                     
                     <!-- ======== Search bar ======== -->
                     <% if(user){ %>
-                        <!-- ======== Old Search bar ======== -->
-                        <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
-
                         <% if(pageType == 'index'){ %>
                             <% if(ctg != 0){ %>
                                 <% if(sort != 0){ %>

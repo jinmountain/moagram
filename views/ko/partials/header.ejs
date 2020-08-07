@@ -72,9 +72,6 @@
                     
                     <!-- ======== Search bar ======== -->
                     <% if(user){ %>
-                        <!-- ======== Old Search bar ======== -->
-                        <!-- <input id="search-bar" type="text" name="headerSearch" onkeypress="if (event.keyCode == 13) { try{window.location.href='/contents/search/'+ document.getElementsByName('headerSearch')[0].value; document.getElementsByName('headerSearch')[0].value=''; return false;}catch(e){} }" placeholder="Search" class="form-control mr-sm-2"> -->
-
                         <% if(pageType == 'index'){ %>
                             <% if(ctg != 0){ %>
                                 <% if(sort != 0){ %>
@@ -151,6 +148,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[0]%></span>
                         <% if (ctgCount[0] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[0]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -158,6 +156,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[1]%></span>
                         <% if (ctgCount[1] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[1]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -165,6 +164,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[2]%></span>
                         <% if (ctgCount[2] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[2]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -172,6 +172,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[3]%></span>
                         <% if (ctgCount[3] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[3]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -179,6 +180,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[4]%></span>
                         <% if (ctgCount[4] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[4]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -186,6 +188,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[5]%></span>
                         <% if (ctgCount[5] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[5]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -193,6 +196,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[6]%></span>
                         <% if (ctgCount[6] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[6]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -200,6 +204,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[7]%></span>
                         <% if (ctgCount[7] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[7]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item"> 
@@ -207,6 +212,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[8]%></span>
                         <% if (ctgCount[8] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[8]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -214,6 +220,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[9]%></span>
                         <% if (ctgCount[9] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[9]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -221,6 +228,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[10]%></span>
                         <% if (ctgCount[10] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[10]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -229,6 +237,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[11]%></span>
                         <% if (ctgCount[11] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[11]%></span>
+                        <% } %>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -236,6 +245,7 @@
                         <span class="badge badge-pill badge-secondary"><%=totalCtgCount[12]%></span>
                         <% if (ctgCount[12] > 0){ %>
                         <span class="badge badge-pill badge-upCount"><%=ctgCount[12]%></span>
+                        <% } %>
                     </button>
                 </li>
             </ul>
