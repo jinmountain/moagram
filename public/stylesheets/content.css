@@ -38,6 +38,11 @@
 	background-color: #8E25AA;
 	color: #FFFFFF;
 }
+
+.badge-upCount {
+	background-color: #8E25AA;
+	color: #FFFFFF;
+}
 /*========= content ad section partition ========*/
 
 .content-ad {
@@ -97,9 +102,19 @@
 	line-height: 20px;
 }
 
+#loadingImg {
+	display: none;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
 .headerNavIconSize {
 	width: 35px;
 	height: 35px;
+}
+
+.noMatch {
+	display: inline;
 }
 
 /*====when screen is smaller than 1380px====*/
