@@ -75,7 +75,7 @@
         </div>
       </form>
     </div>
-
+    <!-- Content Show Main -->
     <div class="content-show-main">
       <div class="content-show-main-info">
         <div class="content-show-main-header">
@@ -83,26 +83,26 @@
 
             <li>
               <!-- Author of the content -->
-              <div id="verticalLine">
+              <div class="verticalLine">
                 Posted By <a href="/profile/<%= content.author.id %>"><strong><%= content.author.username %></strong></a>
               </div>
 
               <!-- Follow button -->
               <% if(content.author.id != user.id) { %>
-              <form id="verticalLine" action="/profile/<%=content.author.id%>" method="POST">
+              <form class="verticalLine" action="/profile/<%=content.author.id%>" method="POST">
                                       
               <%if (user.following.indexOf(content.author.id) != -1) { %>
-                <button class="btn btn-default btn-sm" id="btn-default"><h6>Unfollow</h6></button>
+                <button class="btn btn-default btn-sm"><h6>Unfollow</h6></button>
 
                 
               <% } else { %>
-                <button class="btn btn-default btn-sm" id="btn-default"><h6>Follow
+                <button class="btn btn-default btn-sm"><h6>Follow
                 </button></h6>
               <% } %>
               </form>
               <% } %> 
 
-              <div id="verticalLine">
+              <div class="verticalLine">
                 <% if(contentAuthor.follower > 1000) { %>
                 <%= contentAuthor.follower/1000 %> K 팔로워
                 <% } else { %>
@@ -111,7 +111,7 @@
               </div>
             </li>
             <li>
-              <form id="verticalLine" action="/contents" method="GET">
+              <form class="verticalLine" action="/contents" method="GET">
                 <input type='hidden' name='category' value='<%= content.category %>' />
                 <button class="btn btn-default btn-sm" style="text-transform: capitalize;" id="btn-default">
                   <% if(content.category == 'tntl'){ %>
@@ -143,7 +143,7 @@
                   <% } %>
                 </button>
               </form>
-              <div id="verticalLine">
+              <div class="verticalLine">
                 <% if(content.views > 1000) { %>
                 조회 수 <%= Math.floor(content.views/1000) %>K 
                 <% } else { %>
@@ -151,7 +151,7 @@
                 <% } %>
               </div>
               
-              <div id="verticalLine">
+              <div class="verticalLine">
                 <%= moment(content.date).format('LLLL'); %>
               </div>
             </li>

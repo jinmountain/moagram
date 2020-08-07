@@ -1,5 +1,6 @@
 <% include ../partials/header %> 
 <div class="content-box" >
+  <!-- Need content-index as id for xhr loader -->
   <div id="content-index">
     <div class="contents row" style="background-color: #DAE0E6">
       <div>
@@ -38,7 +39,7 @@
     <div class="contents row"> 
       <div class="content-res col-md-5">
         <div class="row secondRow">
-          <!-- ==============thumnail=============== -->
+          <!-- ============== Thumnail =============== -->
           <div class="content-thumbnail col-sm-12">
             <% if(topContent[0].video.provider){ %>
               <% if(topContent[0].video.provider == 'youtube'){ %>
@@ -94,14 +95,16 @@
             <% } %>
           </span>
         </div>
-      <!-- ==============Infoline=============== -->
+      <!-- ============== Infoline =============== -->
         <div class="content-infoline breakWord"> 
           <div>
-            Posted by &nbsp;   
-            <a class="noSelect" href="/profile/<%= topContent[0].author.id %>">
-              <img style="display: inline-block;  border-radius: 50%;" src= "<%= topContent[0].author.thumbnail %>" width= "28px" height= "28px" />
-              <%= topContent[0].author.username%> 
-            </a>
+            Posted by &nbsp;
+            <strong>   
+              <a class="noSelect" href="/profile/<%= topContent[0].author.id %>">
+                <img style="display: inline-block;  border-radius: 50%;" src= "<%= topContent[0].author.thumbnail %>" width= "28px" height= "28px" />
+                <%= topContent[0].author.username%> 
+              </a>
+            </strong>
           </div>
           <div id="verticalLine" style="font-size: 15px;">
             <% if(user) { %>
@@ -155,7 +158,8 @@
   <%if(noMatch !== null) {%>
     <div class="contents row">
       <div>
-        <img width="235" height="135" src="/icons/220px-Moa_Heinrich_Harder.jpg"/><h5 style="padding-left: 30px; padding-right: 30px;" id="line" style="margin-bottom: 0px;"><%= noMatch %></h5>
+        <img class="col-md-4" width="235" height="135" src="/icons/220px-Moa_Heinrich_Harder.jpg"/>
+        <div class="noMatch col-md-8" style="padding-left: 30px; padding-right: 30px; margin-bottom: 0px;" id="line"><%= noMatch %></div>
       </div>  
     </div>
   <% } %>
@@ -164,7 +168,7 @@
     <div class="contents row">
       <div class="content-res col-md-5">
         <div class="row secondRow">
-          <!-- ==============thumnail=============== -->
+          <!-- ============== Thumnail =============== -->
           <div class="content-thumbnail col-sm-12">
             <% if(content.video.provider){ %>
               <% if(content.video.provider == 'youtube'){ %>
@@ -184,7 +188,7 @@
         </div>
       </div>
     
-    <!-- ==============Title=============== -->
+    <!-- ============== Title =============== -->
       <div class="col-md-7" style="padding-left: 3px; padding-right: 3px;">
         <div class="content-title breakWord" style='padding-top: 5px;'>
           <a href="/contents/<%= content._id %>">
@@ -226,7 +230,7 @@
             <% } %>
           </span>
         </div>
-      <!-- ==============Infoline=============== -->
+      <!-- ============== Infoline =============== -->
         <div class="content-infoline breakWord"> 
           <div>
             Posted by &nbsp;   
@@ -378,161 +382,197 @@
     </div>
   </div>
 
+  <div id="loadingImg">
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ========Pagination======== -->
-<script>
-  var xhr = new XMLHttpRequest();
+  <script>
+    var xhr = new XMLHttpRequest();
 
-  // initialization before all functions
-  var page = 1; 
-  var perPage = 12;
-  var current = page;
+    // initialization before all functions
+    var page = 1; 
+    var perPage = 12;
+    var current = page;
 
-  // How many contents we found 
-  var count = "<%= count %>";
+    // How many contents we found 
+    var count = "<%= count %>";
 
-  // How many pages we have 
-  var pages = Math.ceil(count*1.0 / perPage)
-  var pageCut = pages + 1;
+    // How many pages we have 
+    var pages = Math.ceil(count*1.0 / perPage)
+    var pageCut = pages + 1;
 
-  // Category from Server
-  var ctg = "<%= ctg %>";
+    // Category from Server
+    var ctg = "<%= ctg %>";
 
+    // search query from server
+    var search = "<%= search %>";
+    var sort = "<%= sort %>";
 
-  // search query from server
-  var search = "<%= search %>";
-  var sort = "<%= sort %>";
+    window.onscroll = function(ev) {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        console.log("reached the bottom of a page")
+        page++;
+        current = page;
 
-  window.onscroll = function(ev) {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      page++;
-      current = page;
+        if(current <= pages){
+          loadMore(page, ctg, sort);
+        }
 
-      if(current <= pages){
-        loadMore(page, ctg, sort);
+        // When current equals pageCut it appends an alert
+        else if(current == pageCut) {
+          var comments = document.getElementById('content-index');
+          comments.insertAdjacentHTML('beforeEnd', "<div style='text-align: center;' class='contents alert alert-dark' role='alert'><p style='text-align: center;'>End of List</p></div>");
+        }
       }
+    } 
 
-      // When current equals pageCut it appends an alert
-      else if(current == pageCut) {
-        var comments = document.getElementById('content-index');
-        comments.insertAdjacentHTML('beforeEnd', "<div style='text-align: center;' class='contents alert alert-dark' role='alert'><p style='text-align: center;'>End of List</p></div>");
-      }
-    }
-  };
+    function loadMore(currentPage, ctg, sort){
+      if(ctg != 0){
+        if(sort != 0 && sort == 'popular'){
+          if(search != 0){
+            loadingImage();
+            xhr.open('GET', "/contents/?category=" + ctg + "/&sort=" + sort + "&search=" + search + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
+            };
+            xhr.send();
 
-  function loadMore(currentPage, ctg, sort){
-    if(ctg != 0){
-      if(sort != 0 && sort == 'popular'){
-        if(search != 0){
-          $.ajax({
-            method: "GET",
-            url: "/contents/?category=" + ctg + "/&sort=" + sort + "&search=" + search + "&page=" + currentPage,
-            cache: false, //avoid browser cache ajax requests
-          })
-          .done(function(data) {
-            console.log("success");
-            $('#content-index').append(data);
-          })
-          .fail(function(jqXHR, ajaxOptions, thrownError) {
-              console.log(thrownError);
-              console.log("page: " + page);
-              console.log("Something went wrong!");
-            }
-          );
+            // AJAX REQUEST USED BEFORE
+            // ========================
+            // Change to no Jquery
+
+            // $.ajax({
+            //   method: "GET",
+            //   url: "/contents/?category=" + ctg + "/&sort=" + sort + "&search=" + search + "&page=" + currentPage,
+            //   cache: false, //avoid browser cache ajax requests
+            // })
+            // .done(function(data) {
+            //   console.log("current page: " + currentPage);
+            //   $('#content-index').append(data);
+            // })
+            // .fail(function(jqXHR, ajaxOptions, thrownError) {
+            //     console.log(thrownError);
+            //     console.log("page: " + page);
+            //     console.log("Something went wrong!");
+            //   }
+            // );
+
+          } else {
+            loadingImage();
+            xhr.open('GET', "/contents/?category=" + ctg + "/&sort=" + sort + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
+            };
+            xhr.send();
+          }
         } else {
-          $.ajax({
-            method: "GET",
-            url: "/contents/?category=" + ctg + "/&sort=" + sort + "&page=" + currentPage,
-            cache: false, //avoid browser cache ajax requests
-          })
-          .done(function(data) {
-            console.log("success");
-            $('#content-index').append(data);
-          })
-          .fail(function(jqXHR, ajaxOptions, thrownError) {
-              console.log(thrownError);
-              console.log("page: " + page);
-              console.log("Something went wrong!");
-            }
-          );
+          if(search != 0){
+            loadingImage();
+            xhr.open('GET', "/contents/?category=" + ctg + "&search=" + search + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
+            };
+            xhr.send();
+          } else {
+            loadingImage();
+            xhr.open('GET', "/contents/?category=" + ctg + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
+            };
+            xhr.send();
+          }
         }
       } else {
-        if(search != 0){
-          xhr.open('GET', "/contents/?category=" + ctg + "&search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+        if(sort != 0 && sort == 'popular'){
+          if(search != 0){
+            loadingImage();
+            xhr.open('GET', "/contents/?sort=" + sort + "&search=" + search + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
             }
-            else {
-              console.log('Request failed.' + xhr.status);
+            xhr.send();
+          } else {
+            loadingImage();
+            xhr.open('GET', "/contents/?sort=" + sort + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
             }
-          };
-          xhr.send();
+            xhr.send();
+          }
         } else {
-          xhr.open('GET', "/contents/?category=" + ctg + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+          if(search != 0){
+            loadingImage();
+            xhr.open('GET', "/contents/?search=" + search + "&page=" + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              }
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
             }
-            else {
-              console.log('Request failed.' + xhr.status);
+            xhr.send();
+          } else {
+            loadingImage();
+            xhr.open('GET', '/contents/?page=' + currentPage);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
+              } 
+              else {
+                console.log('Request failed.' + xhr.status);
+              }
+              setTimeout(loadingImageNone, 2000);
             }
-          };
-          xhr.send();
-        }
-      }
-    } else {
-      if(sort != 0 && sort == 'popular'){
-        if(search != 0){
-          xhr.open('GET', "/contents/?sort=" + sort + "&search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        } else {
-          xhr.open('GET', "/contents/?sort=" + sort + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        }
-      } else {
-        if(search != 0){
-          xhr.open('GET', "/contents/?search=" + search + "&page=" + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
-        } else {
-          xhr.open('GET', '/contents/?page=' + currentPage);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              document.getElementById('content-index').insertAdjacentHTML('beforeEnd', xhr.responseText);
-            }
-            else {
-              console.log('Request failed.' + xhr.status);
-            }
-          };
-          xhr.send();
+            xhr.send();
+          }
         }
       }
     }
-  }
-</script>
+  </script>
+  
 </div>
 
 <% include ../partials/footer %>
