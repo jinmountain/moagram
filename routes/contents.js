@@ -17,8 +17,11 @@ const profile = require("./profile");
 const middleware = require("../middleware");
 const configDB = require('../config/keys.js');
 
-// =========Count Newly Upadated Content in Each CTG==========
-function ctgCount(ctgCountArray) {
+// =======================================================
+// Count total the number of contents in each ctg
+// Count newly the number of upadated contents in Each ctg
+// =======================================================
+function ctgCount(ctgCountArray, totalCtgCountArray) {
     var contentCtg = ["tntl", "mukbang", "news", "documentary", 
                     "educational", "fitness", "motivational", "music",
                     "beauty", "gaming", "vlog", "animal", "others"];
@@ -27,6 +30,17 @@ function ctgCount(ctgCountArray) {
     var contentCreatedToday = end - 86400000 // 24hours;
 
     contentCtg.forEach(function(ctg, i, array) {
+        Content.countDocuments({
+            category: ctg,
+        }, function(err, count){
+            if(err){
+                err.httpStatusCode = 500
+                return next(err);
+            } else {
+                totalCtgCountArray.splice(i, 1, count);
+            }
+        });
+
         Content.countDocuments({
             category: ctg,
             createdAt: {$gt: contentCreatedToday}
@@ -42,7 +56,7 @@ function ctgCount(ctgCountArray) {
 }
 
 var ctgCountArray = [];
-// =============================================================
+var totalCtgCountArray = [];
 
 //find every content
 router.get('/', (req, res, next) => {
@@ -116,12 +130,12 @@ router.get('/', (req, res, next) => {
     }
 
     //Used ctgCount and findTopContents Functions
-    ctgCount(ctgCountArray);
+    ctgCount(ctgCountArray, totalCtgCountArray);
     findTopContents(ctgQuery);
 
     // Possible Queries for Get Content
-    // ctg | search | NP
-    // ==================
+    // ctg |  sort  | search
+    // ======================
     //   o |    o   | o
     //   o |    o   | x
     //   o |    x   | o
@@ -190,7 +204,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -240,7 +255,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -305,7 +321,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -351,7 +368,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -417,7 +435,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -464,7 +483,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -527,7 +547,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -573,7 +594,8 @@ router.get('/', (req, res, next) => {
 
                                     url: req.url,
                                     sideContents: theFiveHots,
-                                    ctgCount: ctgCountArray
+                                    ctgCount: ctgCountArray,
+                                    totalCtgCount :totalCtgCountArray
                                 });
                             }
                         });
@@ -586,11 +608,12 @@ router.get('/', (req, res, next) => {
 
 router.get("/new", middleware.authCheck, (req, res) => {
 
-    ctgCount(ctgCountArray);
+    ctgCount(ctgCountArray, totalCtgCountArray);
 
     res.render(req.user.lang + "/contents/new", {
         pageType: 'new',
-        ctgCount: ctgCountArray
+        ctgCount: ctgCountArray,
+        totalCtgCount :totalCtgCountArray
     });
 });
 
@@ -691,7 +714,7 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
 
     var errorMessage = "Sorry, We can't process your following request.";
 
-    ctgCount(ctgCountArray);
+    ctgCount(ctgCountArray, totalCtgCountArray);
 
     if(req.query.page){
         Content.findById(req.params.id, function(err, foundContent){
@@ -802,6 +825,7 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                                             url: req.url,
                                                             contentAuthor: contentAuthor,
                                                             ctgCount: ctgCountArray,
+                                                            totalCtgCount :totalCtgCountArray,
 
                                                             current: page,    
                                                             pages: Math.ceil(commentCount / perPage),
@@ -930,6 +954,8 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
                                                             url: req.url,
                                                             contentAuthor: contentAuthor,
                                                             ctgCount: ctgCountArray,
+                                                            totalCtgCount :totalCtgCountArray,
+
 
                                                             current: page,    
                                                             pages: Math.ceil(commentCount / perPage),
@@ -954,7 +980,7 @@ router.get("/:id", middleware.authCheck, function(req, res, next){
 
 router.get("/:id/edit", middleware.checkUserContent, function(req, res){
 
-    ctgCount(ctgCountArray);
+    ctgCount(ctgCountArray, totalCtgCountArray);
 
     //======LANGUAGE AND PAGEQUERY=====
     var lang;
@@ -978,7 +1004,8 @@ router.get("/:id/edit", middleware.checkUserContent, function(req, res){
             res.render(req.user.lang + "/contents/edit", {
                 pageType: 'edit',
                 content: foundContent,
-                ctgCount: ctgCountArray
+                ctgCount: ctgCountArray,
+                totalCtgCount :totalCtgCountArray
             });
         }
     });
@@ -1066,7 +1093,7 @@ router.get("/:contentId/:commentId", middleware.authCheck, function(req, res, ne
     }
 
     commentReplies = [];
-
+    
     var errorMessage = "Sorry, We can't process your following request.";
 
     Comment.findById(req.params.commentId, function(err, foundComment){

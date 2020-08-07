@@ -142,7 +142,7 @@
                 </div>             
             </nav>
         </div>
-
+        <!-- Category Navigation Bar -->
         <div id="ctg-nav">
             <form action="/contents" method="GET" class="form-group">
                 <ul class="nav nav-tabs">
@@ -159,52 +159,82 @@
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='mukbang'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-noodles-48.png"> Mukbang | 먹방
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[1]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[1]%></span>
+                            <% if (ctgCount[1] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[1]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='news'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-about-64.png"> News
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[2]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[2]%></span>
+                            <% if (ctgCount[2] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[2]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='documentary'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-documentary-64.png"> Documentary
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[3]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[3]%></span>
+                            <% if (ctgCount[3] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[3]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link active" name='category' value='educational'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-learning-50.png"> Educational
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[4]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[4]%></span>
+                            <% if (ctgCount[4] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[4]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='fitness'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-squats-60.png"> Fitness
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[5]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[5]%></span>
+                            <% if (ctgCount[5] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[5]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='motivational'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-syringe-60.png"> Motivational
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[6]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[6]%></span>
+                            <% if (ctgCount[6] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[6]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link active" name='category' value='music'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-music-library-60.png"/> Music
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[7]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[7]%></span>
+                            <% if (ctgCount[7] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[7]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item"> 
                         <button class="nav-link active" name='category' value='beauty'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-lipstick-60.png"> Beauty
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[8]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[8]%></span>
+                            <% if (ctgCount[8] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[8]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link active" name='category' value='gaming'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-accuracy-60.png"/> Gaming
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[9]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[9]%></span>
+                            <% if (ctgCount[9] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[9]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link active" name="category" value='vlog'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-selfie-100.png"/> VLOG
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[10]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[10]%></span>
+                            <% if (ctgCount[10] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[10]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
@@ -212,13 +242,19 @@
                             <img class="headerNavIconSize" id="cat-icons" 
                             src='/icons/icons8-pig-100.png' onmouseover="this.src='/icons/icons8-pinkpig-100.png';" onmouseout="this.src='/icons/icons8-pig-100.png';"/> 
                             Animal
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[11]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[11]%></span>
+                            <% if (ctgCount[11] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[11]%></span> 
+                            <% } %>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link active" name='category' value='others'><img class="headerNavIconSize" id="cat-icons" src="/icons/icons8-xd-50.png"/>
                             Others
-                            <span class="badge badge-pill badge-secondary"><%=ctgCount[12]%></span>
+                            <span class="badge badge-pill badge-secondary"><%=totalCtgCount[12]%></span>
+                            <% if (ctgCount[12] > 0){ %>
+                            <span class="badge badge-pill badge-upCount"><%=ctgCount[12]%></span> 
+                            <% } %>
                         </button>
                     </li>
                 </ul>
