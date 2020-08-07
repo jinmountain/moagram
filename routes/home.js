@@ -6,7 +6,18 @@ const User    = require("../models/user");
 const middleware = require("../middleware");
 const moment = require('moment');
 
-router.get("/", function (req, res) {
+var ctgCountArrayHome = [];
+var totalCtgCountArrayHome = [];
+
+function ctgCountCheck() {
+	if (Content.totalCtgCountArray > 0 && Content.ctgCountArray > 0) {
+		ctgCountArrayHome = Content.ctgCountArray;
+		totalCtgCountArrayHome = Content.totalCtgCountArray;
+	}
+}
+
+router.get("/", function (req, res){
+	ctgCountCheck();
 	var lang;
     if(req.user){
         lang = req.user.lang;
@@ -16,7 +27,8 @@ router.get("/", function (req, res) {
 
     res.render(lang + "/home", {
 		pageType: 'home',
-		ctgCount: []
+		ctgCount: ctgCountArrayHome,
+		totalCtgCount: totalCtgCountArrayHome
 	});
 });
 
@@ -31,7 +43,8 @@ router.get("/about", function(req, res, next){
 
     res.render(lang + "/about", {
 		pageType: 'about',
-		ctgCount: []
+		ctgCount: ctgCountArrayHome,
+		totalCtgCount: totalCtgCountArrayHome
 	});
 });
 

@@ -6,52 +6,41 @@ const bodyParser = require('body-parser');
 const User = require("../models/user");
 const Content = require('../models/content');
 
-// =========Count Newly Upadated Content in Each CTG==========
-function ctgCount(ctgCountArray) {
-    var contentCtg = ["tntl", "mukbang", "news", "documentary", 
-                    "educational", "fitness", "motivational", "music",
-                    "beauty", "gaming", "vlog", "animal", "others"];
+// =========Bring the count from the Content Route==========
+var ctgCountArrayAuth = [];
+var totalCtgCountArrayAuth = [];
 
-    var end = Date.now();
-    var contentCreatedToday = end - 86400000;
-
-    contentCtg.forEach(function(ctg, i, array) {
-        Content.countDocuments({
-            category: ctg,
-            createdAt: {$gt: contentCreatedToday}
-        }, function(err, count){
-            if(err){
-                err.httpStatusCode = 500
-                return next(err);
-            } else {
-                ctgCountArray.splice(i, 1, count);
-            }
-        });
-    });
+function ctgCountCheck() {
+    if (Content.totalCtgCountArray > 0 && Content.ctgCountArray > 0) {
+        ctgCountArrayAuth = Content.ctgCountArray;
+        totalCtgCountArrayAuth = Content.totalCtgCountArray;
+    }
 }
 
-var ctgCountArray = [];
-
 router.get('/login', (req, res) => {
-    ctgCount(ctgCountArray);
+    ctgCountCheck()
 
     if(req.query.language){
         if(req.query.language == "en"){
             res.render('en/login', {
-                ctgCount: ctgCountArray
+                ctgCount: ctgCountArrayAuth,
+                totalCtgCount: totalCtgCountArrayAuth
             });
         } else if(req.query.language == "ko"){
             res.render('ko/login', {
-                ctgCount: ctgCountArray
+                ctgCount: ctgCountArrayAuth,
+                totalCtgCount: totalCtgCountArrayAuth
             });
         } else {
             res.render('en/login', {
-                ctgCount: ctgCountArray
+                ctgCount: ctgCountArrayAuth,
+                totalCtgCount: totalCtgCountArrayAuth
             });
         }
     } else {
         res.render('en/login', {
-            ctgCount: ctgCountArray
+            ctgCount: ctgCountArrayAuth,
+            totalCtgCount: totalCtgCountArrayAuth
         });
     }
 });

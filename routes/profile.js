@@ -9,28 +9,15 @@ const middleware = require("../middleware");
 const Content = require('../models/content');
 const User    = require("../models/user");
 
-// =========Count Newly Upadated Content in Each CTG==========
-function ctgCount(ctgCountArray) {
-    var contentCtg = ["tntl", "mukbang", "news", "documentary", 
-                    "educational", "fitness", "motivational", "music",
-                    "beauty", "gaming", "vlog", "animal", "others"];
+// =========Bring the count from the Content Route==========
+var ctgCountArrayPf = [];
+var totalCtgCountArrayPf = [];
 
-    var end = Date.now();
-    var contentCreatedToday = end - 86400000;
-
-    contentCtg.forEach(function(ctg, i, array) {
-        Content.countDocuments({
-            category: ctg,
-            createdAt: {$gt: contentCreatedToday}
-        }, function(err, count){
-            if(err){
-                err.httpStatusCode = 500
-                return next(err);
-            } else {
-                ctgCountArray.splice(i, 1, count);
-            }
-        });
-    });
+function ctgCountCheck() {
+    if (Content.totalCtgCountArray > 0 && Content.ctgCountArray > 0) {
+        ctgCountArrayAuth = Content.ctgCountArray;
+        totalCtgCountArrayAuth = Content.totalCtgCountArray;
+    }
 }
 
 var ctgCountArray = [];
@@ -46,7 +33,7 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 	var moreContents = null;
 	var moreLikes = null;
 
-	ctgCount(ctgCountArray);
+	ctgCountCheck();
 
 	Content.find({_id: {$in: ids}})
 	.limit(8)
@@ -95,7 +82,8 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 	        			 moreLikes: moreLikes,
 	        			 moreContents: moreContents,
-	        			 ctgCount: ctgCountArray,
+	        			 ctgCount: ctgCountArrayPf,
+	        			 totalCtgCount: totalCtgCountArrayPf,
 
 	        			 pageType: 'profile'
 	        			}
@@ -108,10 +96,12 @@ router.get('/', middleware.authCheck, (req, res, next) => {
 
 router.get('/setting', middleware.authCheck, (req, res) => {
 
-	ctgCount(ctgCountArray);
+	ctgCountCheck();
 
 	res.render(req.user.lang + '/setting', {
-		ctgCount: [],
+		ctgCount: ctgCountArrayPf,
+		totalCtgCount: totalCtgCountArrayPf,
+
 		pageType: 'profile'
 	});
 });
@@ -152,7 +142,7 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 	var perPage = 16;
     var page = req.query.page || 1;
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
 
     if(req.query.search){
     	const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -187,7 +177,9 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			                pages: Math.ceil(count / perPage),
 
 			                url: req.url,
-			                ctgCount: ctgCountArray,
+			                ctgCount: ctgCountArrayPf,
+			                totalCtgCount: totalCtgCountArrayPf,
+
 			                pageType: 'profile'
 			    		});
 	        		}
@@ -220,7 +212,9 @@ router.get('/likes', middleware.authCheck, (req, res) => {
 			                pages: Math.ceil(count / perPage),
 
 			                url: req.url,
-			                ctgCount: ctgCountArray,
+			                ctgCount: ctgCountArrayPf,
+			                totalCtgCount: totalCtgCountArrayPf,
+
 			                pageType: 'profile'
 			    		});
 	        		}
@@ -240,7 +234,7 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 	var perPage = 16;
     var page = req.query.page || 1;
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
 
 	User.findById(ids, function(err, userFound){
 		if(err){
@@ -280,7 +274,8 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 						                pages: Math.ceil(count / perPage),
 
 						                url: req.url,
-						                ctgCount: ctgCountArray,
+						                ctgCount: ctgCountArrayPf,
+						                totalCtgCount: totalCtgCountArrayPf,
 
 						                pageType: 'profile'
 				        			}
@@ -316,7 +311,9 @@ router.get("/contents", middleware.authCheck, function(req, res) {
 						                pages: Math.ceil(count / perPage),
 
 						                url: req.url,
-						                ctgCount: ctgCountArray,
+						                ctgCount: ctgCountArrayPf,
+						                totalCtgCount: totalCtgCountArrayPf,
+
 						                pageType: 'profile'
 				        			}
 				        		);
@@ -337,7 +334,7 @@ router.get("/following", middleware.authCheck, function(req, res){
 	var perPage = 16;
     var page = req.query.page || 1; 
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
 
     if(req.query.search) {
     	const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -378,7 +375,9 @@ router.get("/following", middleware.authCheck, function(req, res){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
+
 					                pageType: 'profile'
 								});	
 							}
@@ -419,7 +418,9 @@ router.get("/following", middleware.authCheck, function(req, res){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
+
 					                pageType: 'profile'
 								});	
 							}
@@ -602,7 +603,7 @@ router.get("/:id", middleware.authCheck, function(req, res, next) {
 	var moreContents = null;
 	var moreLikes = null;
 
-	ctgCount(ctgCountArray);
+	ctgCountCheck();
 
 	User.findById(req.params.id, function(err, userFound){
 		if (err) {
@@ -651,7 +652,8 @@ router.get("/:id", middleware.authCheck, function(req, res, next) {
 
 									moreLikes: moreLikes,
 									moreContents: moreContents,
-									ctgCount: ctgCountArray,
+									ctgCount: ctgCountArrayPf,
+									totalCtgCount: totalCtgCountArrayPf,
 
 									pageType: 'profile'
 			        			}
@@ -677,7 +679,7 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 	var perPage = 16;
     var page = req.query.page || 1;
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
 
     User.findById(req.params.id, function(err, userFound){
     	if(err){
@@ -720,7 +722,8 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					                pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 					    		});
@@ -755,7 +758,8 @@ router.get('/:id/likes', middleware.authCheck, (req, res, next) => {
 					                pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 					    		});
@@ -778,7 +782,7 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 	var perPage = 16;
     var page = req.query.page || 1;
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
 
 	User.findById(req.params.id, function(err, userFound){
 		if(err){
@@ -820,7 +824,8 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 				        		});
@@ -859,7 +864,8 @@ router.get("/:id/contents", middleware.authCheck, function(req, res) {
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 				        		});
@@ -881,7 +887,7 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 	var perPage = 16;
     var page = req.query.page || 1; 
 
-    ctgCount(ctgCountArray);
+    ctgCountCheck();
     
     User.findById(req.params.id, function(err, userFound){
 		if(err){
@@ -922,7 +928,8 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 								});
@@ -955,7 +962,8 @@ router.get("/:id/following", middleware.authCheck, function(req, res, next){
 									pages: Math.ceil(count / perPage),
 
 					                url: req.url,
-					                ctgCount: ctgCountArray,
+					                ctgCount: ctgCountArrayPf,
+					                totalCtgCount: totalCtgCountArrayPf,
 
 					                pageType: 'profile'
 								});
@@ -1197,5 +1205,39 @@ router.post("/:id", function (req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+// router.use((err, req, res, next) => {
+//     if(err.httpStatusCode == "500"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "500",
+//             message: "Oops. Internal Server Error"
+//         });
+//     } else if(err.httpStatusCode == "403"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "403",
+//             message: "Oops. Access not allowed"
+//         });
+//     } else if(err.httpStatusCode == "400"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "400",
+//             message: "Oops. Something went wrong"
+//         });
+//     } else if(err.httpStatusCode == "401"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "401",
+//             message: "Access Unauthorized"
+//         });
+//     } else if(err.httpStatusCode == "404"){
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "404",
+//             message: "Oops. Page not found"
+//         });
+//     } else {
+//         res.status(err.httpStatusCode).render('./error', {
+//             err: "Unknown",
+//             message: "Oops. Something went wrong"
+//         });
+//     }
+// });
 
 module.exports = router;
