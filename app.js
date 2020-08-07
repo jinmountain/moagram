@@ -9,6 +9,7 @@ const http = require('http').Server(app);
 const io = require("socket.io")(http);
 app.set('socketio', io);
 
+const enforce = require('express-sslify');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
