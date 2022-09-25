@@ -1,4 +1,5 @@
 .database.js
 .keys.js
 .passport-setup.js
-config/
+**/config
+**config/
